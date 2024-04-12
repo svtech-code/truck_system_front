@@ -6,7 +6,8 @@ import LayoutPrivate from "../layouts/LayoutPrivate";
 import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
 import Home from "../pages/Home";
-import TruckRegistration from "../pages/TruckRegistration";
+import TruckManagement from "../pages/TruckManagement";
+import Setting from "../pages/Setting";
 
 export const router = createBrowserRouter([
   {
@@ -30,8 +31,12 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/truck/truckregistration",
-        element: <TruckRegistration />,
+        path: "/truck/truckmanagement",
+        element: <TruckManagement />,
+      },
+      {
+        path: "/truck/setting",
+        element: <Setting />,
       },
     ],
   },
