@@ -14,8 +14,8 @@ const FormLogin = () => {
   const loginValidationSchema = loginValidation();
 
   return (
-    <article className="relative flex flex-col items-center justify-center h-[75%] w-full gap-6 bg-red-200">
-      <h2 className="font-bold text-3xl text-[#124C60] text-center">
+    <article className="relative flex flex-col items-center justify-center h-[75%] w-full gap-6">
+      <h2 className="font-bold text-3xl text-primary-color text-center">
         INICIO DE SESIÓN
       </h2>
 
@@ -37,8 +37,12 @@ const FormLogin = () => {
             onSubmit={handleSubmit}
             className="relative flex flex-col w-full px-20 justify-center items-center gap-6"
           >
-            <div className="relative flex flex-col w-2/3 gap-6 my-10">
+            <div className="relative flex flex-col w-2/3 gap-8 my-10">
               <Input
+                color={
+                  values.email !== "" && errors.email ? "danger" : "success"
+                }
+                variant="bordered"
                 type="email"
                 name="email"
                 id="email"
@@ -48,16 +52,23 @@ const FormLogin = () => {
                 size="lg"
                 label="Cuenta de usuario"
                 labelPlacement="outside"
-                placeholder="Ingresar Email !"
+                placeholder="Ingresar Email"
                 isInvalid={touched.email && errors.email && values.email !== ""}
-                errorMessage={errors.email}
+                errorMessage={
+                  values.email !== "" && !isSubmitting && errors.email
+                }
                 startContent={<FaUserAlt size={25} />}
                 classNames={{
-                  label: "text-lg pl-2",
+                  label: "text-lg pl-4 text-primary-color",
+                  innerWrapper: "gap-2 px-2",
                 }}
               />
 
               <Input
+                color={
+                  values.email !== "" && errors.email ? "danger" : "success"
+                }
+                variant="bordered"
                 type="password"
                 name="password"
                 id="password"
@@ -67,12 +78,19 @@ const FormLogin = () => {
                 size="lg"
                 label="Contraseña"
                 labelPlacement="outside"
-                placeholder="Ingresar password !"
+                placeholder="Ingresar password"
                 isInvalid={
-                  touched.password && errors.password && values.email !== ""
+                  touched.password && errors.password && values.password !== ""
                 }
-                errorMessage={errors.password}
+                errorMessage={
+                  values.password !== "" && !isSubmitting && errors.password
+                }
                 startContent={<FaLock size={25} />}
+                classNames={{
+                  label: "text-lg pl-4 text-primary-color",
+                  inputWrapper: "text-green-600 hover:text-orange-800",
+                  innerWrapper: "gap-2 px-2",
+                }}
               />
             </div>
 
