@@ -7,7 +7,7 @@ const LayoutPrivate = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!authentication) return navigate("/");
+    if (!authentication) return navigate("/index");
   }, [authentication]);
 
   return (

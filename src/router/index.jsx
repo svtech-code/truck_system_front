@@ -11,7 +11,7 @@ import Setting from "../pages/Setting";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/index",
     element: <LayoutPublic />,
     errorElement: <NotFound />,
     children: [
@@ -22,20 +22,20 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/truck",
+    path: "/",
     element: <LayoutPrivate />,
     errorElement: <NotFound />,
     children: [
       {
-        path: "/truck/home",
+        path: "/home",
         element: <Home />,
       },
       {
-        path: "/truck/truckmanagement",
+        path: "/truckmanagement",
         element: <TruckManagement />,
       },
       {
-        path: "/truck/setting",
+        path: "/setting",
         element: <Setting />,
       },
     ],

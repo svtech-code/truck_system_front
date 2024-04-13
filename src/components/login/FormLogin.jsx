@@ -53,20 +53,33 @@ const FormLogin = () => {
                 label="Cuenta de usuario"
                 labelPlacement="outside"
                 placeholder="Ingresar Email"
-                isInvalid={touched.email && errors.email && values.email !== ""}
+                isInvalid={errors.email && values.email !== ""}
                 errorMessage={
                   values.email !== "" && !isSubmitting && errors.email
                 }
-                startContent={<FaUserAlt size={25} />}
+                startContent={
+                  <FaUserAlt
+                    size={25}
+                    className={
+                      values.email !== "" && errors.email
+                        ? "text-red-500"
+                        : "text-gray-400"
+                    }
+                  />
+                }
                 classNames={{
-                  label: "text-lg pl-4 text-primary-color",
-                  innerWrapper: "gap-2 px-2",
+                  label: ["text-lg", "pl-4", "text-primary-color"],
+                  input: [],
+                  innerWrapper: ["gap-2", "px-2"],
+                  inputWrapper: [],
                 }}
               />
 
               <Input
                 color={
-                  values.email !== "" && errors.email ? "danger" : "success"
+                  values.password !== "" && errors.password
+                    ? "danger"
+                    : "success"
                 }
                 variant="bordered"
                 type="password"
@@ -79,17 +92,25 @@ const FormLogin = () => {
                 label="Contraseña"
                 labelPlacement="outside"
                 placeholder="Ingresar password"
-                isInvalid={
-                  touched.password && errors.password && values.password !== ""
-                }
+                isInvalid={errors.password && values.password !== ""}
                 errorMessage={
                   values.password !== "" && !isSubmitting && errors.password
                 }
-                startContent={<FaLock size={25} />}
+                startContent={
+                  <FaLock
+                    size={25}
+                    className={
+                      values.password !== "" && errors.password
+                        ? "text-red-500"
+                        : "text-gray-400"
+                    }
+                  />
+                }
                 classNames={{
-                  label: "text-lg pl-4 text-primary-color",
-                  inputWrapper: "text-green-600 hover:text-orange-800",
-                  innerWrapper: "gap-2 px-2",
+                  label: ["text-lg", "pl-4", "text-primary-color"],
+                  input: [],
+                  innerWrapper: ["gap-2", "px-2"],
+                  inputWrapper: [],
                 }}
               />
             </div>
@@ -97,9 +118,11 @@ const FormLogin = () => {
             <Button
               size="lg"
               className="relative w-2/3
-                  text-white font-bold text-xl
-                    bg-gradient-to-r from-[#00597B] to-[#00A3E1]
-                    hover:shadow-md hover:shadow-[#00597B]"
+              text-white font-bold text-xl
+                bg-gradient-to-r from-[#00597B] to-[#00A3E1]
+                hover:shadow-md hover:shadow-[#00597B]"
+              type="submit"
+              disabled={isSubmitting}
             >
               Ingresar
             </Button>
