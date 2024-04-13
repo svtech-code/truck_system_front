@@ -15,14 +15,14 @@ const Login = () => {
 
       {/* sección formulario / social */}
       <section className="relative min-h-screen bg-white flex flex-col w-[55%] rounded-l-2xl">
-        {/* formulario */}
+        {/* formulario login */}
         <FormLogin />
 
-        {/* redes sociales */}z
+        {/* enlace redes sociales */}
         <SocialNetworks />
       </section>
 
-      {/* imagen del sistema */}
+      {/* imagen del sistema, trabajar posicionamiento */}
       <ImageTruck img={imgOfTruck} />
     </main>
   );
