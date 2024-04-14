@@ -7,14 +7,17 @@ import TitleSystem from "../components/login/TitleSystem";
 
 const Login = () => {
   return (
-    <main className="relative min-h-screen flex  bg-gradient-to-b from-[#124C60] to-[#324745]">
+    <main className="relative min-h-screen flex  bg-gradient-to-b from-[#124C60] to-[#324745] transition-all duration-300">
       {/* sección titulo */}
-      <section className="w-[45%]">
+      <section className="w-[0%] md:w-[45%] transition-all duration-300">
         <TitleSystem />
       </section>
 
       {/* sección formulario / social */}
-      <section className="relative min-h-screen bg-white flex flex-col w-[55%] rounded-l-2xl">
+      <section
+        className="relative min-h-screen bg-white flex flex-col w-full md:w-[55%] 
+        md:rounded-l-2xl transition-all duration-300"
+      >
         {/* formulario login */}
         <FormLogin />
 

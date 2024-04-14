@@ -14,8 +14,8 @@ const FormLogin = () => {
   const loginValidationSchema = loginValidation();
 
   return (
-    <article className="relative flex flex-col items-center justify-center h-[75%] w-full gap-6">
-      <h2 className="font-bold text-3xl text-primary-color text-center">
+    <article className="relative flex flex-col items-center justify-center h-[70%] w-full gap-6 z-10">
+      <h2 className="font-bold text-3xl text-primary-color text-center tracking-wider">
         INICIO DE SESIÓN
       </h2>
 
@@ -35,9 +35,9 @@ const FormLogin = () => {
         }) => (
           <form
             onSubmit={handleSubmit}
-            className="relative flex flex-col w-full px-20 justify-center items-center gap-6"
+            className="relative flex flex-col w-full justify-center items-center gap-6"
           >
-            <div className="relative flex flex-col w-2/3 gap-8 my-10">
+            <div className="relative flex flex-col w-[70%] md:w-[80%] lg:w-[55%] max-w-[35rem] gap-8 my-10 transition-all duration-300">
               <Input
                 color={
                   values.email !== "" && errors.email ? "danger" : "success"
@@ -117,7 +117,7 @@ const FormLogin = () => {
 
             <Button
               size="lg"
-              className="relative w-2/3
+              className="relative w-[55%] max-w-[35rem]
               text-white font-bold text-xl
                 bg-gradient-to-r from-[#00597B] to-[#00A3E1]
                 hover:shadow-md hover:shadow-[#00597B]"
