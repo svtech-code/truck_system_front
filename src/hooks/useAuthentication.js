@@ -28,6 +28,7 @@ const useAuthentication = ({ login }) => {
         icon: "success",
         title: "Success",
         text: "Cuenta validada con éxito",
+        showConfirmButton: false,
         timer: 1500,
       }).then(() => {
         login("1", "token", USER_ROOT, "admin");

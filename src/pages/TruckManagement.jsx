@@ -1,5 +1,5 @@
 const TruckManagement = () => {
-  return <h1>registro de camiones</h1>;
+  return <h1>Page Truck management</h1>;
 };
 
 export default TruckManagement;

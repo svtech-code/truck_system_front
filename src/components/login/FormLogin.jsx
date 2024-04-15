@@ -4,18 +4,24 @@ import useAuthentication from "../../hooks/useAuthentication";
 import loginValidation from "../../validations/loginValidation";
 
 import { Formik } from "formik";
-import { Button, Input } from "@nextui-org/react";
-import { FaUserAlt, FaLock } from "react-icons/fa";
+import { Button, Input, button } from "@nextui-org/react";
+import { FaUserAlt, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
+import { useState } from "react";
 
 const FormLogin = () => {
   const { login } = useAuth();
   const { onSubmit } = useAuthentication({ login });
 
+  // esquema de validación
   const loginValidationSchema = loginValidation();
+
+  // manejo de la visibilidad de la contraseña
+  const [visible, setVisible] = useState(false);
+  const toggleVisible = () => setVisible(!visible);
 
   return (
     <article className="relative flex flex-col items-center justify-center h-[70%] w-full gap-6 z-10">
-      <h2 className="font-bold text-3xl text-primary-color text-center tracking-wider">
+      <h2 className="font-bold text-3xl sm:text-4xl text-primary-color text-center py-10 sm:tracking-wider transition-all duration-300">
         INICIO DE SESIÓN
       </h2>
 
@@ -29,19 +35,22 @@ const FormLogin = () => {
           handleSubmit,
           handleChange,
           errors,
-          touched,
+          // touched,
           handleBlur,
           isSubmitting,
+          setFieldValue,
         }) => (
           <form
             onSubmit={handleSubmit}
             className="relative flex flex-col w-full justify-center items-center gap-6"
           >
             <div className="relative flex flex-col w-[70%] md:w-[80%] lg:w-[55%] max-w-[35rem] gap-8 my-10 transition-all duration-300">
+              {/* input correo */}
               <Input
                 color={
                   values.email !== "" && errors.email ? "danger" : "success"
                 }
+                // isRequired={true}
                 variant="bordered"
                 type="email"
                 name="email"
@@ -49,14 +58,13 @@ const FormLogin = () => {
                 value={values.email}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                onClear={() => setFieldValue("email", "")}
                 size="lg"
                 label="Cuenta de usuario"
                 labelPlacement="outside"
                 placeholder="Ingresar Email"
                 isInvalid={errors.email && values.email !== ""}
-                errorMessage={
-                  values.email !== "" && !isSubmitting && errors.email
-                }
+                errorMessage={values.email !== "" && errors.email}
                 startContent={
                   <FaUserAlt
                     size={25}
@@ -75,14 +83,16 @@ const FormLogin = () => {
                 }}
               />
 
+              {/* input contraseña */}
               <Input
                 color={
                   values.password !== "" && errors.password
                     ? "danger"
                     : "success"
                 }
+                // isRequired={true}
                 variant="bordered"
-                type="password"
+                type={visible ? "text" : "password"}
                 name="password"
                 id="password"
                 value={values.password}
@@ -93,18 +103,29 @@ const FormLogin = () => {
                 labelPlacement="outside"
                 placeholder="Ingresar password"
                 isInvalid={errors.password && values.password !== ""}
-                errorMessage={
-                  values.password !== "" && !isSubmitting && errors.password
-                }
+                errorMessage={values.password !== "" && errors.password}
                 startContent={
                   <FaLock
-                    size={25}
+                    size={22}
                     className={
                       values.password !== "" && errors.password
                         ? "text-red-500"
                         : "text-gray-400"
                     }
                   />
+                }
+                endContent={
+                  <button
+                    onClick={toggleVisible}
+                    className={`cursor-pointer hover:scale-110 transition-all duration-300 
+                      ${
+                        values.password !== "" && errors.password
+                          ? "text-red-500 hover:text-red-700"
+                          : "text-gray-400 hover:text-gray-600"
+                      }`}
+                  >
+                    {visible ? <FaEyeSlash size={24} /> : <FaEye size={24} />}
+                  </button>
                 }
                 classNames={{
                   label: ["text-lg", "pl-4", "text-primary-color"],
