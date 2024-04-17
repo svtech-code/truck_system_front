@@ -5,7 +5,8 @@ const ImageTruck = ({ img }) => {
         <img
           src={img}
           alt="Imagen de un camión"
-          className="absolute top-[60%] left-[40%] transform -translate-x-1/2 -translate-y-1/2 w-[45%] h-auto"
+          className="absolute top-[60%] left-[40%] transform -translate-x-1/2 -translate-y-1/2 w-[45%] h-auto 
+            hover:drop-shadow-[2px_2px_10px_white] transition-all duration-300"
         />
       </div>
     </div>

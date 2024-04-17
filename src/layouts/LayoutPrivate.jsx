@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { useEffect } from "react";
-import NavBar from "../components/NavBar";
+import NavBar from "../components/navBar/NavBar";
 
 const LayoutPrivate = () => {
   const { authentication } = useAuth();
@@ -12,7 +12,7 @@ const LayoutPrivate = () => {
   }, [authentication]);
 
   return (
-    <main className="relative w-full h-full">
+    <main className="relative w-full h-full p-1">
       <NavBar />
       <Outlet />
     </main>
