@@ -1,4 +1,3 @@
-import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
 import {
   Divider,
@@ -13,9 +12,15 @@ import NavBar_profile from "./NavBar_profile";
 import NavBar_item from "./NavBar_item";
 
 const NabBar = () => {
-  const { logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  // lista de objetos path
+  const navLinks = [
+    { to: "/home", title: "Home", onClick: toggleMenu },
+    { to: "/truckmanagement", title: "Truck Management", onClick: toggleMenu },
+    { to: "/setting", title: "Setting", onClick: toggleMenu },
+  ];
 
   return (
     <Navbar
@@ -46,9 +51,9 @@ const NabBar = () => {
       >
         <NavBar_logo />
 
-        <NavBar_item to={"/home"}>Home</NavBar_item>
-        <NavBar_item to={"/truckmanagement"}>Truck Management</NavBar_item>
-        <NavBar_item to={"/setting"}>Setting</NavBar_item>
+        {navLinks.map(({ to, title }) => (
+          <NavBar_item to={to}>{title}</NavBar_item>
+        ))}
       </NavbarContent>
 
       {/* linea divisoria entre rutas y perfil */}
@@ -65,17 +70,11 @@ const NabBar = () => {
       {/* lista de rutas vista compacta */}
       <NavbarMenu className="bg-orange-200">
         <NavbarMenuItem className="w-full">
-          <NavBar_item to={"/home"} onClick={toggleMenu}>
-            Home
-          </NavBar_item>
-
-          <NavBar_item to={"/truckmanagement"} onClick={toggleMenu}>
-            Truck Management
-          </NavBar_item>
-
-          <NavBar_item to={"/setting"} onClick={toggleMenu}>
-            Setting
-          </NavBar_item>
+          {navLinks.map(({ to, title, onClick }) => (
+            <NavBar_item to={to} onClick={onClick}>
+              {title}
+            </NavBar_item>
+          ))}
         </NavbarMenuItem>
       </NavbarMenu>
     </Navbar>

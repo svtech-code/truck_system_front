@@ -2,6 +2,7 @@ import useAuth from "../../hooks/useAuth";
 import { NavLink } from "react-router-dom";
 import {
   Avatar,
+  Button,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -17,39 +18,49 @@ const NavBar_profile = () => {
   return (
     <Dropdown placement="bottom-end" backdrop="blur">
       <DropdownTrigger>
-        <Avatar
-          isBordered
-          as="button"
-          className="transition-transform"
-          color="primary"
-          name="Admin"
-          size="md"
-          src="https://i.pravatar.cc/150?u=a042581f4e29026704A"
-        />
+        <Button
+          isIconOnly
+          className="rounded-full bg-transparent box-content p-1"
+        >
+          <Avatar
+            isBordered
+            className="transition-transform"
+            color="primary"
+            name="Admin" // username del context
+            size="md"
+            src="https://i.pravatar.cc/150?u=a042581f4e29026704A"
+          />
+        </Button>
       </DropdownTrigger>
 
-      <DropdownMenu aria-label="Profile Actions" variant="flat">
+      <DropdownMenu aria-label="user profile dropdown menu" variant="flat">
         <DropdownSection title="Bienvenido" showDivider>
-          <DropdownItem key="profile" className="h-14 gap-2">
-            <p className="text-md">admin</p>
-            <p className="text-sm text-gray-400">admin@gmail.com</p>
+          <DropdownItem
+            key="userName"
+            className="h-14 gap-2"
+            description="admin@gmail.com" // correo del context
+          >
+            admin
           </DropdownItem>
         </DropdownSection>
-        <DropdownSection>
+
+        <DropdownSection title="Conjunto de acciones">
           <DropdownItem
-            key="proffile"
+            key="profile"
             startContent={<IoPeopleSharp size={25} />}
           >
-            Profile
+            Perfil de usuario
           </DropdownItem>
+
           <DropdownItem key="message" startContent={<IoMail size={25} />}>
-            Message
+            Mensajes
           </DropdownItem>
 
           <DropdownItem
             key="logout"
             color="danger"
             startContent={<IoLogOut size={25} />}
+            textValue="Logout"
           >
             <NavLink to={"/index"} onClick={() => logout()}>
               Logout

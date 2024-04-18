@@ -12,7 +12,7 @@ const LayoutPrivate = () => {
   }, [authentication]);
 
   return (
-    <main className="relative w-full h-full p-1">
+    <main className="relative w-full h-full p-1">  
       <NavBar />
       <Outlet />
     </main>
