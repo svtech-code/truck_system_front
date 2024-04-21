@@ -1,7 +1,7 @@
 const Maintence = () => {
   return (
-    <main className="relative flex justify-center items-center bg-gray-400 rounded-xl mt-5 w-[95%] mx-auto p-5">
-      <p className="text-2xl font-bold">Mantenimiento</p>
+    <main className="relative flex flex-1 justify-center items-center rounded-xl bg-gradient-to-t to-gray-400 from-white">
+      <p className="text-4xl font-bold">Mantenimiento ...</p>
     </main>
   );
 };
