@@ -1,5 +1,7 @@
+import Maintence from "../components/Maintence";
+
 const Home = () => {
-  return <h1>Page Home</h1>;
+  return <Maintence />;
 };
 
 export default Home;

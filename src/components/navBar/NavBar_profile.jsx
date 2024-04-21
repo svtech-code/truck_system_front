@@ -1,5 +1,4 @@
 import useAuth from "../../hooks/useAuth";
-import { NavLink } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -9,11 +8,48 @@ import {
   DropdownSection,
   DropdownTrigger,
 } from "@nextui-org/react";
-import { IoLogOut, IoMail, IoPeopleSharp } from "react-icons/io5";
+import {
+  IoLogOut,
+  IoMail,
+  IoPeopleSharp,
+  IoSettingsSharp,
+} from "react-icons/io5";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 const NavBar_profile = () => {
-  // información de la cuenta a mostrar
+  const navigate = useNavigate();
   const { authUserName, authEmail, logout } = useAuth();
+
+  // const handleNavigation = (path) => {
+  //   navigate(path);
+  // };
+
+  const navLinksProfile = [
+    {
+      key: "profile",
+      title: "Perfil usuario",
+      icon: <IoPeopleSharp size={25} />,
+      onClick: () => navigate("/profile"),
+    },
+    {
+      key: "message",
+      title: "Mensajes",
+      icon: <IoMail size={25} />,
+      onClick: () => navigate("/message"),
+    },
+    {
+      key: "setting",
+      title: "Configuración",
+      icon: <IoSettingsSharp size={25} />,
+      onClick: () => navigate("/setting"),
+    },
+    {
+      key: "logout",
+      title: "Logout",
+      icon: <IoLogOut size={25} />,
+      onClick: logout,
+    },
+  ];
 
   return (
     <Dropdown placement="bottom-end" backdrop="blur">
@@ -45,27 +81,16 @@ const NavBar_profile = () => {
         </DropdownSection>
 
         <DropdownSection title="Conjunto de acciones">
-          <DropdownItem
-            key="profile"
-            startContent={<IoPeopleSharp size={25} />}
-          >
-            Perfil de usuario
-          </DropdownItem>
-
-          <DropdownItem key="message" startContent={<IoMail size={25} />}>
-            Mensajes
-          </DropdownItem>
-
-          <DropdownItem
-            key="logout"
-            color="danger"
-            startContent={<IoLogOut size={25} />}
-            textValue="Logout"
-          >
-            <NavLink to={"/index"} onClick={() => logout()}>
-              Logout
-            </NavLink>
-          </DropdownItem>
+          {navLinksProfile.map(({ key, title, icon, onClick }) => (
+            <DropdownItem
+              key={key}
+              startContent={icon}
+              onClick={onClick}
+              color={key === "logout" ? "danger" : "primary"}
+            >
+              {title}
+            </DropdownItem>
+          ))}
         </DropdownSection>
       </DropdownMenu>
     </Dropdown>

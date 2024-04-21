@@ -20,8 +20,8 @@ const FormLogin = () => {
   const toggleVisible = () => setVisible(!visible);
 
   return (
-    <article className="relative flex flex-col items-center justify-center h-[70%] w-full gap-6 z-10">
-      <h2 className="font-bold text-3xl sm:text-4xl text-primary-color text-center py-10 sm:tracking-wider transition-all duration-300">
+    <article className="relative flex flex-col items-center justify-center sm:h-[70%] w-full gap-6 z-10">
+      <h2 className="font-bold text-3xl sm:text-4xl text-primary-color text-center mt-20 sm:py-10 sm:tracking-wider transition-all duration-300">
         INICIO DE SESIÓN
       </h2>
 

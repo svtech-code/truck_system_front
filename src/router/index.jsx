@@ -8,6 +8,9 @@ import Login from "../pages/Login";
 import Home from "../pages/Home";
 import TruckManagement from "../pages/TruckManagement";
 import Setting from "../pages/Setting";
+import LoadingOrder from "../pages/LoadingOrder";
+import Message from "../pages/Message";
+import Profile from "../pages/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +36,22 @@ export const router = createBrowserRouter([
       {
         path: "/truckmanagement",
         element: <TruckManagement />,
+      },
+      {
+        path: "/loadingorder",
+        element: <LoadingOrder />,
+      },
+      {
+        path: "/report",
+        element: <LoadingOrder />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/message",
+        element: <Message />,
       },
       {
         path: "/setting",

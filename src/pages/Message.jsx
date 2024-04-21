@@ -1,7 +1,7 @@
 import Maintence from "../components/Maintence";
 
-const Setting = () => {
+const Message = () => {
   return <Maintence />;
 };
 
-export default Setting;
+export default Message;

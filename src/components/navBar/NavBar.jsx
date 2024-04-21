@@ -3,6 +3,7 @@ import {
   Divider,
   Navbar,
   NavbarContent,
+  NavbarItem,
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
@@ -10,16 +11,19 @@ import {
 import NavBar_logo from "./NavBar_logo";
 import NavBar_profile from "./NavBar_profile";
 import NavBar_item from "./NavBar_item";
+import { Link } from "react-router-dom";
+import NavBar_menuItem from "./NavBar_menuItem";
 
 const NabBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   // lista de objetos path
-  const navLinks = [
+  const navLinksMenu = [
     { to: "/home", title: "Home", onClick: toggleMenu },
-    { to: "/truckmanagement", title: "Truck Management", onClick: toggleMenu },
-    { to: "/setting", title: "Setting", onClick: toggleMenu },
+    { to: "/truckmanagement", title: "Gestión camión", onClick: toggleMenu },
+    { to: "/loadingorder", title: "Orden carga", onClick: toggleMenu },
+    { to: "/report", title: "Reporte", onClick: toggleMenu },
   ];
 
   return (
@@ -30,7 +34,7 @@ const NabBar = () => {
       className="relative rounded-2xl bg-gradient-to-l to-[#00597B] from-[#00A3E1]"
     >
       {/* logo para vista compacta */}
-      <NavbarContent className="sm:hidden text-white" justify="start">
+      <NavbarContent className="md:hidden text-white" justify="start">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         />
@@ -38,7 +42,7 @@ const NabBar = () => {
 
       {/* logo para vista completa */}
       <NavbarContent
-        className="sm:hidden pr-3 w-full text-white font-semibold"
+        className="md:hidden pr-3 w-full text-white font-semibold"
         justify="center"
       >
         <NavBar_logo />
@@ -46,13 +50,13 @@ const NabBar = () => {
 
       {/* lista de rutas */}
       <NavbarContent
-        className="hidden sm:flex gap-6 w-full text-white font-semibold"
+        className="hidden md:flex gap-6 w-full text-white font-semibold"
         justify="center"
       >
         <NavBar_logo />
 
-        {navLinks.map(({ to, title }) => (
-          <NavBar_item to={to}>{title}</NavBar_item>
+        {navLinksMenu.map(({ to, title }) => (
+          <NavBar_item key={to} to={to} title={title} />
         ))}
       </NavbarContent>
 
@@ -68,14 +72,13 @@ const NabBar = () => {
       </NavbarContent>
 
       {/* lista de rutas vista compacta */}
-      <NavbarMenu className="bg-orange-200">
-        <NavbarMenuItem className="w-full">
-          {navLinks.map(({ to, title, onClick }) => (
-            <NavBar_item to={to} onClick={onClick}>
-              {title}
-            </NavBar_item>
-          ))}
-        </NavbarMenuItem>
+      <NavbarMenu
+        className="absolute bg-gradient-to-l to-[#00597B] from-[#00A3E1]
+        rounded-xl p-5 sm:ml-2 mt-2 mx-auto w-[98%] sm:w-[50%] text-white"
+      >
+        {navLinksMenu.map(({ to, title, onClick }) => (
+          <NavBar_menuItem key={to} to={to} title={title} onClick={onClick} />
+        ))}
       </NavbarMenu>
     </Navbar>
   );

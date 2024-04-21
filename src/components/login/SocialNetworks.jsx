@@ -8,7 +8,7 @@ const SocialNetworks = () => {
       {/* linea divisoria */}
       <div className="relative flex items-center justify-center w-full -mt-12">
         <div className="border-b border-gray-400 w-1/4 mr-4"></div>
-        <div className="text-gray-600 font-semibold text-lg">
+        <div className="text-gray-600 font-semibold text-medium sm:text-lg">
           Puedes visitarno en
         </div>
         <div className="border-b border-gray-400 w-1/4 ml-4"></div>

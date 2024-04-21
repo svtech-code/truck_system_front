@@ -1,7 +1,7 @@
 import Maintence from "../components/Maintence";
 
-const Setting = () => {
+const LoadingOrder = () => {
   return <Maintence />;
 };
 
-export default Setting;
+export default LoadingOrder;

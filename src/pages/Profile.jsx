@@ -1,7 +1,7 @@
 import Maintence from "../components/Maintence";
 
-const Setting = () => {
+const Profile = () => {
   return <Maintence />;
 };
 
-export default Setting;
+export default Profile;
