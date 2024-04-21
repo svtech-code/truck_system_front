@@ -2,7 +2,7 @@ import { Children, createContext, useCallback, useMemo, useState } from "react";
 
 const TruckManagementContext = createContext({});
 
-export const TruckManagementProvider = ({ Children }) => {
+export const TruckManagementProvider = ({ children }) => {
   const [TruckManagementData, setTruckManagementData] = useState({
     truckData: [], // data de los camions
     truckNumber: 0, // cantidad de camiones
@@ -25,7 +25,7 @@ export const TruckManagementProvider = ({ Children }) => {
 
   return (
     <TruckManagementContext.Provider value={value}>
-      {Children}
+      {children}
     </TruckManagementContext.Provider>
   );
 };
