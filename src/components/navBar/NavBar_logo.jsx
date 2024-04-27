@@ -11,7 +11,7 @@ const NavBar_logo = () => {
             transition-all duration-300"
         />
         <p
-          className="font-bold text-inherit 
+          className="font-bold text-inherit text-2xl
             group-hover:drop-shadow-[1px_1px_5px_rgba(255,255,255,0.5)] 
             transition-all duration-300"
         >

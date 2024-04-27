@@ -29,7 +29,7 @@ const NabBar = () => {
       onMenuOpenChange={setIsMenuOpen}
       maxWidth="full"
       classNames={{
-        base: ["bg-gradient-to-l to-[#00597B] from-[#00A3E1]", "rounded-2xl"],
+        base: ["bg-gradient-to-l to-[#00597B] from-[#00A3E1]", "rounded-xl"],
         menu: [
           "bg-gradient-to-l to-[#00597B] from-[#00A3E1] text-white",
           "p-5 sm:ml-1 mt-2 mx-auto sm:w-[50%] w-[98%] rounded-xl",

@@ -1,21 +1,46 @@
-const Header_card = () => {
+import { Button } from "@nextui-org/react";
+import { GiTruck } from "react-icons/gi";
+import { HiClipboardDocumentList } from "react-icons/hi2";
+
+const objectComponentHeaderCard = {
+  operativo: {
+    title: "Camiones operativos",
+    shadowColor: "shadow-green-200",
+    icon: <GiTruck size={35} />,
+    bgHover: "hover:bg-green-200",
+  },
+  vencido: {
+    title: "Documentos vencidos",
+    shadowColor: "shadow-red-200",
+    icon: <HiClipboardDocumentList size={35} />,
+    bgHover: "hover:bg-red-200",
+  },
+};
+
+const Header_card = ({ type }) => {
+  const componentButtonHeaderCard = objectComponentHeaderCard[type] || {};
+
   return (
-    <Card
-      className="w-full sm:w-1/2 md:w-[13.5rem] hover:bg-green-100 transition-all duration-300 
-              text-primary-color hover:text-green-800 hover:scale-105 border border-green-400"
-      shadow="sm"
+    <Button
+      className={`flex flex-col p-2 h-[5rem] w-full sm:w-1/2 md:w-[15rem] 
+        shadow-md ${componentButtonHeaderCard.shadowColor} hover:shadow-gray-400
+        ${componentButtonHeaderCard.colorBorder} ${componentButtonHeaderCard.bgHover}
+        rounded-lg bg-transparent gap-0 group`}
     >
-      <CardBody>
-        <p className="text-xl">Camiones operativos</p>
-      </CardBody>
-      <Divider />
-      <CardFooter>
-        <div className="flex w-full justify-around items-center">
-          <FaTruck size={30} />
-          <p className="text-2xl">34</p>
-        </div>
-      </CardFooter>
-    </Card>
+      <div
+        className="flex justify-center items-center gap-10 w-full text-primary-color group-hover:text-gray-600 
+            group-hover:scale-110 transition-all duration-300"
+      >
+        {componentButtonHeaderCard.icon}
+        <p className="text-xl">34</p>
+      </div>
+      <p
+        className="w-full text-lg text-primary-color group-hover:text-gray-600
+          group-hover:scale-110 transition-all duration-300"
+      >
+        {componentButtonHeaderCard.title}
+      </p>
+    </Button>
   );
 };
 
