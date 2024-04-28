@@ -12,7 +12,12 @@ const TitleAndRoute = ({ maintainer }) => {
         <BreadcrumbItem startContent={<IoHome />}>
           <Link to={"/home"}>Home</Link>
         </BreadcrumbItem>
-        <BreadcrumbItem startContent={<IoLogoWindows />}>
+        <BreadcrumbItem
+          startContent={<IoLogoWindows />}
+          classNames={{
+            item: "data-[current=true]:text-primary-color",
+          }}
+        >
           {maintainer}
         </BreadcrumbItem>
       </Breadcrumbs>

@@ -6,11 +6,12 @@ import LayoutPrivate from "../layouts/LayoutPrivate";
 import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
 import Home from "../pages/Home";
-import TruckManagement from "../pages/TruckManagement";
+import Truck from "../pages/Truck";
 import Setting from "../pages/Setting";
 import LoadingOrder from "../pages/LoadingOrder";
 import Message from "../pages/Message";
 import Profile from "../pages/Profile";
+import Driver from "../pages/Driver";
 
 export const router = createBrowserRouter([
   {
@@ -34,8 +35,12 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/truckmanagement",
-        element: <TruckManagement />,
+        path: "/truck",
+        element: <Truck />,
+      },
+      {
+        path: "/driver",
+        element: <Driver />,
       },
       {
         path: "/loadingorder",

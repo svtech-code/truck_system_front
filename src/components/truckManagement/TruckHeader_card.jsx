@@ -17,7 +17,7 @@ const objectComponentHeaderCard = {
   },
 };
 
-const Header_card = ({ type }) => {
+const TruckHeader_card = ({ type }) => {
   const componentButtonHeaderCard = objectComponentHeaderCard[type] || {};
 
   return (
@@ -44,4 +44,4 @@ const Header_card = ({ type }) => {
   );
 };
 
-export default Header_card;
+export default TruckHeader_card;

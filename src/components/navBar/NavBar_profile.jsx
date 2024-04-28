@@ -14,15 +14,11 @@ import {
   IoPeopleSharp,
   IoSettingsSharp,
 } from "react-icons/io5";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const NavBar_profile = () => {
   const navigate = useNavigate();
   const { authUserName, authEmail, logout } = useAuth();
-
-  // const handleNavigation = (path) => {
-  //   navigate(path);
-  // };
 
   const navLinksProfile = [
     {

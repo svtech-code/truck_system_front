@@ -22,7 +22,7 @@ const NotFound = () => {
 
       <Button className="mt-6 group" variant="ghost">
         <Link
-          to={"/"}
+          to={"/home"}
           className="text-[1.5rem] text-gray-300 group-hover:text-gray-600"
         >
           Volver

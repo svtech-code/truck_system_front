@@ -1,8 +1,14 @@
 import { useState } from "react";
 import {
+  Button,
   Divider,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
   Navbar,
   NavbarContent,
+  NavbarItem,
   NavbarMenu,
   NavbarMenuToggle,
 } from "@nextui-org/react";
@@ -10,15 +16,20 @@ import NavBar_logo from "./NavBar_logo";
 import NavBar_profile from "./NavBar_profile";
 import NavBar_item from "./NavBar_item";
 import NavBar_menuItem from "./NavBar_menuItem";
+import { FaChevronDown, FaTruck, FaUser } from "react-icons/fa";
+import NavBar_DropdownItem from "./NavBar_DropdownItem";
+import { useNavigate } from "react-router-dom";
 
 const NabBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const navigate = useNavigate();
 
   // lista de objetos path
   const navLinksMenu = [
     { to: "/home", title: "Home", onClick: toggleMenu },
-    { to: "/truckmanagement", title: "Gestión camión", onClick: toggleMenu },
+    { to: "/truck", title: "Camiones", onClick: toggleMenu },
+    { to: "/driver", title: "Choferes", onClick: toggleMenu },
     { to: "/loadingorder", title: "Orden carga", onClick: toggleMenu },
     { to: "/report", title: "Reporte", onClick: toggleMenu },
   ];
@@ -58,9 +69,47 @@ const NabBar = () => {
       >
         <NavBar_logo />
 
-        {navLinksMenu.map(({ to, title }) => (
+        {/* {navLinksMenu.map(({ to, title }) => (
           <NavBar_item key={to} to={to} title={title} />
-        ))}
+        ))} */}
+        <NavBar_item to={"/home"} title={"Home"} />
+
+        {/* componentizar elemento ------!!!!! */}
+        <Dropdown>
+          <NavbarItem>
+            <DropdownTrigger>
+              <Button
+                disableRipple
+                className="flex flex-col bg-transparent text-white mt-2 hover:scale-105"
+              >
+                <div className="flex gap-2 w-full items-center text-[1rem] font-semibold">
+                  Gestión
+                  <FaChevronDown />
+                </div>
+                <Divider className="w-0 group-hover:w-[100%] h-[.20rem] bg-white opacity-80 transition-all duration-300 rounded-full" />
+              </Button>
+            </DropdownTrigger>
+          </NavbarItem>
+          <DropdownMenu aria-label="management dropdown menu">
+            <DropdownItem
+              key={"truck"}
+              startContent={<FaTruck />}
+              onClick={() => navigate("/truck")}
+            >
+              Gestión camión
+            </DropdownItem>
+            <DropdownItem
+              key={"driver"}
+              startContent={<FaUser />}
+              onClick={() => navigate("/driver")}
+            >
+              Gestión chofer
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+
+        <NavBar_item to={"/loadingorder"} title={"Orden Carga"} />
+        <NavBar_item to={"/report"} title={"Reporte"} />
       </NavbarContent>
 
       {/* linea divisoria entre rutas y perfil */}
