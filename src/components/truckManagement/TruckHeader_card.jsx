@@ -35,8 +35,8 @@ const TruckHeader_card = ({ type }) => {
         <p className="text-xl">34</p>
       </div>
       <p
-        className="w-full text-lg text-primary-color group-hover:text-gray-600
-          group-hover:scale-110 transition-all duration-300"
+        className="w-full sm:text-lg text-primary-color group-hover:text-gray-600
+          group-hover:scale-110 transition-all duration-300 text-sm"
       >
         {componentButtonHeaderCard.title}
       </p>
