@@ -1,9 +1,14 @@
 import DataTable from "react-data-table-component";
 import { dataTable_structure } from "./DataTable_structure";
 import InfoDataTable from "../InfoDataTable";
-import { providerPaginationDataTable } from "../../utils/providerDataTable";
+import {
+  providerFilter,
+  providerPaginationDataTable,
+  styleDataTable,
+} from "../../utils/providerDataTable";
 import { useState } from "react";
 import SubDataTable_structure from "./SubDataTable_structure";
+import DataTable_header from "./DataTable_header";
 
 const TruckDataTable = () => {
   // estado para las variables del mantenedor de gestión de camiones
@@ -12,6 +17,10 @@ const TruckDataTable = () => {
     loadingTruck: false, // propiedad para manejar la carga de datos
     errorTruck: null, // propiedad para manejar los errores
   });
+
+  const updateStateTruck = (newState) => {
+    setStateTruck((prev) => ({ ...prev, ...newState }));
+  };
 
   // constante de prueba, eliminar
   const data = [
@@ -60,12 +69,18 @@ const TruckDataTable = () => {
   ];
 
   return (
-    <section className="relative flex flex-col flex-1 p-2">
+    // <section className="relative flex flex-col flex-1 p-2">
+    <section className="relative flex flex-col p-2">
       <DataTable
+        customStyles={styleDataTable}
         fixedHeader
-        // subHeader
+        subHeader
+        subHeaderComponent={DataTable_header({
+          filterTruck: stateTruck.filterTruck,
+          updateStateTruck,
+        })}
         columns={dataTable_structure()}
-        data={data}
+        data={providerFilter({ data: data, filter: stateTruck.filterTruck })}
         highlightOnHover
         responsive
         persistTableHead
