@@ -1,8 +1,5 @@
 import Swal from "sweetalert2";
-
-// valores de prueba
-const USER_ROOT = "admin@gmail.com";
-const PASS_ROOT = "@Dmin2024";
+import axios from "../api/axios";
 
 const useAuthentication = ({ login }) => {
   const onSubmit = async (
@@ -10,38 +7,43 @@ const useAuthentication = ({ login }) => {
     { setSubmitting, setErrors }
   ) => {
     try {
-      // Eliminar condicionales ================================================>
-      if (email !== USER_ROOT) {
-        setErrors({
-          email: "El Email ingresado, no tiene cuenta de usuario !",
+      const response = await axios.post(
+        "/token",
+        { username: email, password: password },
+        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+      );
+
+      if (response?.status === 200) {
+        const privilege = response?.data?.cod_tipo_usuario.toString();
+        const token = response?.data?.access_token;
+        const userName = response?.data?.desc_usuario;
+
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Cuenta validada con éxito",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => {
+          login(privilege, token, email, userName);
+        });
+      }
+    } catch (error) {
+      // manejo del error de autorización
+      if (error?.response?.status === 401) {
+        Swal.fire({
+          icon: "error",
+          title: "Acceso denegado",
+          text: "Cuenta de usuario incorrecta ...!",
         });
         return;
       }
-
-      if (password !== PASS_ROOT) {
-        setErrors({ password: "La contraseña ingresada es incorrecta !" });
-        return;
-      }
-      // =====================================================================>
-
-      Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: "Cuenta validada con éxito",
-        showConfirmButton: false,
-        timer: 1500,
-      }).then(() => {
-        login("1", "token", USER_ROOT, "admin");
-      });
-    } catch (error) {
-      // manejo de errores proporcionados por el backend
-      // recibir los errores que aparecen en la condicional
 
       // Manejo de error de conexión
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "Sin conexión con el servidor !",
+        text: "Sin conexión con el servisor !",
       });
     } finally {
       setSubmitting(false);
