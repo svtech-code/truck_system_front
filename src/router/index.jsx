@@ -1,17 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 
+import Login from "../pages/Login";
 import LayoutPublic from "../layouts/LayoutPublic";
 import LayoutPrivate from "../layouts/LayoutPrivate";
-
 import NotFound from "../pages/NotFound";
-import Login from "../pages/Login";
-import Home from "../pages/Home";
-import Truck from "../pages/Truck";
-import Setting from "../pages/Setting";
-import LoadingOrder from "../pages/LoadingOrder";
-import Message from "../pages/Message";
-import Profile from "../pages/Profile";
-import Driver from "../pages/Driver";
+import { RoutesObjects } from "./RoutesObjects";
 
 export const router = createBrowserRouter([
   {
@@ -29,39 +22,9 @@ export const router = createBrowserRouter([
     path: "/",
     element: <LayoutPrivate />,
     errorElement: <NotFound />,
-    children: [
-      {
-        path: "/home",
-        element: <Home />,
-      },
-      {
-        path: "/truck",
-        element: <Truck />,
-      },
-      {
-        path: "/driver",
-        element: <Driver />,
-      },
-      {
-        path: "/loadingorder",
-        element: <LoadingOrder />,
-      },
-      {
-        path: "/report",
-        element: <LoadingOrder />,
-      },
-      {
-        path: "/profile",
-        element: <Profile />,
-      },
-      {
-        path: "/message",
-        element: <Message />,
-      },
-      {
-        path: "/setting",
-        element: <Setting />,
-      },
-    ],
+    children: RoutesObjects.map(({ path, element }) => ({
+      path: path,
+      element: element,
+    })),
   },
 ]);

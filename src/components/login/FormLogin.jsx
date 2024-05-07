@@ -26,7 +26,7 @@ const FormLogin = () => {
       </h2>
 
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ username: "", password: "" }}
         onSubmit={onSubmit}
         validationSchema={loginValidationSchema}
       >
@@ -48,28 +48,30 @@ const FormLogin = () => {
               {/* input correo */}
               <Input
                 color={
-                  values.email !== "" && errors.email ? "danger" : "success"
+                  values.username !== "" && errors.username
+                    ? "danger"
+                    : "success"
                 }
                 // isRequired={true}
                 variant="bordered"
-                type="email"
-                name="email"
-                id="email"
-                value={values.email}
+                type="text"
+                name="username"
+                id="username"
+                value={values.username}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                onClear={() => setFieldValue("email", "")}
+                onClear={() => setFieldValue("username", "")}
                 size="lg"
                 label="Cuenta de usuario"
                 labelPlacement="outside"
-                placeholder="Ingresar Email"
-                isInvalid={errors.email && values.email !== ""}
-                errorMessage={values.email !== "" && errors.email}
+                placeholder="Ingresar username"
+                isInvalid={errors.username && values.username !== ""}
+                errorMessage={values.username !== "" && errors.username}
                 startContent={
                   <FaUserAlt
                     size={25}
                     className={
-                      values.email !== "" && errors.email
+                      values.username !== "" && errors.username
                         ? "text-red-500"
                         : "text-gray-400"
                     }
@@ -116,6 +118,7 @@ const FormLogin = () => {
                 }
                 endContent={
                   <button
+                    type="button"
                     onClick={toggleVisible}
                     className={`cursor-pointer hover:scale-110 transition-all duration-300 
                       ${

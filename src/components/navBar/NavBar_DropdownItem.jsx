@@ -9,15 +9,21 @@ const NavBar_DropdownItem = ({ type }) => {
   const navLinksDropdown = {
     camion: {
       key: "truck",
-      title: "Gestión camión",
+      title: "Camión",
       icon: <FaTruck />,
       onClick: () => navigate("/truck"),
     },
     chofer: {
       key: "driver",
-      title: "Gestión chofer",
+      title: "Chofer",
       icon: <FaUser />,
       onClick: () => navigate("/driver"),
+    },
+    OrdenCarga: {
+      key: "loadingorder",
+      title: "Orden Carga",
+      icon: <FaUser />,
+      onClick: () => navigate("/loadingorder"),
     },
   };
 

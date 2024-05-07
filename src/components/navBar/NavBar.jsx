@@ -16,7 +16,14 @@ import NavBar_logo from "./NavBar_logo";
 import NavBar_profile from "./NavBar_profile";
 import NavBar_item from "./NavBar_item";
 import NavBar_menuItem from "./NavBar_menuItem";
-import { FaChevronDown, FaTruck, FaUser } from "react-icons/fa";
+import {
+  FaChevronDown,
+  FaClipboardList,
+  FaTruck,
+  FaTruckPickup,
+  FaUser,
+  FaUsersCog,
+} from "react-icons/fa";
 import NavBar_DropdownItem from "./NavBar_DropdownItem";
 import { useNavigate } from "react-router-dom";
 
@@ -28,9 +35,15 @@ const NabBar = () => {
   // lista de objetos path
   const navLinksMenu = [
     { to: "/home", title: "Home", onClick: toggleMenu },
-    { to: "/truck", title: "Camiones", onClick: toggleMenu },
-    { to: "/driver", title: "Choferes", onClick: toggleMenu },
+    { to: "/truck", title: "Gestión camión", onClick: toggleMenu },
+    { to: "/driver", title: "Gestión chofer", onClick: toggleMenu },
     { to: "/loadingorder", title: "Orden carga", onClick: toggleMenu },
+
+    { to: "/userType", title: "Tipo usuario", onClick: toggleMenu },
+    { to: "/vehicletype", title: "Tipo vehículo", onClick: toggleMenu },
+    { to: "/vehiclebrand", title: "Marca vehículo", onClick: toggleMenu },
+    { to: "/vehiclestatus", title: "Estado vehículo", onClick: toggleMenu },
+
     { to: "/report", title: "Reporte", onClick: toggleMenu },
   ];
 
@@ -75,6 +88,7 @@ const NabBar = () => {
         <NavBar_item to={"/home"} title={"Home"} />
 
         {/* componentizar elemento ------!!!!! */}
+        {/* seccion gestion */}
         <Dropdown>
           <NavbarItem>
             <DropdownTrigger>
@@ -105,10 +119,68 @@ const NabBar = () => {
             >
               Gestión chofer
             </DropdownItem>
+            <DropdownItem
+              key={"loadingorder"}
+              startContent={<FaClipboardList />}
+              onClick={() => navigate("/loadingorder")}
+            >
+              Orden carga
+            </DropdownItem>
           </DropdownMenu>
         </Dropdown>
 
-        <NavBar_item to={"/loadingorder"} title={"Orden Carga"} />
+        {/* seccion mantenedor */}
+        <Dropdown>
+          <NavbarItem>
+            <DropdownTrigger>
+              <Button
+                disableRipple
+                className="flex flex-col bg-transparent text-white mt-2 hover:scale-105"
+              >
+                <div className="flex gap-2 w-full items-center text-[1rem] font-semibold">
+                  Mantenimiento
+                  <FaChevronDown />
+                </div>
+                <Divider className="w-0 group-hover:w-[100%] h-[.20rem] bg-white opacity-80 transition-all duration-300 rounded-full" />
+              </Button>
+            </DropdownTrigger>
+          </NavbarItem>
+          <DropdownMenu aria-label="management dropdown menu">
+            <DropdownItem
+              key={"userType"}
+              startContent={<FaUsersCog />}
+              onClick={() => navigate("/usertype")}
+            >
+              Tipo usuario
+            </DropdownItem>
+
+            <DropdownItem
+              key={"vehicletype"}
+              startContent={<FaTruckPickup />}
+              onClick={() => navigate("/vehicletype")}
+            >
+              Tipo vehículo
+            </DropdownItem>
+
+            <DropdownItem
+              key={"vehiclebrand"}
+              startContent={<FaClipboardList />}
+              onClick={() => navigate("/vehiclebrand")}
+            >
+              Marca vehículo
+            </DropdownItem>
+
+            <DropdownItem
+              key={"vehiclestatus"}
+              startContent={<FaClipboardList />}
+              onClick={() => navigate("/vehiclestatus")}
+            >
+              Estado vehículo
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+
+        {/* <NavBar_item to={"/loadingorder"} title={"Orden Carga"} /> */}
         <NavBar_item to={"/report"} title={"Reporte"} />
       </NavbarContent>
 
