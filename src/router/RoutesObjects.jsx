@@ -5,10 +5,10 @@ import LoadingOrder from "../pages/LoadingOrder";
 import Message from "../pages/Message";
 import Profile from "../pages/Profile";
 import Driver from "../pages/Driver";
-import VehicleType from "../pages/vehicleType";
 import UserType from "../pages/UserType";
 import VehicleStatus from "../pages/VehicleStatus";
 import VehicleBrand from "../pages/VehicleBrand";
+import VehicleType from "../pages/VehicleType";
 
 export const RoutesObjects = [
   { path: "/home", element: <Home /> },
