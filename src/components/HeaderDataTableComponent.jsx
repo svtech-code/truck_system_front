@@ -33,7 +33,7 @@ const HeaderDataTableComponent = ({ filter, updateStateData }) => {
           <input
             type="text"
             placeholder="Buscar ...."
-            value={filterTruck}
+            value={filter}
             onChange={(event) =>
               updateStateData({ filterData: event.target.value })
             }

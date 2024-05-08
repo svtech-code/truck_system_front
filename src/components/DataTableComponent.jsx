@@ -7,6 +7,7 @@ import {
 } from "../utils/providerDataTable";
 import InfoDataTable from "./InfoDataTable";
 import HeaderDataTableComponent from "./HeaderDataTableComponent";
+import { UserType_structure } from "./userType/UserType_structure";
 
 const DataTableComponent = ({ data, structureData }) => {
   // estados generales de los datos
@@ -22,7 +23,7 @@ const DataTableComponent = ({ data, structureData }) => {
   };
 
   return (
-    <section className="relative flex flex-colp-2">
+    <section className="relative flex flex-col p-2">
       <DataTable
         customStyles={styleDataTable}
         fixedHeader
@@ -31,7 +32,7 @@ const DataTableComponent = ({ data, structureData }) => {
           filter: stateData.filterData,
           updateStateData,
         })}
-        columns={structureData}
+        columns={UserType_structure()}
         data={providerFilter({ data: data, filter: stateData.filterData })}
         highlightOnHover
         responsive
@@ -44,3 +45,5 @@ const DataTableComponent = ({ data, structureData }) => {
     </section>
   );
 };
+
+export default DataTableComponent;
