@@ -5,9 +5,8 @@ import {
   providerPaginationDataTable,
   styleDataTable,
 } from "../utils/providerDataTable";
-import InfoDataTable from "./InfoDataTable";
-import HeaderDataTableComponent from "./HeaderDataTableComponent";
-import { UserType_structure } from "./userType/UserType_structure";
+import InfoDataTable from "./InfoDataTable_component";
+import HeaderDataTableComponent from "./HeaderDataTable_Component";
 
 const DataTableComponent = ({ data, structureData }) => {
   // estados generales de los datos
@@ -32,7 +31,7 @@ const DataTableComponent = ({ data, structureData }) => {
           filter: stateData.filterData,
           updateStateData,
         })}
-        columns={UserType_structure()}
+        columns={structureData}
         data={providerFilter({ data: data, filter: stateData.filterData })}
         highlightOnHover
         responsive

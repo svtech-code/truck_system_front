@@ -1,6 +1,6 @@
 import DataTable from "react-data-table-component";
 import { dataTable_structure } from "./DataTable_structure";
-import InfoDataTable from "../InfoDataTable";
+import InfoDataTable from "../InfoDataTable_component";
 import {
   providerFilter,
   providerPaginationDataTable,
