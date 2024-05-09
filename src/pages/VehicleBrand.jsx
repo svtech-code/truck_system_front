@@ -1,7 +1,8 @@
 import Maintence from "../components/Maintence";
+import VehicleBrand_main from "../components/vehicleBrand/VehicleBrand_main";
 
 const VehicleBrand = () => {
-  return <Maintence />;
+  return <VehicleBrand_main />;
 };
 
 export default VehicleBrand;
