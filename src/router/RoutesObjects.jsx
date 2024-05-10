@@ -21,6 +21,6 @@ export const RoutesObjects = [
   { path: "/setting", element: <Setting /> },
   { path: "/vehicletype", element: <VehicleType /> },
   { path: "/usertype", element: <UserType /> },
-  { path: "/vehiclestatus", element: <VehicleStatus /> },
+  // { path: "/vehiclestatus", element: <VehicleStatus /> },
   { path: "/vehiclebrand", element: <VehicleBrand /> },
 ];

@@ -38,12 +38,10 @@ const NabBar = () => {
     { to: "/truck", title: "Gestión camión", onClick: toggleMenu },
     { to: "/driver", title: "Gestión chofer", onClick: toggleMenu },
     { to: "/loadingorder", title: "Orden carga", onClick: toggleMenu },
-
     { to: "/userType", title: "Tipo usuario", onClick: toggleMenu },
     { to: "/vehicletype", title: "Tipo vehículo", onClick: toggleMenu },
     { to: "/vehiclebrand", title: "Marca vehículo", onClick: toggleMenu },
-    { to: "/vehiclestatus", title: "Estado vehículo", onClick: toggleMenu },
-
+    // { to: "/vehiclestatus", title: "Estado vehículo", onClick: toggleMenu },
     { to: "/report", title: "Reporte", onClick: toggleMenu },
   ];
 
@@ -170,13 +168,13 @@ const NabBar = () => {
               Marca vehículo
             </DropdownItem>
 
-            <DropdownItem
+            {/* <DropdownItem
               key={"vehiclestatus"}
               startContent={<FaClipboardList />}
               onClick={() => navigate("/vehiclestatus")}
             >
               Estado vehículo
-            </DropdownItem>
+            </DropdownItem> */}
           </DropdownMenu>
         </Dropdown>
 
