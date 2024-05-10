@@ -8,7 +8,7 @@ import {
 import InfoDataTable from "./InfoDataTable_component";
 import HeaderDataTableComponent from "./HeaderDataTable_Component";
 
-const DataTableComponent = ({ data, structureData }) => {
+const DataTableComponent = ({ data, structureData, newData, downloadData }) => {
   // estados generales de los datos
   const [stateData, setStateData] = useState({
     filterData: "",
@@ -29,7 +29,7 @@ const DataTableComponent = ({ data, structureData }) => {
         subHeader
         subHeaderComponent={HeaderDataTableComponent({
           filter: stateData.filterData,
-          updateStateData,
+          updateStateData, onClickAdd: newData, onClickDownload:downloadData
         })}
         columns={structureData}
         data={providerFilter({ data: data, filter: stateData.filterData })}

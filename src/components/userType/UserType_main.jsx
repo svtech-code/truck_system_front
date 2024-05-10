@@ -5,6 +5,11 @@ import HeaderComponent from "../Header_Component";
 import { UserType_structure } from "./UserType_structure";
 
 const UserType_main = () => {
+
+  const eventClickNewData = () => alert("nuevo elemento");
+
+  const eventClickDownloadData = () => alert("Descargar informacion");
+
   return (
     <>
       <HeaderComponent
@@ -14,6 +19,8 @@ const UserType_main = () => {
       <DataTableComponent
         data={userType_data}
         structureData={UserType_structure()}
+        newData={eventClickNewData}
+        downloadData={eventClickDownloadData}
       />
     </>
   );

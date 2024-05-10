@@ -1,3 +1,5 @@
+import ActionButton from "../ActionButton";
+
 export const UserType_structure = () => {
   return [
     {
@@ -10,10 +12,7 @@ export const UserType_structure = () => {
       center: true,
       width: "200px",
       cell: (row) => (
-        <div className="flex gap-4">
-          <p>btn editar</p>
-          <p>btn eliminar</p>
-        </div>
+        <ActionButton row={row} />
       ),
     },
   ];
