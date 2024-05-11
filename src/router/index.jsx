@@ -22,9 +22,10 @@ export const router = createBrowserRouter([
     path: "/",
     element: <LayoutPrivate />,
     errorElement: <NotFound />,
-    children: RoutesObjects.map(({ path, element }) => ({
-      path: path,
-      element: element,
+    children: RoutesObjects.map(({ path, element, loader }) => ({
+      path,
+      element,
+      loader,
     })),
   },
 ]);

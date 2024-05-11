@@ -1,8 +1,10 @@
-import Maintence from "../components/Maintence";
+import { useLoaderData } from "react-router-dom";
 import VehicleBrand_main from "../components/vehicleBrand/VehicleBrand_main";
 
 const VehicleBrand = () => {
-  return <VehicleBrand_main />;
+  const { response } = useLoaderData();
+
+  return <VehicleBrand_main vehicleBrand_data={response} />;
 };
 
 export default VehicleBrand;

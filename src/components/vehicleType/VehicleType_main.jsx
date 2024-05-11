@@ -4,7 +4,7 @@ import DataTableComponent from "../DataTable_Component";
 import { vehicleType_data } from "../../utils/datatable_data";
 import { VehicleType_structure } from "./VehicleType_structure";
 
-const VehicleType_main = () => {
+const VehicleType_main = ({ vehicleType_data }) => {
   return (
     <>
       <HeaderComponent

@@ -1,8 +1,11 @@
-// import Maintence from "../components/Maintence";
+import { useLoaderData } from "react-router-dom";
 import UserType_main from "../components/userType/UserType_main";
+import { useEffect } from "react";
 
 const UserType = () => {
-  return <UserType_main />;
+  const { response } = useLoaderData();
+
+  return <UserType_main userType_data={response} />;
 };
 
 export default UserType;
