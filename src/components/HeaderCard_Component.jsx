@@ -1,6 +1,6 @@
 import { Button } from "@nextui-org/react";
 
-const HeaderCardComponent = ({ title, icon }) => {
+const HeaderCardComponent = ({ title, icon, count }) => {
   return (
     <Button
       className={`flex flex-col p-2 h-[5rem] w-full sm:w-1/2 md:w-[15rem] 
@@ -12,7 +12,7 @@ const HeaderCardComponent = ({ title, icon }) => {
             group-hover:scale-110 transition-all duration-300"
       >
         {icon}
-        <p className="text-xl">34</p>
+        <p className="text-xl">{count}</p>
       </div>
       <p
         className="w-full sm:text-lg text-primary-color group-hover:text-gray-600

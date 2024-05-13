@@ -8,7 +8,13 @@ import {
 import InfoDataTable from "./InfoDataTable_component";
 import HeaderDataTableComponent from "./HeaderDataTable_Component";
 
-const DataTableComponent = ({ data, structureData, newData, downloadData }) => {
+const DataTableComponent = ({
+  data,
+  structureData,
+  subStructureData,
+  newData,
+  downloadData,
+}) => {
   // estados generales de los datos
   const [stateData, setStateData] = useState({
     filterData: "",
@@ -29,7 +35,9 @@ const DataTableComponent = ({ data, structureData, newData, downloadData }) => {
         subHeader
         subHeaderComponent={HeaderDataTableComponent({
           filter: stateData.filterData,
-          updateStateData, onClickAdd: newData, onClickDownload:downloadData
+          updateStateData,
+          onClickAdd: newData,
+          onClickDownload: downloadData,
         })}
         columns={structureData}
         data={providerFilter({ data: data, filter: stateData.filterData })}
@@ -40,6 +48,8 @@ const DataTableComponent = ({ data, structureData, newData, downloadData }) => {
         pagination
         paginationComponentOptions={providerPaginationDataTable}
         progressPending={stateData.loadingData}
+        expandableRows={subStructureData ? true : false}
+        expandableRowsComponent={subStructureData}
       />
     </section>
   );

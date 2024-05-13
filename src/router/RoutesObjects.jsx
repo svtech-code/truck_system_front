@@ -1,5 +1,4 @@
 import Home from "../pages/Home";
-import Truck from "../pages/Truck";
 import Setting from "../pages/Setting";
 import LoadingOrder from "../pages/LoadingOrder";
 import Message from "../pages/Message";
@@ -9,6 +8,7 @@ import UserType from "../pages/UserType";
 import VehicleBrand from "../pages/VehicleBrand";
 import VehicleType from "../pages/VehicleType";
 import apiGet from "../api/apiGet";
+import Vehicle from "../pages/Vehicle";
 
 const getData = async ({ endPoint }) => {
   try {
@@ -24,8 +24,8 @@ const getData = async ({ endPoint }) => {
 export const RoutesObjects = [
   { path: "/home", element: <Home /> },
   {
-    path: "/truck",
-    element: <Truck />,
+    path: "/vehicle",
+    element: <Vehicle />,
     loader: () => getData({ endPoint: "vehiculos" }),
   },
   { path: "/driver", element: <Driver /> },

@@ -35,7 +35,8 @@ const NabBar = () => {
   // lista de objetos path
   const navLinksMenu = [
     { to: "/home", title: "Home", onClick: toggleMenu },
-    { to: "/truck", title: "Gestión camión", onClick: toggleMenu },
+    // { to: "/truck", title: "Gestión camión", onClick: toggleMenu },
+    { to: "/vehicle", title: "Registro vehículos", onClick: toggleMenu },
     { to: "/driver", title: "Gestión chofer", onClick: toggleMenu },
     { to: "/loadingorder", title: "Orden carga", onClick: toggleMenu },
     { to: "/userType", title: "Tipo usuario", onClick: toggleMenu },
@@ -104,11 +105,11 @@ const NabBar = () => {
           </NavbarItem>
           <DropdownMenu aria-label="management dropdown menu">
             <DropdownItem
-              key={"truck"}
+              key={"vehicle"}
               startContent={<FaTruck />}
-              onClick={() => navigate("/truck")}
+              onClick={() => navigate("/vehicle")}
             >
-              Gestión camión
+              Registro vehículos
             </DropdownItem>
             <DropdownItem
               key={"driver"}
