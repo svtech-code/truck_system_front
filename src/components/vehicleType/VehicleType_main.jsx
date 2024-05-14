@@ -6,6 +6,7 @@ import HeaderCardComponent from "../HeaderCard_Component";
 import { useState } from "react";
 import {
   Button,
+  Input,
   Modal,
   ModalBody,
   ModalContent,
@@ -13,6 +14,8 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/react";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
 const VehicleType_main = ({ vehicleType_data }) => {
   const [data, setData] = useState(vehicleType_data);
@@ -22,6 +25,31 @@ const VehicleType_main = ({ vehicleType_data }) => {
 
   // const eventClickNewData = () => alert("nuevo elemento");
   const eventClickDownloadData = () => alert("Descargar informacion");
+
+  // valores para el formik
+  const initialValues = {
+    newData: "",
+  };
+
+  // esquema de validaciones
+  const validationSchema = Yup.object().shape({
+    newData: Yup.string()
+      .trim()
+      .required("El campo es requerido")
+  });
+
+  const [isSubmittingForm, setIsSubmittingForm] = useState(false);
+
+  const onSubmitData = (onClose) =>  ({newData}) => {
+    setIsSubmittingForm(true);
+
+    console.log(newData);
+
+    setIsSubmittingForm(false);
+    onClose();
+
+  };
+
 
   return (
     <>
@@ -45,32 +73,59 @@ const VehicleType_main = ({ vehicleType_data }) => {
           {(onClose) => (
             <>
               <ModalHeader className="text-2xl px-4 py-3">
-                Nuevo Tipo de Vehículo
+                Tipo de Vehículo
               </ModalHeader>
 
-              <ModalBody>
-                <p>Prueba de contenido</p>
-              </ModalBody>
-
-              <ModalFooter className="w-full px-2">
-                <Button
-                  className="w-[8rem] text-lg"
-                  color="danger"
-                  variant="flat"
-                  onPress={onClose}
+              
+                <Formik
+                  initialValues={initialValues}
+                  validationSchema={validationSchema}
+                  onSubmit={onSubmitData(onClose)}
                 >
-                  Cancelar
-                </Button>
+                  {({values, handleSubmit, handleChange, errors, handleBlur}) => (
+                    <ModalBody>
+                      <Input 
+                        color={
+                          values.newData !== "" && errors.newData
+                          ? "danger"
+                          : "primary"
+                        }
+                        name="newData"
+                        type="text"
+                        label="Nuevo registro"
+                        labelPlacement="outside"
+                        variant="faded"
+                        value={values.newData}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        isInvalid={errors.newData && values.newData !== ""}
+                        errorMessage={values.newData !== "" && errors.newData}
+                      />
 
-                <Button
-                  className="w-[8rem] text-lg"
-                  color="primary"
-                  // onPress={handleSubmit}
-                  // disabled={isSubmitting}
-                >
-                  Registrar
-                </Button>
-              </ModalFooter>
+                      <ModalFooter className="w-full px-2">
+                        <Button
+                          className="w-[8rem] text-lg"
+                          color="danger"
+                          variant="flat"
+                          onPress={onClose}
+                        >
+                          Cancelar
+                        </Button>
+
+                        <Button
+                          className="w-[8rem] text-lg"
+                          color="primary"
+                          onPress={handleSubmit}
+                          disabled={isSubmittingForm}
+                        >
+                          {isSubmittingForm ? "Enviando.." : "Registrar"}
+                        </Button>
+                      </ModalFooter>
+                    </ModalBody>
+                  )}
+                </Formik>
+
+              
             </>
           )}
         </ModalContent>
