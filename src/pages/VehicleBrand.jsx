@@ -1,10 +1,19 @@
 import { useLoaderData } from "react-router-dom";
 import VehicleBrand_main from "../components/vehicleBrand/VehicleBrand_main";
+import GetError from "../components/GetError";
 
 const VehicleBrand = () => {
-  const { response } = useLoaderData();
+  const { response, error } = useLoaderData();
 
-  return <VehicleBrand_main vehicleBrand_data={response} />;
+  return (
+    <>
+      {!error ? (
+        <VehicleBrand_main vehicleBrand_data={response || []} />
+      ) : (
+        <GetError getError={error} />
+      )}
+    </>
+  );
 };
 
 export default VehicleBrand;

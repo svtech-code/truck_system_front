@@ -2,7 +2,12 @@ import { Button } from "@nextui-org/react";
 import { IoSearchSharp } from "react-icons/io5";
 import { MdClear, MdDownload, MdOpenInNew } from "react-icons/md";
 
-const HeaderDataTableComponent = ({ filter, updateStateData, onClickAdd, onClickDownload }) => {
+const HeaderDataTableComponent = ({
+  filter,
+  updateStateData,
+  onClickAdd,
+  onClickDownload,
+}) => {
   return (
     <header className="relative w-full flex gap-3 items-center justify-center sm:justify-between flex-wrap">
       {/* btn para agregar un nuevo registro */}
@@ -10,7 +15,7 @@ const HeaderDataTableComponent = ({ filter, updateStateData, onClickAdd, onClick
         color="primary"
         variant="ghost"
         startContent={<MdOpenInNew size={25} />}
-        onClick={onClickAdd}
+        onPress={onClickAdd}
       >
         Nuevo registro
       </Button>
@@ -21,7 +26,7 @@ const HeaderDataTableComponent = ({ filter, updateStateData, onClickAdd, onClick
           color="success"
           startContent={<MdDownload size={25} />}
           variant="ghost"
-          onClick={onClickDownload}
+          onPress={onClickDownload}
         >
           Descargar
         </Button>

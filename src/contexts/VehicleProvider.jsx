@@ -20,7 +20,7 @@ export const VehiculoProvider = ({ children, response }) => {
   const [vehicleData, setVehicleData] = useState({
     mainVehicleData: response, // datos primarios de los vehiculos
     numberOperationalVehicles: response.filter(
-      (item) => item?.cod_estado_vehiculo === 1
+      (item) => item?.desc_estado_vehiculo === "DISPONIBLE"
     ).length, // cantidad de vehiculos operativos
     numberExpiredDocument: filterByData(response).length, // cantidad de vehiculos con documentos vencidos
   });

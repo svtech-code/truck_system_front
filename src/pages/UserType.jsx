@@ -1,11 +1,19 @@
 import { useLoaderData } from "react-router-dom";
 import UserType_main from "../components/userType/UserType_main";
-import { useEffect } from "react";
+import GetError from "../components/GetError";
 
 const UserType = () => {
-  const { response } = useLoaderData();
+  const { response, error } = useLoaderData();
 
-  return <UserType_main userType_data={response} />;
+  return (
+    <>
+      {!error ? (
+        <UserType_main userType_data={response || []} />
+      ) : (
+        <GetError getError={error?.message} />
+      )}
+    </>
+  );
 };
 
 export default UserType;

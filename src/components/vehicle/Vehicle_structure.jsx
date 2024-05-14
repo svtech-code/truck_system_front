@@ -8,11 +8,11 @@ export const Vehicle_structure = () => {
     },
     {
       name: "Tipo vehículo",
-      selector: (row) => row.cod_tipo_vehiculo,
+      selector: (row) => row.desc_tipo_vehiculo,
     },
     {
       name: "Marca",
-      selector: (row) => row.cod_marca,
+      selector: (row) => row.desc_marca,
     },
     {
       name: "Modelo",
@@ -24,7 +24,7 @@ export const Vehicle_structure = () => {
     },
     {
       name: "Estado",
-      selector: (row) => row.cod_estado_vehiculo,
+      selector: (row) => row.desc_estado_vehiculo,
     },
     {
       name: "Acciones",
