@@ -16,14 +16,16 @@ import {
 } from "@nextui-org/react";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import useSubmitNewData from "../../hooks/useSubmitNewData";
 
 const VehicleType_main = ({ vehicleType_data }) => {
+  // estado para almacenar la información del mantenedor
   const [data, setData] = useState(vehicleType_data);
+  const {onSubmit} = useSubmitNewData({setData});
 
   // estados para el manejo del modal
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  // const eventClickNewData = () => alert("nuevo elemento");
   const eventClickDownloadData = () => alert("Descargar informacion");
 
   // valores para el formik
@@ -37,18 +39,6 @@ const VehicleType_main = ({ vehicleType_data }) => {
       .trim()
       .required("El campo es requerido")
   });
-
-  const [isSubmittingForm, setIsSubmittingForm] = useState(false);
-
-  const onSubmitData = (onClose) =>  ({newData}) => {
-    setIsSubmittingForm(true);
-
-    console.log(newData);
-
-    setIsSubmittingForm(false);
-    onClose();
-
-  };
 
 
   return (
@@ -76,15 +66,14 @@ const VehicleType_main = ({ vehicleType_data }) => {
                 Tipo de Vehículo
               </ModalHeader>
 
-              
                 <Formik
                   initialValues={initialValues}
                   validationSchema={validationSchema}
-                  onSubmit={onSubmitData(onClose)}
+                  onSubmit={onSubmit(onClose)}
                 >
-                  {({values, handleSubmit, handleChange, errors, handleBlur}) => (
+                  {({values, handleSubmit, handleChange, errors, handleBlur, isSubmitting, handleReset}) => (
                     <ModalBody>
-                      <Input 
+                      <Input
                         color={
                           values.newData !== "" && errors.newData
                           ? "danger"
@@ -98,8 +87,8 @@ const VehicleType_main = ({ vehicleType_data }) => {
                         value={values.newData}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        isInvalid={errors.newData && values.newData !== ""}
-                        errorMessage={values.newData !== "" && errors.newData}
+                        isInvalid={errors.newData && values.newData === ""}
+                        errorMessage={values.newData === "" && errors.newData}
                       />
 
                       <ModalFooter className="w-full px-2">
@@ -115,17 +104,17 @@ const VehicleType_main = ({ vehicleType_data }) => {
                         <Button
                           className="w-[8rem] text-lg"
                           color="primary"
-                          onPress={handleSubmit}
-                          disabled={isSubmittingForm}
+                          onClick={handleSubmit}
+                          disabled={isSubmitting}
                         >
-                          {isSubmittingForm ? "Enviando.." : "Registrar"}
+                          {isSubmitting ? "Enviando.." : "Registrar"}
                         </Button>
                       </ModalFooter>
                     </ModalBody>
                   )}
                 </Formik>
 
-              
+
             </>
           )}
         </ModalContent>
