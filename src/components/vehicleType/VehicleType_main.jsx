@@ -1,15 +1,26 @@
 import { FaCar } from "react-icons/fa";
 import HeaderComponent from "../Header_Component";
 import DataTableComponent from "../DataTable_Component";
-import { VehicleType_structure } from "./VehicleType_structure";
 import HeaderCardComponent from "../HeaderCard_Component";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useDisclosure } from "@nextui-org/react";
 import ModalNewData from "../../templates/ModalNewData";
+import Structure_Component from "../structure/Structure_Component";
 
 const VehicleType_main = ({ vehicleType_data }) => {
-  // estado para almacenar la información del mantenedor
-  const [data, setData] = useState(vehicleType_data);
+  // estados generales del componente
+  const [stateComponent, setStateComponent] = useState({
+    data: vehicleType_data,
+    edit: false,
+    idEdit: null,
+    descriptionEdit: null,
+    error: null,
+  });
+
+  // actualizador de los estados del componente
+  const updateStateComponent = useCallback((newState) => {
+    setStateComponent((prev) => ({ ...prev, ...newState }));
+  }, []);
 
   // estados para el manejo del modal
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -24,25 +35,32 @@ const VehicleType_main = ({ vehicleType_data }) => {
         <HeaderCardComponent
           title={"Tipos de vehículos"}
           icon={<FaCar size={35} />}
-          count={data.length}
+          count={stateComponent.data.length}
         />
       </HeaderComponent>
 
       {/* modal del mantenedor */}
       <ModalNewData
-        setData={setData}
+        stateComponent={stateComponent}
+        updateStateComponent={updateStateComponent}
         title={"Tipo de Vehículo"}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         route={"tipo_vehiculos"}
+        propertyId={"cod_tipo_vehiculo"}
         propertyName={"desc_tipo_vehiculo"}
       />
 
       {/* tabla de datos del mantenedor */}
       <DataTableComponent
-        data={data}
-        structureData={VehicleType_structure()}
-        newData={onOpen}
+        data={stateComponent.data} // datos de la tabla
+        structureData={Structure_Component({
+          onOpen, // función para abrir modal
+          propertyId: "cod_tipo_vehiculo", // propiedad del id
+          propertyName: "desc_tipo_vehiculo", // propiedad de la descripción
+          updateStateComponent, // actualizador del objeto estados del componente
+        })}
+        openModal={onOpen}
         downloadData={eventClickDownloadData}
       />
     </>

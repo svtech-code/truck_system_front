@@ -10,7 +10,7 @@ const VehicleBrand = () => {
       {!error ? (
         <VehicleBrand_main vehicleBrand_data={response || []} />
       ) : (
-        <GetError getError={error} />
+        <GetError getError={error?.message} />
       )}
     </>
   );

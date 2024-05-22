@@ -10,7 +10,7 @@ const VehicleType = () => {
       {!error ? (
         <VehicleType_main vehicleType_data={response} />
       ) : (
-        <GetError getError={error} />
+        <GetError getError={error?.message} />
       )}
     </>
   );

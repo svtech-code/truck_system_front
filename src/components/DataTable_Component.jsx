@@ -12,17 +12,17 @@ const DataTableComponent = ({
   data,
   structureData,
   subStructureData,
-  newData,
+  openModal,
   downloadData,
 }) => {
-  // estados generales de los datos
+  // estados del dataTable
   const [stateData, setStateData] = useState({
     filterData: "",
     loadingData: false,
     errorData: null,
   });
 
-  //actualizador de los estados
+  //actualizador de los estados del dataTable
   const updateStateData = (newState) => {
     setStateData((prev) => ({ ...prev, ...newState }));
   };
@@ -36,7 +36,7 @@ const DataTableComponent = ({
         subHeaderComponent={HeaderDataTableComponent({
           filter: stateData.filterData,
           updateStateData,
-          onClickAdd: newData,
+          onClickAdd: openModal,
           onClickDownload: downloadData,
         })}
         columns={structureData}

@@ -8,7 +8,7 @@ const Vehicle = () => {
 
   return (
     <VehiculoProvider response={response || []}>
-      {!error ? <Vehicle_main /> : <GetError getError={error} />}
+      {!error ? <Vehicle_main /> : <GetError getError={error?.message} />}
     </VehiculoProvider>
   );
 };

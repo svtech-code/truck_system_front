@@ -60,23 +60,23 @@ const FormLogin = () => {
                 value={values.username}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                onClear={() => setFieldValue("username", "")}
+                // onClear={() => setFieldValue("username", "")}
                 size="lg"
                 label="Cuenta de usuario"
                 labelPlacement="outside"
                 placeholder="Ingresar username"
                 isInvalid={errors.username && values.username !== ""}
                 errorMessage={values.username !== "" && errors.username}
-                startContent={
-                  <FaUserAlt
-                    size={25}
-                    className={
-                      values.username !== "" && errors.username
-                        ? "text-red-500"
-                        : "text-gray-400"
-                    }
-                  />
-                }
+                // startContent={
+                //   <FaUserAlt
+                //     size={25}
+                //     className={
+                //       values.username !== "" && errors.username
+                //         ? "text-red-500"
+                //         : "text-gray-400"
+                //     }
+                //   />
+                // }
                 classNames={{
                   label: ["text-lg", "pl-4", "text-primary-color"],
                   input: [],

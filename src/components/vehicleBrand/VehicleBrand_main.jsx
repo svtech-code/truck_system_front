@@ -1,15 +1,26 @@
 import { FaClipboardList } from "react-icons/fa";
 import HeaderComponent from "../Header_Component";
 import DataTableComponent from "../DataTable_Component";
-import { VehicleBrand_structure } from "./VehicleBrand_structure";
 import HeaderCardComponent from "../HeaderCard_Component";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useDisclosure } from "@nextui-org/react";
 import ModalNewData from "../../templates/ModalNewData";
+import Structure_Component from "../structure/Structure_Component";
 
 const VehicleBrand_main = ({ vehicleBrand_data }) => {
-  // estado para almacenar la información del mantenedor
-  const [data, setData] = useState(vehicleBrand_data);
+  // estados generales del componente
+  const [stateComponent, setStateComponent] = useState({
+    data: vehicleBrand_data,
+    edit: false,
+    idEdit: null,
+    descriptionEdit: null,
+    error: null,
+  });
+
+  // actualizador de los estados del componente
+  const updateStateComponent = useCallback((newState) => {
+    setStateComponent((prev) => ({ ...prev, ...newState }));
+  }, []);
 
   // estados para el manejo del modal
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -24,25 +35,33 @@ const VehicleBrand_main = ({ vehicleBrand_data }) => {
         <HeaderCardComponent
           title={"Marcas de vehículo"}
           icon={<FaClipboardList size={35} />}
-          count={data.length}
+          count={stateComponent.data.length}
         />
       </HeaderComponent>
 
       {/* modal del mantenedor */}
       <ModalNewData
-        setData={setData}
+        stateComponent={stateComponent}
+        updateStateComponent={updateStateComponent}
         title={"Marca de vehículo"}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         route={"marcas"}
+        propertyId={"cod_marca"}
         propertyName={"desc_marca"}
       />
 
       {/* tabla de datos del mantenedor */}
       <DataTableComponent
-        data={data}
-        structureData={VehicleBrand_structure()}
-        newData={onOpen}
+        data={stateComponent.data} // datos de la tabla
+        structureData={Structure_Component({
+          titleColum: "Marcas de vehículos", // titulo de la columna de la tabla
+          onOpen, // función para abrir modal
+          propertyId: "cod_marca", // propiedad del id
+          propertyName: "desc_marca", // propiedad de la descripción
+          updateStateComponent, // actualizador del objeto estados del componente
+        })}
+        openModal={onOpen}
         downloadData={eventClickDownloadData}
       />
     </>

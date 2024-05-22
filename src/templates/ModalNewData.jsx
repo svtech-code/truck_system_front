@@ -6,27 +6,47 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  useDisclosure,
 } from "@nextui-org/react";
 import useSubmitNewData from "../hooks/useSubmitNewData";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { useEffect } from "react";
 
 const ModalNewData = ({
-  setData,
+  stateComponent,
+  updateStateComponent,
   title,
   isOpen,
   onOpenChange,
   route,
+  propertyId,
   propertyName,
 }) => {
+  // desestructuración de estados del componente principal
+  const { data, edit, idEdit, descriptionEdit } = stateComponent;
+
   // desestructuración del hook personalizado para el registro de datos
-  const { onSubmit } = useSubmitNewData({ setData, route, propertyName });
+  const { onSubmit } = useSubmitNewData({
+    data,
+    updateStateComponent,
+    route,
+    propertyId,
+    propertyName,
+  });
+
+  // texto personalizado para btn del modal
+  const textBtnSubmit = edit ? "Actualizar" : "Registrar";
+  const textBtnSubmitting = edit ? "Actualizando..." : "Registrando...";
 
   // esquema de validaciones
   const validationSchema = Yup.object().shape({
     newData: Yup.string().trim().required("Campo requerido..!"),
   });
+
+  // reestablecer la acción del modal y el id (add or update)
+  useEffect(() => {
+    if (!isOpen) updateStateComponent({ edit: false, idEdit: null });
+  }, [isOpen]);
 
   return (
     <>
@@ -45,7 +65,10 @@ const ModalNewData = ({
               <ModalHeader className="text-2xl px-4 py-3">{title}</ModalHeader>
 
               <Formik
-                initialValues={{ newData: "" }}
+                initialValues={{
+                  newData: edit ? descriptionEdit : "",
+                  idData: edit ? idEdit : null,
+                }}
                 validationSchema={validationSchema}
                 onSubmit={onSubmit(onClose)}
               >
@@ -95,7 +118,7 @@ const ModalNewData = ({
                         onClick={handleSubmit}
                         disabled={isSubmitting}
                       >
-                        {isSubmitting ? "Registrando.." : "Registrar"}
+                        {isSubmitting ? textBtnSubmitting : textBtnSubmit}
                       </Button>
                     </ModalFooter>
                   </>
