@@ -30,10 +30,10 @@ const VehicleBrand_main = ({ vehicleBrand_data }) => {
   return (
     <>
       {/* cabecera del mantenedor */}
-      <HeaderComponent maintainer={"Marcas de vehículo"}>
+      <HeaderComponent maintainer={"Marcas de vehículos"}>
         {/* tarjeta del mantenedor */}
         <HeaderCardComponent
-          title={"Marcas de vehículo"}
+          title={"Marcas de vehículos"}
           icon={<FaClipboardList size={35} />}
           count={stateComponent.data.length}
         />
@@ -55,8 +55,10 @@ const VehicleBrand_main = ({ vehicleBrand_data }) => {
       <DataTableComponent
         data={stateComponent.data} // datos de la tabla
         structureData={Structure_Component({
+          data: stateComponent.data, // Array con los datos del mantenedor
           titleColum: "Marcas de vehículos", // titulo de la columna de la tabla
           onOpen, // función para abrir modal
+          route: "marcas", // ruta para trabajar peticions axios
           propertyId: "cod_marca", // propiedad del id
           propertyName: "desc_marca", // propiedad de la descripción
           updateStateComponent, // actualizador del objeto estados del componente

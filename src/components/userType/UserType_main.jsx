@@ -56,7 +56,10 @@ const UserType_main = ({ userType_data }) => {
       <DataTableComponent
         data={stateComponent.data} // datos de la tabla
         structureData={Structure_Component({
+          data: stateComponent.data, // Array con los datos del mantenedor
+          titleColum: "Tipos de usuarios", // titulo de la columna
           onOpen, // función para abrir modal
+          route: "tipo_usuarios", // ruta para trabajar peticions axios
           propertyId: "cod_tipo_usuario", // propiedad del id
           propertyName: "desc_tipo_usuario", // propiedad de la descripción
           updateStateComponent, // actualizador del objeto estados del componente

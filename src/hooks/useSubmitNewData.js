@@ -3,6 +3,7 @@ import apiPost from "../api/apiPost";
 import apiGet from "../api/apiGet";
 import apiPut from "../api/apiPut";
 
+// function to update data
 const updateArray = ({
   arrayData,
   idData,

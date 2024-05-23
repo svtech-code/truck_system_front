@@ -1,11 +1,13 @@
 import ActionButton from "../ActionButton";
 
 const Structure_Component = ({
-  titleColum,
-  onOpen,
-  propertyId,
-  propertyName,
-  updateStateComponent,
+  data, // array con datos de la tabla
+  titleColum, // titulo de la columna de la tabla
+  onOpen, // función open del modal
+  route, // ruta del endpoint del mantenedor
+  propertyId, // nombre de la propiedad que almacena el id
+  propertyName, // nombre de la propiedad que almacena el nombre
+  updateStateComponent, // actualizador de los estados del mantenedor
 }) => {
   return [
     {
@@ -19,8 +21,10 @@ const Structure_Component = ({
       width: "200px",
       cell: (row) => (
         <ActionButton
+          data={data}
           row={row}
           onOpen={onOpen}
+          route={route}
           propertyId={propertyId}
           propertyName={propertyName}
           updateStateComponent={updateStateComponent}

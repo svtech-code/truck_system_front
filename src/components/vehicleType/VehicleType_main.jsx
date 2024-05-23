@@ -55,7 +55,10 @@ const VehicleType_main = ({ vehicleType_data }) => {
       <DataTableComponent
         data={stateComponent.data} // datos de la tabla
         structureData={Structure_Component({
+          data: stateComponent.data, // Array con los datos del mantenedor
+          titleColum: "Tipos de vehículos", // titulo de la columna
           onOpen, // función para abrir modal
+          route: "tipo_vehiculos", // ruta para trabajar peticions axios
           propertyId: "cod_tipo_vehiculo", // propiedad del id
           propertyName: "desc_tipo_vehiculo", // propiedad de la descripción
           updateStateComponent, // actualizador del objeto estados del componente
