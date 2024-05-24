@@ -1,7 +1,7 @@
-import Maintence from "../components/Maintence";
+import LoadingOrder_main from "../components/loadingOrder/LoadingOrder_main";
 
 const LoadingOrder = () => {
-  return <Maintence />;
+  return <LoadingOrder_main />;
 };
 
 export default LoadingOrder;
