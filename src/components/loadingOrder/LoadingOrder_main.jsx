@@ -11,19 +11,19 @@ const LoadingOrder_main = () => {
     {
       numeroOrden: 1212,
       patente: "FJJF26",
-      tipoVehiculo: "tracto camion",
-      chofer: "Luis Troncoso",
+      tipoVehiculo: "TRACTO CAMIÓN",
+      chofer: "MANUEL BRAVO",
       kmInicial: 150200,
       odometroInicial: 1200,
       kmFinal: 150500,
       odometroFinal: 1250,
-      estado: "Iniciado",
+      estado: "INICIADO",
       detalleOrder: [
         {
-          cliente: "bitumix",
-          origen: "linares",
-          destino: "talca",
-          estado: "finalizada",
+          cliente: "BITUMIX",
+          origen: "LINARES",
+          destino: "TALCA",
+          estado: "FINALIZADO",
           gasto: {
             conbustible: 20000,
             peajes: 16000,
@@ -31,10 +31,10 @@ const LoadingOrder_main = () => {
           },
         },
         {
-          cliente: "transportes loncomilla",
-          origen: "linares",
-          destino: "longavi",
-          estado: "finalizada",
+          cliente: "TRANSORTES LONCOMILLA",
+          origen: "LINARES",
+          destino: "LONGAVI",
+          estado: "INICIADO",
           gasto: {
             conbustible: 15000,
             peajes: 2000,
@@ -44,21 +44,21 @@ const LoadingOrder_main = () => {
       ],
     },
     {
-      numeroOrden: 1212,
+      numeroOrden: 1213,
       patente: "FJJF26",
-      tipoVehiculo: "tracto camion",
-      chofer: "Luis Troncoso",
+      tipoVehiculo: "TRACTO CAMIÓN",
+      chofer: "MANUEL MONSALVE",
       kmInicial: 150200,
       odometroInicial: 1200,
       kmFinal: 150500,
       odometroFinal: 1250,
-      estado: "Iniciado",
+      estado: "INICIADO",
       detalleOrder: [
         {
-          cliente: "bitumix",
-          origen: "linares",
-          destino: "talca",
-          estado: "finalizada",
+          cliente: "BITUMIX",
+          origen: "LINARES",
+          destino: "TALCA",
+          estado: "FINALIZADO",
           gasto: {
             conbustible: 20000,
             peajes: 16000,
@@ -66,10 +66,10 @@ const LoadingOrder_main = () => {
           },
         },
         {
-          cliente: "transportes loncomilla",
-          origen: "linares",
-          destino: "longavi",
-          estado: "finalizada",
+          cliente: "TRANSPORTES LONCOMILLA",
+          origen: "LINARES",
+          destino: "LONGAVI",
+          estado: "FINALIZADO",
           gasto: {
             conbustible: 15000,
             peajes: 2000,
@@ -79,21 +79,21 @@ const LoadingOrder_main = () => {
       ],
     },
     {
-      numeroOrden: 1212,
+      numeroOrden: 1214,
       patente: "FJJF26",
-      tipoVehiculo: "tracto camion",
-      chofer: "Luis Troncoso",
+      tipoVehiculo: "TRACTO CAMIÓN",
+      chofer: "LUIS TRONCOSO",
       kmInicial: 150200,
       odometroInicial: 1200,
       kmFinal: 150500,
       odometroFinal: 1250,
-      estado: "Iniciado",
+      estado: "INICIADO",
       detalleOrder: [
         {
-          cliente: "bitumix",
-          origen: "linares",
-          destino: "talca",
-          estado: "finalizada",
+          cliente: "BITUMIX",
+          origen: "LINARES",
+          destino: "TALCA",
+          estado: "FINALIZADO",
           gasto: {
             conbustible: 20000,
             peajes: 16000,
@@ -101,10 +101,10 @@ const LoadingOrder_main = () => {
           },
         },
         {
-          cliente: "transportes loncomilla",
-          origen: "linares",
-          destino: "longavi",
-          estado: "finalizada",
+          cliente: "TRANSPORTES LONCOMILLA",
+          origen: "LINARES",
+          destino: "LONGAVI",
+          estado: "FINALIZADO",
           gasto: {
             conbustible: 15000,
             peajes: 2000,
@@ -114,21 +114,21 @@ const LoadingOrder_main = () => {
       ],
     },
     {
-      numeroOrden: 1213,
+      numeroOrden: 1215,
       patente: "FDYG45",
-      tipoVehiculo: "camion",
-      chofer: "Julio Vallejos",
+      tipoVehiculo: "CAMIÓN",
+      chofer: "JULIO VALLEJOS",
       kmInicial: 150200,
       odometroInicial: 1200,
       kmFinal: 150500,
       odometroFinal: 1250,
-      estado: "Finalizado",
+      estado: "FINALIZADO",
       detalleOrder: [
         {
-          cliente: "Mobil",
-          origen: "linares",
-          destino: "talca",
-          estado: "finalizada",
+          cliente: "MOBIL",
+          origen: "LINARES",
+          destino: "TALCA",
+          estado: "FINALIZADO",
           gasto: {
             conbustible: 20000,
             peajes: 16000,
@@ -138,21 +138,21 @@ const LoadingOrder_main = () => {
       ],
     },
     {
-      numeroOrden: 1213,
+      numeroOrden: 1216,
       patente: "FDYG45",
-      tipoVehiculo: "camion",
-      chofer: "Julio Vallejos",
+      tipoVehiculo: "CAMIÓN",
+      chofer: "JULIO VALLEJOS",
       kmInicial: 150200,
       odometroInicial: 1200,
       kmFinal: 150500,
       odometroFinal: 1250,
-      estado: "Finalizado",
+      estado: "FINALIZADO",
       detalleOrder: [
         {
-          cliente: "Mobil",
-          origen: "linares",
-          destino: "talca",
-          estado: "finalizada",
+          cliente: "MOBIL",
+          origen: "LINARES",
+          destino: "TALCA",
+          estado: "FINALIZADO",
           gasto: {
             conbustible: 20000,
             peajes: 16000,
@@ -162,21 +162,21 @@ const LoadingOrder_main = () => {
       ],
     },
     {
-      numeroOrden: 1213,
+      numeroOrden: 1217,
       patente: "FDYG45",
-      tipoVehiculo: "camion",
-      chofer: "Julio Vallejos",
+      tipoVehiculo: "CAMIÓN",
+      chofer: "JULIO VALLEJOS",
       kmInicial: 150200,
       odometroInicial: 1200,
       kmFinal: 150500,
       odometroFinal: 1250,
-      estado: "Finalizado",
+      estado: "FINALIZADO",
       detalleOrder: [
         {
-          cliente: "Mobil",
-          origen: "linares",
-          destino: "talca",
-          estado: "finalizada",
+          cliente: "MOBIL",
+          origen: "LINARES",
+          destino: "TALCA",
+          estado: "FINALIZADO",
           gasto: {
             conbustible: 20000,
             peajes: 16000,
@@ -186,21 +186,21 @@ const LoadingOrder_main = () => {
       ],
     },
     {
-      numeroOrden: 1213,
+      numeroOrden: 1218,
       patente: "FDYG45",
-      tipoVehiculo: "camion",
-      chofer: "Julio Vallejos",
+      tipoVehiculo: "CAMIÓN",
+      chofer: "JULIO VALLEJOS",
       kmInicial: 150200,
       odometroInicial: 1200,
       kmFinal: 150500,
       odometroFinal: 1250,
-      estado: "Finalizado",
+      estado: "FINALIZADO",
       detalleOrder: [
         {
-          cliente: "Mobil",
-          origen: "linares",
-          destino: "talca",
-          estado: "finalizada",
+          cliente: "MOBIL",
+          origen: "LINARES",
+          destino: "TALCA",
+          estado: "FINALIZADO",
           gasto: {
             conbustible: 20000,
             peajes: 16000,
@@ -210,21 +210,21 @@ const LoadingOrder_main = () => {
       ],
     },
     {
-      numeroOrden: 1213,
+      numeroOrden: 1219,
       patente: "FDYG45",
-      tipoVehiculo: "camion",
-      chofer: "Julio Vallejos",
+      tipoVehiculo: "CAMIÓN",
+      chofer: "JULIO VALLEJOS",
       kmInicial: 150200,
       odometroInicial: 1200,
       kmFinal: 150500,
       odometroFinal: 1250,
-      estado: "Finalizado",
+      estado: "FINALIZADO",
       detalleOrder: [
         {
-          cliente: "Mobil",
-          origen: "linares",
-          destino: "talca",
-          estado: "finalizada",
+          cliente: "MOBIL",
+          origen: "LINARES",
+          destino: "TALCA",
+          estado: "FINALIZADO",
           gasto: {
             conbustible: 20000,
             peajes: 16000,
@@ -234,21 +234,21 @@ const LoadingOrder_main = () => {
       ],
     },
     {
-      numeroOrden: 1213,
+      numeroOrden: 1220,
       patente: "FDYG45",
-      tipoVehiculo: "camion",
-      chofer: "Julio Vallejos",
+      tipoVehiculo: "CAMIÓN",
+      chofer: "JULIO VALLEJOS",
       kmInicial: 150200,
       odometroInicial: 1200,
       kmFinal: 150500,
       odometroFinal: 1250,
-      estado: "Finalizado",
+      estado: "FINALIZADO",
       detalleOrder: [
         {
-          cliente: "Mobil",
-          origen: "linares",
-          destino: "talca",
-          estado: "finalizada",
+          cliente: "MOBIL",
+          origen: "LINARES",
+          destino: "TALCA",
+          estado: "FINALIZADO",
           gasto: {
             conbustible: 20000,
             peajes: 16000,
@@ -258,21 +258,21 @@ const LoadingOrder_main = () => {
       ],
     },
     {
-      numeroOrden: 1213,
+      numeroOrden: 1221,
       patente: "FDYG45",
-      tipoVehiculo: "camion",
-      chofer: "Julio Vallejos",
+      tipoVehiculo: "CAMIÓN",
+      chofer: "JULIO VALLEJOS",
       kmInicial: 150200,
       odometroInicial: 1200,
       kmFinal: 150500,
       odometroFinal: 1250,
-      estado: "Finalizado",
+      estado: "FINALIZADO",
       detalleOrder: [
         {
-          cliente: "Mobil",
-          origen: "linares",
-          destino: "talca",
-          estado: "finalizada",
+          cliente: "MOBIL",
+          origen: "LINARES",
+          destino: "TALCA",
+          estado: "FINALIZADO",
           gasto: {
             conbustible: 20000,
             peajes: 16000,
@@ -282,21 +282,21 @@ const LoadingOrder_main = () => {
       ],
     },
     {
-      numeroOrden: 1213,
+      numeroOrden: 1222,
       patente: "FDYG45",
-      tipoVehiculo: "camion",
-      chofer: "Julio Vallejos",
+      tipoVehiculo: "CAMIÓN",
+      chofer: "JULIO VALLEJOS",
       kmInicial: 150200,
       odometroInicial: 1200,
       kmFinal: 150500,
       odometroFinal: 1250,
-      estado: "Finalizado",
+      estado: "FINALIZADO",
       detalleOrder: [
         {
-          cliente: "Mobil",
-          origen: "linares",
-          destino: "talca",
-          estado: "finalizada",
+          cliente: "MOBIL",
+          origen: "LINARES",
+          destino: "TALCA",
+          estado: "FINALIZADO",
           gasto: {
             conbustible: 20000,
             peajes: 16000,
@@ -306,21 +306,21 @@ const LoadingOrder_main = () => {
       ],
     },
     {
-      numeroOrden: 1213,
+      numeroOrden: 1223,
       patente: "FDYG45",
-      tipoVehiculo: "camion",
-      chofer: "Julio Vallejos",
+      tipoVehiculo: "CAMIÓN",
+      chofer: "JULIO VALLEJOS",
       kmInicial: 150200,
       odometroInicial: 1200,
       kmFinal: 150500,
       odometroFinal: 1250,
-      estado: "Finalizado",
+      estado: "FINALIZADO",
       detalleOrder: [
         {
-          cliente: "Mobil",
-          origen: "linares",
-          destino: "talca",
-          estado: "finalizada",
+          cliente: "MOBIL",
+          origen: "LINARES",
+          destino: "TALCA",
+          estado: "FINALIZADO",
           gasto: {
             conbustible: 20000,
             peajes: 16000,
@@ -352,12 +352,12 @@ const LoadingOrder_main = () => {
           count={10}
         />
         <HeaderCardComponent
-          title={"Ordenes en curso"}
+          title={"Órdenes en curso"}
           icon={<FaUserTag size={35} />}
           count={2}
         />
         <HeaderCardComponent
-          title={"Ordenes Efectuadas"}
+          title={"Órdenes Efectuadas"}
           icon={<FaUserTag size={35} />}
           count={23}
         />
@@ -381,11 +381,11 @@ const LoadingOrder_main = () => {
             <table className="w-full">
               <tbody className="flex flex-col gap-1">
                 <tr className="flex justify-between">
-                  <th>tipo:</th>
-                  <td>tractocamión</td>
+                  <th>Tipo:</th>
+                  <td>Tracto camión</td>
                 </tr>
                 <tr className="flex justify-between">
-                  <th>Patente: </th>
+                  <th>Patente:</th>
                   <td>FGYD-45</td>
                 </tr>
               </tbody>

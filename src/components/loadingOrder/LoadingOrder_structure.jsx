@@ -7,7 +7,7 @@ const LoadingOrder_structure = () => {
       selector: (row) => row.numeroOrden,
     },
     {
-      name: "Vehiculo",
+      name: "Vehículo",
       selector: (row) => row.tipoVehiculo,
     },
     {
@@ -19,7 +19,7 @@ const LoadingOrder_structure = () => {
       selector: (row) => row.estado,
     },
     {
-      name: "acciones",
+      name: "Acciones",
       center: true,
       cell: (row) => (
         <div className="flex items-center gap-2">
