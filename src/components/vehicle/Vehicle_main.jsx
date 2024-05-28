@@ -4,7 +4,7 @@ import useVehicle from "../../hooks/useVehicle";
 import { Vehicle_structure } from "./Vehicle_structure";
 import Vehicle_subStructure from "./Vehicle_subStructure";
 import HeaderCardComponent from "../HeaderCard_Component";
-import { GiTruck } from "react-icons/gi";
+import { GiMechanicGarage, GiTruck } from "react-icons/gi";
 import { HiClipboardDocumentList } from "react-icons/hi2";
 
 const Vehicle_main = () => {
@@ -16,11 +16,17 @@ const Vehicle_main = () => {
 
   return (
     <>
+      {/* header del mantenedor */}
       <HeaderComponent maintainer={"Registro de vehículos"}>
         <HeaderCardComponent
-          title={"Camiones operativos"}
+          title={"Vehículos operativos"}
           icon={<GiTruck size={35} />}
           count={numberOperationalVehicles}
+        />
+        <HeaderCardComponent
+          title={"En mantenimiento"}
+          icon={<GiMechanicGarage size={35} />}
+          count={numberExpiredDocument}
         />
         <HeaderCardComponent
           title={"Documentos vencidos"}
@@ -29,6 +35,9 @@ const Vehicle_main = () => {
         />
       </HeaderComponent>
 
+      {/* espacio para ingresar el modal */}
+
+      {/* tabla del mantenedor */}
       <DataTableComponent
         data={mainVehicleData}
         structureData={Vehicle_structure()}

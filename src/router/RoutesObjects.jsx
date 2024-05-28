@@ -12,8 +12,8 @@ import Vehicle from "../pages/Vehicle";
 
 const getData = async ({ endPoint }) => {
   try {
-    const getUserType = await apiGet({ route: endPoint });
-    const response = await getUserType?.data;
+    const getDataResponse = await apiGet({ route: endPoint });
+    const response = await getDataResponse?.data;
 
     return { response };
   } catch (error) {

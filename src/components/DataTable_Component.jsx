@@ -41,7 +41,6 @@ const DataTableComponent = ({
         })}
         columns={structureData}
         data={providerFilter({ data: data, filter: stateData.filterData })}
-        // data={data}
         highlightOnHover
         responsive
         persistTableHead

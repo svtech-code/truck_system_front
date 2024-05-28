@@ -1,4 +1,10 @@
-import { Modal, ModalContent, ModalHeader } from "@nextui-org/react";
+import {
+  Button,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  useDisclosure,
+} from "@nextui-org/react";
 import useSubmitVehicle from "../hooks/useSubmitVehicle";
 import vehicleValidation from "../validations/vehicleValidation";
 import { Formik } from "formik";
@@ -9,6 +15,9 @@ const Test = () => {
 
   // importación del esquema de validación
   const validationSchema = vehicleValidation();
+
+  // variables para trabajar con modal
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const initialValues = {
     patente: "",
@@ -27,6 +36,8 @@ const Test = () => {
 
   return (
     <>
+      <Button onClick={onOpen}>Modal</Button>
+
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}

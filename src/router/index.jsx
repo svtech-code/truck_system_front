@@ -5,7 +5,7 @@ import LayoutPublic from "../layouts/LayoutPublic";
 import LayoutPrivate from "../layouts/LayoutPrivate";
 import NotFound from "../pages/NotFound";
 import { RoutesObjects } from "./RoutesObjects";
-// import Test from "../pages/test"; // eliminar, solo pruebas
+// import Test from "../pages/Test"; // eliminar, solo pruebas
 
 export const router = createBrowserRouter([
   {

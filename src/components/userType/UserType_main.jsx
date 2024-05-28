@@ -17,6 +17,15 @@ const UserType_main = ({ userType_data }) => {
     error: null,
   });
 
+  // variables string
+  const varString = {
+    title: "Tipos de usuarios",
+    titleModal: "Tipo de usuario",
+    route: "tipo_usuarios",
+    propertyId: "cod_tipo_usuario",
+    propertyName: "desc_tipo_usuario",
+  };
+
   // actualizador de los estados del componente
   const updateStateComponent = useCallback((newState) => {
     setStateComponent((prev) => ({ ...prev, ...newState }));
@@ -31,10 +40,10 @@ const UserType_main = ({ userType_data }) => {
   return (
     <>
       {/* cabecera del mantenedor */}
-      <HeaderComponent maintainer={"Tipos de usuarios"}>
+      <HeaderComponent maintainer={varString.title}>
         {/* tarjeta del mantenedor */}
         <HeaderCardComponent
-          title={"Tipos de usuarios"}
+          title={varString.title}
           icon={<FaUserTag size={35} />}
           count={stateComponent.data.length}
         />
@@ -44,12 +53,12 @@ const UserType_main = ({ userType_data }) => {
       <ModalNewData
         stateComponent={stateComponent}
         updateStateComponent={updateStateComponent}
-        title={"Tipo de usuario"}
+        title={varString.titleModal}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        route={"tipo_usuarios"}
-        propertyId={"cod_tipo_usuario"}
-        propertyName={"desc_tipo_usuario"}
+        route={varString.route}
+        propertyId={varString.propertyId}
+        propertyName={varString.propertyName}
       />
 
       {/* tabla de datos del mantenedor */}
@@ -57,11 +66,11 @@ const UserType_main = ({ userType_data }) => {
         data={stateComponent.data} // datos de la tabla
         structureData={Structure_Component({
           data: stateComponent.data, // Array con los datos del mantenedor
-          titleColum: "Tipos de usuarios", // titulo de la columna
+          titleColum: varString.title, // titulo de la columna
           onOpen, // función para abrir modal
-          route: "tipo_usuarios", // ruta para trabajar peticions axios
-          propertyId: "cod_tipo_usuario", // propiedad del id
-          propertyName: "desc_tipo_usuario", // propiedad de la descripción
+          route: varString.route, // ruta para trabajar peticions axios
+          propertyId: varString.propertyId, // propiedad del id
+          propertyName: varString.propertyName, // propiedad de la descripción
           updateStateComponent, // actualizador del objeto estados del componente
         })}
         openModal={onOpen}

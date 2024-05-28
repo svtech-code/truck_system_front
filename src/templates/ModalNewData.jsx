@@ -75,7 +75,8 @@ const ModalNewData = ({
                 {({
                   values,
                   handleSubmit,
-                  handleChange,
+                  // handleChange,
+                  setFieldValue,
                   errors,
                   handleBlur,
                   isSubmitting,
@@ -94,7 +95,10 @@ const ModalNewData = ({
                         labelPlacement="outside"
                         variant="faded"
                         value={values.newData}
-                        onChange={handleChange}
+                        // onChange={handleChange}
+                        onChange={(e) =>
+                          setFieldValue("newData", e.target.value.toUpperCase())
+                        }
                         onBlur={handleBlur}
                         isInvalid={values.newData === "" && errors.newData}
                         errorMessage={values.newData === "" && errors.newData}

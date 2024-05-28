@@ -23,6 +23,7 @@ export const Vehicle_structure = () => {
       selector: (row) => row.cantidad_kilos,
     },
     {
+      // agregar select interactivo
       name: "Estado",
       selector: (row) => row.desc_estado_vehiculo,
     },

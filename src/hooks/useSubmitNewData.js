@@ -1,9 +1,8 @@
 import Swal from "sweetalert2";
 import apiPost from "../api/apiPost";
-import apiGet from "../api/apiGet";
 import apiPut from "../api/apiPut";
 
-// function to update data
+// funciton to add new data or update data
 const updateArray = ({
   arrayData,
   idData,
@@ -11,19 +10,32 @@ const updateArray = ({
   propertyId,
   propertyName,
 }) => {
-  const newArray = arrayData.map((item) => {
-    if (item[propertyId] === idData) {
-      return {
-        ...item,
-        [propertyName]: descriptionData,
-      };
-    }
-    return item;
-  });
+  // verificación de la existencia del id
+  const exists = arrayData.some((item) => item[propertyId] === idData);
 
-  return newArray;
+  // si existe el id, se actualizan los datos
+  if (exists) {
+    return arrayData.map((item) => {
+      if (item[propertyId] === idData) {
+        return {
+          ...item,
+          [propertyName]: descriptionData,
+        };
+      }
+      return item;
+    });
+  }
+
+  // si no existe el id, se agrega el nuevo dato
+  const newItem = {
+    [propertyId]: idData,
+    [propertyName]: descriptionData,
+  };
+
+  return [...arrayData, newItem];
 };
 
+// function submit to add and update data
 const useSubmitNewData = ({
   data,
   updateStateComponent,
@@ -38,23 +50,29 @@ const useSubmitNewData = ({
         if (idData === null) {
           await apiPost({
             route: route,
-            object: { [propertyName]: newData },
-          }).then(() => {
+            object: { [propertyName]: newData.toUpperCase() },
+          }).then((response) => {
             Swal.fire({
               icon: "success",
               title: "Success",
               text: "Registro almacenado",
             }).then(() =>
               // actualizar datos de la tabla
-              apiGet({ route: route }).then((response) =>
-                updateStateComponent({ data: response?.data })
-              )
+              updateStateComponent({
+                data: updateArray({
+                  arrayData: data,
+                  idData: response?.data?.[propertyId],
+                  descriptionData: newData,
+                  propertyId,
+                  propertyName,
+                }),
+              })
             );
           });
         } else {
           await apiPut({
             route: `${route}/${idData}`,
-            object: { [propertyName]: newData },
+            object: { [propertyName]: newData.toUpperCase() },
           }).then(() => {
             Swal.fire({
               icon: "success",
