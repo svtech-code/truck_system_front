@@ -4,12 +4,12 @@ import { FaFacebookF, FaInstagram, FaXTwitter } from "react-icons/fa6";
 
 const SocialNetworks = () => {
   return (
-    <article className="relative flex flex-col items-center justify-center h-[30%]">
+    <article className="relative flex flex-col items-center justify-center min-h-[250px] h-[30%]">
       {/* linea divisoria */}
       <div className="relative flex items-center justify-center w-full -mt-12">
         <div className="border-b border-gray-400 w-1/4 mr-4"></div>
         <div className="text-gray-600 font-semibold text-medium sm:text-lg">
-          Puedes visitarno en
+          Puedes visitarnos en
         </div>
         <div className="border-b border-gray-400 w-1/4 ml-4"></div>
       </div>

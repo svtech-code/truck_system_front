@@ -1,4 +1,6 @@
 import ActionButton from "../ActionButton";
+import Vehicle_selectChofer from "./Vehicle_selectChofer";
+import Vehicle_selectEstado from "./Vehicle_selectEstado";
 
 export const Vehicle_structure = () => {
   return [
@@ -13,10 +15,12 @@ export const Vehicle_structure = () => {
     {
       name: "Marca",
       selector: (row) => row.desc_marca,
+      hide: "md",
     },
     {
       name: "Modelo",
       selector: (row) => row.modelo,
+      hide: "md",
     },
     {
       name: "Capacidad (KG)",
@@ -26,6 +30,13 @@ export const Vehicle_structure = () => {
       // agregar select interactivo
       name: "Estado",
       selector: (row) => row.desc_estado_vehiculo,
+      cell: (row) => <Vehicle_selectEstado />,
+      minWidth: "12rem",
+    },
+    {
+      name: "Chofer",
+      cell: () => <Vehicle_selectChofer />,
+      hide: "md",
     },
     {
       name: "Acciones",

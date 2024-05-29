@@ -33,7 +33,7 @@ const ActionButton = ({
     <div className="flex gap-4 items-center">
       {/* btn update */}
       <Button
-        isIconOnly
+        // isIconOnly
         color="primary"
         aria-label="Edit"
         onClick={handlerEdit}
@@ -42,7 +42,7 @@ const ActionButton = ({
       </Button>
 
       {/* btn delete */}
-      <Button isIconOnly color="danger" aria-label="Edit" onClick={onDelete}>
+      <Button color="danger" aria-label="Edit" onClick={onDelete}>
         <FaTrashAlt size={20} />
       </Button>
     </div>

@@ -6,11 +6,16 @@ import loginValidation from "../../validations/loginValidation";
 import { Formik } from "formik";
 import { Button, Input, button } from "@nextui-org/react";
 import { FaUserAlt, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const FormLogin = () => {
   const { login } = useAuth();
   const { onSubmit } = useAuthentication({ login });
+  const userNameRef = useRef();
+
+  useEffect(() => {
+    userNameRef.current.focus();
+  }, []);
 
   // esquema de validación
   const loginValidationSchema = loginValidation();
@@ -20,7 +25,7 @@ const FormLogin = () => {
   const toggleVisible = () => setVisible(!visible);
 
   return (
-    <article className="relative flex flex-col items-center justify-center sm:h-[70%] w-full gap-6 z-10">
+    <article className="relative flex flex-col items-center justify-center min-h-[600px] sm:h-[70%] w-full gap-6 z-10">
       <h2 className="font-bold text-3xl sm:text-4xl text-primary-color text-center mt-20 sm:py-10 sm:tracking-wider transition-all duration-300">
         INICIO DE SESIÓN
       </h2>
@@ -35,7 +40,7 @@ const FormLogin = () => {
           handleSubmit,
           handleChange,
           errors,
-          // touched,
+          touched,
           handleBlur,
           isSubmitting,
           setFieldValue,
@@ -48,11 +53,8 @@ const FormLogin = () => {
               {/* input correo */}
               <Input
                 color={
-                  values.username !== "" && errors.username
-                    ? "danger"
-                    : "success"
+                  touched.username && errors.username ? "danger" : "success"
                 }
-                // isRequired={true}
                 variant="bordered"
                 type="text"
                 name="username"
@@ -60,39 +62,36 @@ const FormLogin = () => {
                 value={values.username}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                // onClear={() => setFieldValue("username", "")}
+                ref={userNameRef}
+                isRequired={true}
                 size="lg"
                 label="Cuenta de usuario"
                 labelPlacement="outside"
                 placeholder="Ingresar username"
-                isInvalid={errors.username && values.username !== ""}
-                errorMessage={values.username !== "" && errors.username}
-                // startContent={
-                //   <FaUserAlt
-                //     size={25}
-                //     className={
-                //       values.username !== "" && errors.username
-                //         ? "text-red-500"
-                //         : "text-gray-400"
-                //     }
-                //   />
-                // }
+                isInvalid={touched.username && errors.username}
+                errorMessage={touched.username && errors.username}
+                startContent={
+                  <FaUserAlt
+                    size={25}
+                    className={
+                      touched.username && errors.username
+                        ? "text-red-500"
+                        : "text-gray-400"
+                    }
+                  />
+                }
                 classNames={{
                   label: ["text-lg", "pl-4", "text-primary-color"],
-                  input: [],
                   innerWrapper: ["gap-2", "px-2"],
-                  inputWrapper: [],
                 }}
               />
 
               {/* input contraseña */}
               <Input
                 color={
-                  values.password !== "" && errors.password
-                    ? "danger"
-                    : "success"
+                  touched.password && errors.password ? "danger" : "success"
                 }
-                // isRequired={true}
+                isRequired={true}
                 variant="bordered"
                 type={visible ? "text" : "password"}
                 name="password"
@@ -104,13 +103,13 @@ const FormLogin = () => {
                 label="Contraseña"
                 labelPlacement="outside"
                 placeholder="Ingresar password"
-                isInvalid={errors.password && values.password !== ""}
-                errorMessage={values.password !== "" && errors.password}
+                isInvalid={touched.password && errors.password}
+                errorMessage={touched.password && errors.password}
                 startContent={
                   <FaLock
                     size={22}
                     className={
-                      values.password !== "" && errors.password
+                      touched.password && errors.password
                         ? "text-red-500"
                         : "text-gray-400"
                     }
@@ -132,9 +131,7 @@ const FormLogin = () => {
                 }
                 classNames={{
                   label: ["text-lg", "pl-4", "text-primary-color"],
-                  input: [],
                   innerWrapper: ["gap-2", "px-2"],
-                  inputWrapper: [],
                 }}
               />
             </div>
