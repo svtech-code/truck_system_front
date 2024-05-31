@@ -20,6 +20,7 @@ const Test = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const initialValues = {
+    idVehicle: "",
     patente: "",
     idTipoVehiculo: "",
     idMarcaVehiculo: "",

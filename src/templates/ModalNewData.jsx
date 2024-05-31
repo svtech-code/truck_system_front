@@ -10,7 +10,9 @@ import {
 import useSubmitNewData from "../hooks/useSubmitNewData";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+
+const REGEX = /^[A-ZÁÉÍÓÚÑ0-9]+$/;
 
 const ModalNewData = ({
   stateComponent,
@@ -24,6 +26,7 @@ const ModalNewData = ({
 }) => {
   // desestructuración de estados del componente principal
   const { data, edit, idEdit, descriptionEdit } = stateComponent;
+  const inputRef = useRef();
 
   // desestructuración del hook personalizado para el registro de datos
   const { onSubmit } = useSubmitNewData({
@@ -40,12 +43,16 @@ const ModalNewData = ({
 
   // esquema de validaciones
   const validationSchema = Yup.object().shape({
-    newData: Yup.string().trim().required("Campo requerido..!"),
+    newData: Yup.string()
+      .trim()
+      .required("Campo requerido..!")
+      .matches(REGEX, "Solo se permiten letras, tildes y números"),
   });
 
   // reestablecer la acción del modal y el id (add or update)
   useEffect(() => {
     if (!isOpen) updateStateComponent({ edit: false, idEdit: null });
+    if (isOpen) inputRef.current.focus();
   }, [isOpen]);
 
   return (
@@ -75,17 +82,17 @@ const ModalNewData = ({
                 {({
                   values,
                   handleSubmit,
-                  // handleChange,
                   setFieldValue,
+                  touched,
                   errors,
                   handleBlur,
                   isSubmitting,
                 }) => (
-                  <>
+                  <form onSubmit={handleSubmit}>
                     <ModalBody>
                       <Input
                         color={
-                          values.newData !== "" && errors.newData
+                          touched.newData && errors.newData
                             ? "danger"
                             : "primary"
                         }
@@ -95,13 +102,14 @@ const ModalNewData = ({
                         labelPlacement="outside"
                         variant="faded"
                         value={values.newData}
-                        // onChange={handleChange}
+                        ref={inputRef}
+                        isRequired={true}
                         onChange={(e) =>
                           setFieldValue("newData", e.target.value.toUpperCase())
                         }
                         onBlur={handleBlur}
-                        isInvalid={values.newData === "" && errors.newData}
-                        errorMessage={values.newData === "" && errors.newData}
+                        isInvalid={touched.newData && errors.newData}
+                        errorMessage={touched.newData && errors.newData}
                       />
                     </ModalBody>
 
@@ -119,13 +127,13 @@ const ModalNewData = ({
                         className="w-[8rem] text-lg"
                         color="primary"
                         variant="flat"
-                        onClick={handleSubmit}
+                        type="submit"
                         disabled={isSubmitting}
                       >
                         {isSubmitting ? textBtnSubmitting : textBtnSubmit}
                       </Button>
                     </ModalFooter>
-                  </>
+                  </form>
                 )}
               </Formik>
             </>

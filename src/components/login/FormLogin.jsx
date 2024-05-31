@@ -43,7 +43,6 @@ const FormLogin = () => {
           touched,
           handleBlur,
           isSubmitting,
-          setFieldValue,
         }) => (
           <form
             onSubmit={handleSubmit}

@@ -6,15 +6,11 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react";
+import useVehicle from "../../hooks/useVehicle";
+import Select_Component from "../Select_Component";
 
 const Vehicle_subStructure = ({ data }) => {
-  // // componente para las filas
-  // const renderDataRow = (label, value) => (
-  //   <tr key={label}>
-  //     <th className="bg-gray-200 px-4 text-left">{label}</th>
-  //     <td className="px-4">{value}</td>
-  //   </tr>
-  // );
+  const { mainAcopladoData } = useVehicle();
 
   const dataVehiculo = {
     descricion: data.desc_vehiculo,
@@ -50,7 +46,15 @@ const Vehicle_subStructure = ({ data }) => {
           <TableCell>{data.fecha_vigencia_segur}</TableCell>
           <TableCell>{data.fecha_vigencia_revision}</TableCell>
           <TableCell>Transportes Bullileo</TableCell>
-          <TableCell>FJJF26</TableCell>
+          <TableCell>
+            {data.desc_tipo_vehiculo !== "ACOPLADO" ? (
+              <Select_Component object={mainAcopladoData} />
+            ) : (
+              <span className="bg-gray-400 px-4 py-2 rounded-md">
+                NO DISPONIBLE
+              </span>
+            )}
+          </TableCell>
         </TableRow>
       </TableBody>
     </Table>
