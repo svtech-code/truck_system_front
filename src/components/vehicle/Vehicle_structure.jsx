@@ -31,12 +31,13 @@ export const Vehicle_structure = () => {
       name: "Estado",
       selector: (row) => row.desc_estado_vehiculo,
       cell: (row) => <Vehicle_selectEstado />,
-      minWidth: "12rem",
+      minWidth: "13rem",
     },
     {
       name: "Chofer",
       cell: () => <Vehicle_selectChofer />,
       hide: "md",
+      minWidth: "15rem",
     },
     {
       name: "Acciones",

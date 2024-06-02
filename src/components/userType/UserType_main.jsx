@@ -17,7 +17,7 @@ const UserType_main = ({ userType_data }) => {
     error: null,
   });
 
-  // variables string
+  // constante con los string utilizados como parámetros
   const varString = {
     title: "Tipos de usuarios",
     titleModal: "Tipo de usuario",
@@ -73,7 +73,7 @@ const UserType_main = ({ userType_data }) => {
           propertyName: varString.propertyName, // propiedad de la descripción
           updateStateComponent, // actualizador del objeto estados del componente
         })}
-        openModal={onOpen}
+        onOpen={onOpen}
         downloadData={eventClickDownloadData}
       />
     </>

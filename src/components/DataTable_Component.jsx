@@ -12,7 +12,7 @@ const DataTableComponent = ({
   data,
   structureData,
   subStructureData,
-  openModal,
+  onOpen,
   downloadData,
 }) => {
   // estados del dataTable
@@ -36,7 +36,7 @@ const DataTableComponent = ({
         subHeaderComponent={HeaderDataTableComponent({
           filter: stateData.filterData,
           updateStateData,
-          onClickAdd: openModal,
+          onClickAdd: onOpen,
           onClickDownload: downloadData,
         })}
         columns={structureData}

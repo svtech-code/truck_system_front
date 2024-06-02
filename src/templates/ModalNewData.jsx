@@ -11,8 +11,7 @@ import useSubmitNewData from "../hooks/useSubmitNewData";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useEffect, useRef } from "react";
-
-const REGEX = /^[A-ZÁÉÍÓÚÑ0-9]+$/;
+import { REGEX_numberString } from "../utils/regularExpressions";
 
 const ModalNewData = ({
   stateComponent,
@@ -46,7 +45,7 @@ const ModalNewData = ({
     newData: Yup.string()
       .trim()
       .required("Campo requerido..!")
-      .matches(REGEX, "Solo se permiten letras, tildes y números"),
+      .matches(REGEX_numberString, "Solo se permiten letras, tildes y números"),
   });
 
   // reestablecer la acción del modal y el id (add or update)

@@ -6,10 +6,24 @@ import Vehicle_subStructure from "./Vehicle_subStructure";
 import HeaderCardComponent from "../HeaderCard_Component";
 import { GiMechanicGarage, GiTruck } from "react-icons/gi";
 import { HiClipboardDocumentList } from "react-icons/hi2";
+import ModalVehicle from "../../templates/ModalVehicle";
+import { useDisclosure } from "@nextui-org/react";
 
 const Vehicle_main = () => {
   const { mainVehicleData, numberOperationalVehicles, numberExpiredDocument } =
     useVehicle();
+
+  // constante con los string utilizados como parámetros
+  const varString = {
+    title: "Registro de vehículos",
+    titleModal: "Tipo de usuario",
+    route: "tipo_usuarios",
+    propertyId: "cod_tipo_usuario",
+    propertyName: "desc_tipo_usuario",
+  };
+
+  // estados para el manejo del modal
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const eventClickNewData = () => alert("nuevo elemento");
   const eventClickDownloadData = () => alert("Descargar informacion");
@@ -17,7 +31,7 @@ const Vehicle_main = () => {
   return (
     <>
       {/* header del mantenedor */}
-      <HeaderComponent maintainer={"Registro de vehículos"}>
+      <HeaderComponent maintainer={varString.title}>
         <HeaderCardComponent
           title={"Vehículos operativos"}
           icon={<GiTruck size={35} />}
@@ -36,10 +50,16 @@ const Vehicle_main = () => {
       </HeaderComponent>
 
       {/* espacio para ingresar el modal */}
+      <ModalVehicle
+        title={varString.titleModal}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      />
 
       {/* tabla del mantenedor */}
       <DataTableComponent
         data={mainVehicleData}
+        onOpen={onOpen}
         structureData={Vehicle_structure()}
         subStructureData={Vehicle_subStructure}
         newData={eventClickNewData}

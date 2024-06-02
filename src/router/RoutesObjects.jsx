@@ -7,19 +7,8 @@ import Driver from "../pages/Driver";
 import UserType from "../pages/UserType";
 import VehicleBrand from "../pages/VehicleBrand";
 import VehicleType from "../pages/VehicleType";
-import apiGet from "../api/apiGet";
 import Vehicle from "../pages/Vehicle";
-
-const getData = async ({ endPoint }) => {
-  try {
-    const getDataResponse = await apiGet({ route: endPoint });
-    const response = await getDataResponse?.data;
-
-    return { response };
-  } catch (error) {
-    return { error };
-  }
-};
+import { getData } from "../api/apiGet";
 
 export const RoutesObjects = [
   { path: "/home", element: <Home /> },

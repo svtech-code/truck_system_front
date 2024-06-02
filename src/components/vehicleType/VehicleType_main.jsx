@@ -17,6 +17,15 @@ const VehicleType_main = ({ vehicleType_data }) => {
     error: null,
   });
 
+  // constante con los string utilizados como parámetros
+  const varString = {
+    title: "Tipos de vehículos",
+    titleModal: "Tipo de Vehículo",
+    route: "tipo_vehiculos",
+    propertyId: "cod_tipo_vehiculo",
+    propertyName: "desc_tipo_vehiculo",
+  };
+
   // actualizador de los estados del componente
   const updateStateComponent = useCallback((newState) => {
     setStateComponent((prev) => ({ ...prev, ...newState }));
@@ -30,10 +39,10 @@ const VehicleType_main = ({ vehicleType_data }) => {
   return (
     <>
       {/* cabecera del mantenedor */}
-      <HeaderComponent maintainer={"Tipos de vehículos"}>
+      <HeaderComponent maintainer={varString.title}>
         {/* tarjeta del mantenedor */}
         <HeaderCardComponent
-          title={"Tipos de vehículos"}
+          title={varString.title}
           icon={<FaCar size={35} />}
           count={stateComponent.data.length}
         />
@@ -43,12 +52,12 @@ const VehicleType_main = ({ vehicleType_data }) => {
       <ModalNewData
         stateComponent={stateComponent}
         updateStateComponent={updateStateComponent}
-        title={"Tipo de Vehículo"}
+        title={varString.titleModal}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        route={"tipo_vehiculos"}
-        propertyId={"cod_tipo_vehiculo"}
-        propertyName={"desc_tipo_vehiculo"}
+        route={varString.route}
+        propertyId={varString.propertyId}
+        propertyName={varString.propertyName}
       />
 
       {/* tabla de datos del mantenedor */}
@@ -56,14 +65,14 @@ const VehicleType_main = ({ vehicleType_data }) => {
         data={stateComponent.data} // datos de la tabla
         structureData={Structure_Component({
           data: stateComponent.data, // Array con los datos del mantenedor
-          titleColum: "Tipos de vehículos", // titulo de la columna
+          titleColum: varString.title, // titulo de la columna
           onOpen, // función para abrir modal
-          route: "tipo_vehiculos", // ruta para trabajar peticions axios
-          propertyId: "cod_tipo_vehiculo", // propiedad del id
-          propertyName: "desc_tipo_vehiculo", // propiedad de la descripción
+          route: varString.route, // ruta para trabajar peticions axios
+          propertyId: varString.propertyId, // propiedad del id
+          propertyName: varString.propertyName, // propiedad de la descripción
           updateStateComponent, // actualizador del objeto estados del componente
         })}
-        openModal={onOpen}
+        onOpen={onOpen}
         downloadData={eventClickDownloadData}
       />
     </>

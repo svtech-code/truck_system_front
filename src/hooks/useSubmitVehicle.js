@@ -1,9 +1,9 @@
 const useSubmitVehicle = () => {
   const onSubmit =
     (onClose) =>
-    async ({ newData }, { setSubmitting }) => {
+    async ({ values }, { setSubmitting }) => {
       try {
-        console.log(newData);
+        console.log(values);
       } catch (error) {
         console.log(error);
       } finally {

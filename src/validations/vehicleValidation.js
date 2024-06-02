@@ -8,7 +8,6 @@ const vehicleValidation = () => {
   return Yup.object().shape({
     username: Yup.string()
       .trim()
-      // .email("Email no válido !")
       .min(6, "El nombre de usuario debe contener al menos 6 carécteres !")
       .max(16, "El nombre de usuario no debe contener más de 16 carácteres !")
       .required("Nombre de usuario requerido !")
