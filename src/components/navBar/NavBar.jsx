@@ -24,8 +24,9 @@ import {
   FaUser,
   FaUsersCog,
 } from "react-icons/fa";
-import NavBar_DropdownItem from "./NavBar_DropdownItem";
+// import NavBar_DropdownItem from "./NavBar_DropdownItem";
 import { useNavigate } from "react-router-dom";
+import { HiStatusOnline } from "react-icons/hi";
 
 const NabBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,10 +40,10 @@ const NabBar = () => {
     { to: "/vehicle", title: "Registro vehículos", onClick: toggleMenu },
     { to: "/driver", title: "Gestión chofer", onClick: toggleMenu },
     { to: "/loadingorder", title: "Orden carga", onClick: toggleMenu },
-    { to: "/userType", title: "Tipo usuario", onClick: toggleMenu },
-    { to: "/vehicletype", title: "Tipo vehículo", onClick: toggleMenu },
-    { to: "/vehiclebrand", title: "Marca vehículo", onClick: toggleMenu },
-    // { to: "/vehiclestatus", title: "Estado vehículo", onClick: toggleMenu },
+    { to: "/userType", title: "Tipos usuario", onClick: toggleMenu },
+    { to: "/vehicletype", title: "Tipos vehículo", onClick: toggleMenu },
+    { to: "/vehiclebrand", title: "Marcas vehículo", onClick: toggleMenu },
+    { to: "/vehiclestate", title: "Estados vehículo", onClick: toggleMenu },
     { to: "/report", title: "Reporte", onClick: toggleMenu },
   ];
 
@@ -150,7 +151,7 @@ const NabBar = () => {
               startContent={<FaUsersCog />}
               onClick={() => navigate("/usertype")}
             >
-              Tipo usuario
+              Tipos usuario
             </DropdownItem>
 
             <DropdownItem
@@ -158,7 +159,7 @@ const NabBar = () => {
               startContent={<FaTruckPickup />}
               onClick={() => navigate("/vehicletype")}
             >
-              Tipo vehículo
+              Tipos vehículo
             </DropdownItem>
 
             <DropdownItem
@@ -166,20 +167,19 @@ const NabBar = () => {
               startContent={<FaClipboardList />}
               onClick={() => navigate("/vehiclebrand")}
             >
-              Marca vehículo
+              Marcas vehículo
             </DropdownItem>
-
-            {/* <DropdownItem
-              key={"vehiclestatus"}
-              startContent={<FaClipboardList />}
-              onClick={() => navigate("/vehiclestatus")}
+            
+            <DropdownItem
+              key={"vehiclestate"}
+              startContent={<HiStatusOnline />}
+              onClick={() => navigate("/vehiclestate")}
             >
-              Estado vehículo
-            </DropdownItem> */}
+              Estados vehículo
+            </DropdownItem>
           </DropdownMenu>
         </Dropdown>
 
-        {/* <NavBar_item to={"/loadingorder"} title={"Orden Carga"} /> */}
         <NavBar_item to={"/report"} title={"Reporte"} />
       </NavbarContent>
 

@@ -1,5 +1,5 @@
 // expresión regurlar usada para validar compos input generales
-export const REGEX_numberString = /^[A-ZÁÉÍÓÚÑ0-9]+$/;
+export const REGEX_numberString = /^[A-ZÁÉÍÓÚÑ0-9 ]+$/;
 
 // expresión regular usada para validar nombre de usuario
 export const REGEX_userName = /^[a-zA-Z0-9@_]{6,12}$/;

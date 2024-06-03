@@ -44,7 +44,7 @@ const VehicleType_main = ({ vehicleType_data }) => {
         <HeaderCardComponent
           title={varString.title}
           icon={<FaCar size={35} />}
-          count={stateComponent.data.length}
+          count={stateComponent?.data?.length}
         />
       </HeaderComponent>
 

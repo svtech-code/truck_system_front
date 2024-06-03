@@ -6,6 +6,7 @@ import Profile from "../pages/Profile";
 import Driver from "../pages/Driver";
 import UserType from "../pages/UserType";
 import VehicleBrand from "../pages/VehicleBrand";
+import StateVehicle from "../pages/StateVehicle";
 import VehicleType from "../pages/VehicleType";
 import Vehicle from "../pages/Vehicle";
 import { getData } from "../api/apiGet";
@@ -33,6 +34,11 @@ export const RoutesObjects = [
     path: "/vehiclebrand",
     element: <VehicleBrand />,
     loader: () => getData({ endPoint: "marcas" }),
+  },
+  {
+    path: "/vehiclestate",
+    element: <StateVehicle />,
+    loader: () => getData({ endPoint: "estado_vehiculos" }),
   },
   { path: "/report", element: <LoadingOrder /> },
   { path: "/profile", element: <Profile /> },
