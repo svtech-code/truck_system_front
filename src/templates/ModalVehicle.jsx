@@ -106,7 +106,6 @@ const ModalVehicle = ({ title, isOpen, onOpenChange }) => {
                           labelPlacement="outside"
                           variant="faded"
                           value={values.anioVehiculo}
-                          // ref
                           isRequired={true}
                           onChange={(e) =>
                             setFieldValue(
@@ -163,6 +162,7 @@ const ModalVehicle = ({ title, isOpen, onOpenChange }) => {
                           }
                         />
                       </div>
+                      
                       {/* input descripcion y capacidad */}
                       <div className="flex flex-col sm:flex-row gap-4">
                         <Input

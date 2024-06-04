@@ -4,15 +4,16 @@ const initialValues_vehicle = () => {
     patente: "",
     idTipoVehiculo: "",
     idMarcaVehiculo: "",
-    modeloVehiculo: "",
+    idModelo: "",
+    idContribuyente: "",
     capacidadKG: "",
     estado: "",
     descripcionVehiculo: "",
     anioVehiculo: "",
     vencimientoSeguro: "",
     vencimientoRevision: "",
-    idPatenteAcoplado: "",
     idChoferAsignado: "",
+    idPatenteAcoplado: "",
   };
 };
 

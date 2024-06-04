@@ -6,8 +6,13 @@ import Vehicle_subStructure from "./Vehicle_subStructure";
 import HeaderCardComponent from "../HeaderCard_Component";
 import { GiMechanicGarage, GiTruck } from "react-icons/gi";
 import { HiClipboardDocumentList } from "react-icons/hi2";
-import ModalVehicle from "../../templates/ModalVehicle";
+// import ModalVehicle from "../../templates/ModalVehicle";
 import { useDisclosure } from "@nextui-org/react";
+import ModalBase from "../../templates/ModalBase";
+import useSubmitVehicle from "../../hooks/useSubmitVehicle";
+import initialValues_vehicle from "../../utils/initialValues/vehicleValues";
+import vehicleValidation from "../../validations/vehicleValidation";
+import Vehicle_form from "./Vehicle_form";
 
 const Vehicle_main = () => {
   const { mainVehicleData, numberOperationalVehicles, numberExpiredDocument } =
@@ -16,10 +21,27 @@ const Vehicle_main = () => {
   // constante con los string utilizados como parámetros
   const varString = {
     title: "Registro de vehículos",
-    titleModal: "Tipo de usuario",
-    route: "tipo_usuarios",
-    propertyId: "cod_tipo_usuario",
-    propertyName: "desc_tipo_usuario",
+    titleModal: "Registro de vehículo",
+    route: "vehiculos",
+    propertyId: "cod_vehiculo",
+    propertyName: "desc_modelo", // agregar array con propertis name
+    cards: [
+      {
+        titleCard: "Operativos",
+        iconCard: <GiTruck size={35} />,
+        countCard: numberOperationalVehicles,
+      },
+      {
+        titleCard: "Mantenimiento",
+        iconCard: <GiMechanicGarage size={35} />,
+        countCard: numberExpiredDocument,
+      },
+      {
+        titleCard: "Vencimiento",
+        iconCard: <HiClipboardDocumentList size={35} />,
+        countCard: numberExpiredDocument,
+      },
+    ],
   };
 
   // estados para el manejo del modal
@@ -32,30 +54,28 @@ const Vehicle_main = () => {
     <>
       {/* header del mantenedor */}
       <HeaderComponent maintainer={varString.title}>
-        <HeaderCardComponent
-          title={"Vehículos operativos"}
-          icon={<GiTruck size={35} />}
-          count={numberOperationalVehicles}
-        />
-        <HeaderCardComponent
-          title={"En mantenimiento"}
-          icon={<GiMechanicGarage size={35} />}
-          count={numberExpiredDocument}
-        />
-        <HeaderCardComponent
-          title={"Documentos vencidos"}
-          icon={<HiClipboardDocumentList size={35} />}
-          count={numberExpiredDocument}
-        />
+        {/* tarjeta del mantenedor */}
+        {varString.cards.map((card, index) => (
+          <HeaderCardComponent
+            key={index}
+            title={card.titleCard}
+            icon={card.iconCard}
+            count={card.countCard}
+          />
+        ))}
       </HeaderComponent>
 
-      {/* espacio para ingresar el modal */}
-      <ModalVehicle
+      {/* modal generico */}
+      <ModalBase
         title={varString.titleModal}
+        size={"2xl"}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
+        useSubmit_generic={useSubmitVehicle}
+        initialValues_generic={initialValues_vehicle}
+        validationSchema_generic={vehicleValidation}
+        Form_generic={(props) => <Vehicle_form {...props} />}
       />
-
       {/* tabla del mantenedor */}
       <DataTableComponent
         data={mainVehicleData}

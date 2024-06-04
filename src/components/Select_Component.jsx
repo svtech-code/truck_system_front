@@ -4,7 +4,15 @@ import { getData } from "../api/apiGet";
 
 // trabajar el estilo mediante objetos
 
-const Select_Component = ({ route, label, itemKey, detail }) => {
+const Select_Component = ({
+  route,
+  label,
+  itemKey,
+  detail,
+  name,
+  value,
+  handleChange,
+}) => {
   const [list, setList] = useState([]);
   const [isDataLoader, setIsDataLoader] = useState(false);
 
@@ -22,12 +30,15 @@ const Select_Component = ({ route, label, itemKey, detail }) => {
 
   return (
     <Select
+      name={name}
       arial-label={label}
       label={label}
       labelPlacement="outside"
       size="md"
       variant="faded"
       color="primary"
+      value={value}
+      onChange={handleChange}
       isRequired={true}
       isLoading={!isDataLoader}
     >

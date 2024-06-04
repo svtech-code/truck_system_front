@@ -27,16 +27,16 @@ import {
 // import NavBar_DropdownItem from "./NavBar_DropdownItem";
 import { useNavigate } from "react-router-dom";
 import { HiStatusOnline } from "react-icons/hi";
+import { MdModelTraining } from "react-icons/md";
 
 const NabBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const navigate = useNavigate();
 
-  // lista de objetos path
+  // lista de objetos path para menu movile
   const navLinksMenu = [
     { to: "/home", title: "Home", onClick: toggleMenu },
-    // { to: "/truck", title: "Gestión camión", onClick: toggleMenu },
     { to: "/vehicle", title: "Registro vehículos", onClick: toggleMenu },
     { to: "/driver", title: "Gestión chofer", onClick: toggleMenu },
     { to: "/loadingorder", title: "Orden carga", onClick: toggleMenu },
@@ -44,6 +44,7 @@ const NabBar = () => {
     { to: "/vehicletype", title: "Tipos vehículo", onClick: toggleMenu },
     { to: "/vehiclebrand", title: "Marcas vehículo", onClick: toggleMenu },
     { to: "/vehiclestate", title: "Estados vehículo", onClick: toggleMenu },
+    { to: "/vehiclemodel", title: "Modelos vehículo", onClick: toggleMenu },
     { to: "/report", title: "Reporte", onClick: toggleMenu },
   ];
 
@@ -82,9 +83,6 @@ const NabBar = () => {
       >
         <NavBar_logo />
 
-        {/* {navLinksMenu.map(({ to, title }) => (
-          <NavBar_item key={to} to={to} title={title} />
-        ))} */}
         <NavBar_item to={"/home"} title={"Home"} />
 
         {/* componentizar elemento ------!!!!! */}
@@ -169,13 +167,21 @@ const NabBar = () => {
             >
               Marcas vehículo
             </DropdownItem>
-            
+
             <DropdownItem
               key={"vehiclestate"}
               startContent={<HiStatusOnline />}
               onClick={() => navigate("/vehiclestate")}
             >
               Estados vehículo
+            </DropdownItem>
+
+            <DropdownItem
+              key={"vehiclemodel"}
+              startContent={<MdModelTraining />}
+              onClick={() => navigate("/vehiclemodel")}
+            >
+              Modelos vehículo
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
