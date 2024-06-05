@@ -12,6 +12,10 @@ export default {
       colors: {
         "primary-color": "#124C60",
       },
+      screens: {
+        xxs: "400px",
+        xs: "520px",
+      },
     },
   },
   darkMode: "class",

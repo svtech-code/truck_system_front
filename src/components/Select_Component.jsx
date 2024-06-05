@@ -12,6 +12,9 @@ const Select_Component = ({
   name,
   value,
   handleChange,
+  subDetail,
+  allowNew,
+  reload,
 }) => {
   const [list, setList] = useState([]);
   const [isDataLoader, setIsDataLoader] = useState(false);
@@ -26,7 +29,10 @@ const Select_Component = ({
     };
 
     handlerLoad();
-  }, []);
+
+    if (reload && reload.length > 0)
+      setList((prevList) => [...prevList, ...reload]);
+  }, [reload]);
 
   return (
     <Select
@@ -42,9 +48,14 @@ const Select_Component = ({
       isRequired={true}
       isLoading={!isDataLoader}
     >
+      {allowNew && (
+        <SelectItem key="__new__" value="__new__">
+          Agregar Nuevo
+        </SelectItem>
+      )}
       {list.map((item) => (
         <SelectItem key={item[itemKey]} value={item[itemKey]}>
-          {item[detail]}
+          {subDetail ? `${item[detail]} - ${item[subDetail]}` : item[detail]}
         </SelectItem>
       ))}
     </Select>

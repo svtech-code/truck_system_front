@@ -6,7 +6,6 @@ import Vehicle_subStructure from "./Vehicle_subStructure";
 import HeaderCardComponent from "../HeaderCard_Component";
 import { GiMechanicGarage, GiTruck } from "react-icons/gi";
 import { HiClipboardDocumentList } from "react-icons/hi2";
-// import ModalVehicle from "../../templates/ModalVehicle";
 import { useDisclosure } from "@nextui-org/react";
 import ModalBase from "../../templates/ModalBase";
 import useSubmitVehicle from "../../hooks/useSubmitVehicle";
