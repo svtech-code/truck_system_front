@@ -2,12 +2,6 @@ import { Input } from "@nextui-org/react";
 import Select_Component from "../Select_Component";
 import { useState } from "react";
 import { useDisclosure } from "@nextui-org/react";
-import ModalNewData from "../../templates/ModalNewData";
-import ModalBase from "../../templates/ModalBase";
-import useSubmitVehicle from "../../hooks/useSubmitVehicle";
-import FormTest from "../FormTest";
-import initialValues_vehicle from "../../utils/initialValues/vehicleValues";
-import vehicleValidation from "../../validations/vehicleValidation";
 
 const Vehicle_form = ({
   values,
@@ -18,6 +12,7 @@ const Vehicle_form = ({
   errors,
   firstInputRef,
 }) => {
+  // estado usado para almacenar
   const [reload, setReload] = useState([]);
 
   // función manejador de la patente completa
@@ -41,7 +36,8 @@ const Vehicle_form = ({
   // funcion para agregar nuevo dato desde el select
   const handleSelectChange = (e) => {
     if (e.target.value === "__new__") {
-      onOpen();
+      // onOpen();
+      console.log("modal para agregar modelo");
       // Aquí puedes manejar la lógica para agregar un nuevo modelo
       // lanzar modal para agregar nuevo modelo
       // una vez agregado los datos, se deve actualizar el array en lo posible o volver a cargar este select
@@ -60,7 +56,7 @@ const Vehicle_form = ({
 
   return (
     <>
-      <ModalBase
+      {/* <ModalBase
         title={"Modelo vehículo"}
         size={"2xl"}
         isOpen={isOpen}
@@ -69,9 +65,9 @@ const Vehicle_form = ({
         initialValues_generic={initialValues_vehicle}
         validationSchema_generic={vehicleValidation}
         Form_generic={(props) => <FormTest {...props} />}
-      />
+      /> */}
 
-      {/* input patente y año */}
+      {/* input patente, año y tonelaje */}
       <div className="flex flex-col xs:flex-row gap-4">
         <Input
           color={touched.patente && errors.patente ? "danger" : "primary"}
@@ -110,24 +106,23 @@ const Vehicle_form = ({
         />
 
         <Input
-          color={
-            touched.capacidadKG && errors.capacidadKG ? "danger" : "primary"
-          }
-          name="capacidadKG"
+          color={touched.tonelaje && errors.tonelaje ? "danger" : "primary"}
+          name="tonelaje"
           type="number"
           label="Tonelaje"
           labelPlacement="outside"
           variant="faded"
-          value={values.capacidadKG}
+          value={values.tonelaje}
           isRequired={true}
           onChange={handleChange}
           onBlur={handleBlur}
-          isInvalid={touched.capacidadKG && errors.capacidadKG}
-          errorMessage={touched.capacidadKG && errors.capacidadKG}
+          isInvalid={touched.tonelaje && errors.tonelaje}
+          errorMessage={touched.tonelaje && errors.tonelaje}
           className="w-full xxs:w-[8rem]"
         />
       </div>
-      {/* select tipoVehiculo, marca, modelo */}
+
+      {/* select tipoVehiculo y modelo */}
       <div className="flex flex-col sm:flex-row gap-4">
         <Select_Component
           name={"idTipoVehiculo"}
@@ -137,6 +132,10 @@ const Vehicle_form = ({
           detail="desc_tipo_vehiculo"
           value={values.idTipoVehiculo}
           handleChange={handleChange}
+          handleBlur={handleBlur}
+          touched={touched}
+          errors={errors}
+          required={true}
         />
 
         <Select_Component
@@ -150,9 +149,14 @@ const Vehicle_form = ({
           subDetail={"desc_marca"}
           allowNew={true}
           reload={reload}
+          handleBlur={handleBlur}
+          touched={touched}
+          errors={errors}
+          required={true}
         />
       </div>
-      {/* input descripción y select contribullente */}
+
+      {/* input descripción y select transportista */}
       <div className="flex flex-col sm:flex-row gap-4">
         <Input
           color={
@@ -178,15 +182,20 @@ const Vehicle_form = ({
         />
 
         <Select_Component
-          name={"idContribuyente"}
+          name={"idTransportista"}
           route="estado_vehiculos"
           label={"Transportista"}
           itemKey="cod_estado_vehiculo"
           detail="desc_estado_vehiculo"
-          value={values.idContribuyente}
+          value={values.idTransportista}
           handleChange={handleChange}
+          handleBlur={handleBlur}
+          touched={touched}
+          errors={errors}
+          required={true}
         />
       </div>
+
       {/* input fechas de vencimiento */}
       <div className="flex flex-col sm:flex-row gap-4">
         <Input
@@ -207,6 +216,7 @@ const Vehicle_form = ({
           isInvalid={touched.vencimientoSeguro && errors.vencimientoSeguro}
           errorMessage={touched.vencimientoSeguro && errors.vencimientoSeguro}
         />
+
         <Input
           color={
             touched.vencimientoRevision && errors.vencimientoRevision
@@ -228,6 +238,7 @@ const Vehicle_form = ({
           }
         />
       </div>
+
       {/* Select chofer y acoplado */}
       <div className="flex flex-col sm:flex-row gap-4">
         <Select_Component
@@ -238,6 +249,10 @@ const Vehicle_form = ({
           detail="desc_tipo_usuario"
           value={values.idChoferAsignado}
           handleChange={handleChange}
+          handleBlur={handleBlur}
+          touched={touched}
+          errors={errors}
+          required={true}
         />
 
         <Select_Component
@@ -248,6 +263,10 @@ const Vehicle_form = ({
           detail="patente"
           value={values.idPatenteAcoplado}
           handleChange={handleChange}
+          handleBlur={handleBlur}
+          touched={touched}
+          errors={errors}
+          required={false}
         />
       </div>
     </>

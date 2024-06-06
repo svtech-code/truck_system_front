@@ -23,13 +23,7 @@ const ModalBase = ({
   const firstInputRef = useRef();
 
   // submit de datos del formulario
-  const { onSubmit } = useSubmit_generic();
-
-  // valores iniciales del formulario
-  //   const initialValues = initialValues_generic();
-
-  // esquema de validación del formulario
-  //   const validationSchema = validationSchema_generic();
+  const { onSubmit } = useSubmit_generic;
 
   useEffect(() => {
     if (isOpen) firstInputRef.current.focus();
@@ -56,7 +50,7 @@ const ModalBase = ({
             {/* controlador de formulario con formik */}
             <Formik
               initialValues={initialValues_generic()}
-              // validationSchema={validationSchema_generic()}
+              validationSchema={validationSchema_generic()}
               onSubmit={onSubmit(onClose)}
             >
               {({

@@ -8,14 +8,18 @@ import { GiMechanicGarage, GiTruck } from "react-icons/gi";
 import { HiClipboardDocumentList } from "react-icons/hi2";
 import { useDisclosure } from "@nextui-org/react";
 import ModalBase from "../../templates/ModalBase";
-import useSubmitVehicle from "../../hooks/useSubmitVehicle";
 import initialValues_vehicle from "../../utils/initialValues/vehicleValues";
 import vehicleValidation from "../../validations/vehicleValidation";
 import Vehicle_form from "./Vehicle_form";
+import usePostVehicle from "../../hooks/usePostVehicle";
 
 const Vehicle_main = () => {
-  const { mainVehicleData, numberOperationalVehicles, numberExpiredDocument } =
-    useVehicle();
+  const {
+    mainVehicleData,
+    numberOperationalVehicles,
+    numberExpiredDocument,
+    updateVehicleData,
+  } = useVehicle();
 
   // constante con los string utilizados como parámetros
   const varString = {
@@ -70,18 +74,22 @@ const Vehicle_main = () => {
         size={"2xl"}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        useSubmit_generic={useSubmitVehicle}
+        useSubmit_generic={usePostVehicle({
+          data: mainVehicleData,
+          updateData: updateVehicleData,
+        })}
         initialValues_generic={initialValues_vehicle}
         validationSchema_generic={vehicleValidation}
         Form_generic={(props) => <Vehicle_form {...props} />}
       />
+
       {/* tabla del mantenedor */}
       <DataTableComponent
         data={mainVehicleData}
         onOpen={onOpen}
         structureData={Vehicle_structure()}
         subStructureData={Vehicle_subStructure}
-        newData={eventClickNewData}
+        // newData={eventClickNewData}
         downloadData={eventClickDownloadData}
       />
     </>

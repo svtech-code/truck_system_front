@@ -12,14 +12,21 @@ import Select_Component from "../Select_Component";
 const Vehicle_subStructure = ({ data }) => {
   const { mainAcopladoData } = useVehicle();
 
-  const dataVehiculo = {
-    descricion: data.desc_vehiculo,
-    anio: data.anio,
-    vencimientoSeguro: data.fecha_vigencia_segur,
-    vencimientoRevicion: data.fecha_vigencia_revision,
-    choferAsignado: null,
-    vehiculoAcoplado: null,
-  };
+  // const dataVehiculo = {
+  //   descricion: data.desc_vehiculo,
+  //   anio: data.anio,
+  //   vencimientoSeguro: data.fecha_vigencia_seguro,
+  //   vencimientoRevicion: data.fecha_vigencia_revision,
+  //   choferAsignado: null,
+  //   vehiculoAcoplado: null,
+  // };
+  const {
+    desc_vehiculo,
+    desc_tipo_vehiculo,
+    anio,
+    fecha_vigencia_seguro,
+    fecha_vigencia_revision,
+  } = data;
 
   return (
     <Table
@@ -37,24 +44,24 @@ const Vehicle_subStructure = ({ data }) => {
         <TableColumn>Vencimiento seguro</TableColumn>
         <TableColumn>Vencimiento Revisión</TableColumn>
         <TableColumn>Asociación</TableColumn>
-        <TableColumn>Pte. Acoplado</TableColumn>
+        {/* <TableColumn>Pte. Acoplado</TableColumn> */}
       </TableHeader>
       <TableBody emptyContent={"Sin datos asignados"}>
         <TableRow key="1">
-          <TableCell>{data.desc_vehiculo}</TableCell>
-          <TableCell>{data.anio}</TableCell>
-          <TableCell>{data.fecha_vigencia_segur}</TableCell>
-          <TableCell>{data.fecha_vigencia_revision}</TableCell>
+          <TableCell>{desc_vehiculo}</TableCell>
+          <TableCell>{anio}</TableCell>
+          <TableCell>{fecha_vigencia_seguro}</TableCell>
+          <TableCell>{fecha_vigencia_revision}</TableCell>
           <TableCell>Transportes Bullileo</TableCell>
-          <TableCell>
-            {data.desc_tipo_vehiculo !== "ACOPLADO" ? (
+          {/* <TableCell>
+            {desc_tipo_vehiculo !== "ACOPLADO" ? (
               <Select_Component object={mainAcopladoData} />
             ) : (
               <span className="bg-gray-400 px-4 py-2 rounded-md">
                 NO DISPONIBLE
               </span>
             )}
-          </TableCell>
+          </TableCell> */}
         </TableRow>
       </TableBody>
     </Table>

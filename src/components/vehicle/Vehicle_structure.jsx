@@ -19,7 +19,7 @@ export const Vehicle_structure = () => {
     },
     {
       name: "Modelo",
-      selector: (row) => row.modelo,
+      selector: (row) => row.desc_modelo,
       hide: "md",
     },
     {
