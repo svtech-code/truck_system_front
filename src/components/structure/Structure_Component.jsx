@@ -28,6 +28,7 @@ const Structure_Component = ({
           propertyId={propertyId}
           propertyName={propertyName}
           updateStateComponent={updateStateComponent}
+          dataKey={"data"}
         />
       ),
     },

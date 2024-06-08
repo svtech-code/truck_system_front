@@ -12,11 +12,14 @@ import initialValues_vehicle from "../../utils/initialValues/vehicleValues";
 import vehicleValidation from "../../validations/vehicleValidation";
 import Vehicle_form from "./Vehicle_form";
 import usePostVehicle from "../../hooks/usePostVehicle";
+import { useEffect } from "react";
+import { getData } from "../../api/apiGet";
 
 const Vehicle_main = () => {
   const {
     mainVehicleData,
     numberOperationalVehicles,
+    numberMaintanceVehicle,
     numberExpiredDocument,
     updateVehicleData,
   } = useVehicle();
@@ -37,7 +40,7 @@ const Vehicle_main = () => {
       {
         titleCard: "Mantenimiento",
         iconCard: <GiMechanicGarage size={35} />,
-        countCard: numberExpiredDocument,
+        countCard: numberMaintanceVehicle,
       },
       {
         titleCard: "Vencimiento",
@@ -47,10 +50,26 @@ const Vehicle_main = () => {
     ],
   };
 
+  // carga de datos estados y choferes
+  useEffect(() => {
+    const getDataVehicle = async () => {
+      const [estados, choferes] = await Promise.all([
+        getData({ endPoint: "estado_vehiculos" }),
+        getData({ endPoint: "choferes" }),
+      ]);
+
+      updateVehicleData({
+        stateVehicle: estados?.response,
+        driveList: choferes?.response,
+      });
+    };
+
+    getDataVehicle();
+  }, []);
+
   // estados para el manejo del modal
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  const eventClickNewData = () => alert("nuevo elemento");
   const eventClickDownloadData = () => alert("Descargar informacion");
 
   return (
@@ -87,7 +106,13 @@ const Vehicle_main = () => {
       <DataTableComponent
         data={mainVehicleData}
         onOpen={onOpen}
-        structureData={Vehicle_structure()}
+        structureData={Vehicle_structure({
+          // data: mainVehicleData, // array con los datos del mantenedor
+          onOpen, // función para abrir el modal
+          route: varString.route, // ruta para trabajar peticiones axios
+          propertyId: varString.propertyId, // propiedad del id
+          propertyName: varString.propertyName, // propiedad de la descripción
+        })}
         subStructureData={Vehicle_subStructure}
         // newData={eventClickNewData}
         downloadData={eventClickDownloadData}

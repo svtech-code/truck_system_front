@@ -43,7 +43,7 @@ const ModalBase = ({
         {(onClose) => (
           <>
             {/* header del modal */}
-            <ModalHeader className="text-2xl px-4 py-3 bg-blue-400 rounded-lg">
+            <ModalHeader className="text-2xl px-4 py-3 rounded-lg">
               {title}
             </ModalHeader>
 

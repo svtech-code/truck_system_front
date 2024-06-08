@@ -13,7 +13,7 @@ const usePostVehicle = ({ data, updateStateComponent }) => {
         idTipoVehiculo,
         idModelo,
         descripcionVehiculo,
-        idTransportista,
+        idTransportista, // aún no !!
         vencimientoSeguro,
         vencimientoRevision,
         idChoferAsignado,
@@ -34,6 +34,9 @@ const usePostVehicle = ({ data, updateStateComponent }) => {
               cantidad_kilos: tonelaje,
               patente: patente.slice(0, -2),
               patente_completa: patente,
+              cod_chofer: idChoferAsignado,
+              cod_acoplado: idPatenteAcoplado,
+              cod_marca: idTransportista,
             },
           }).then((response) => {
             Swal.fire({

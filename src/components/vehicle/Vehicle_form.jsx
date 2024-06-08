@@ -1,7 +1,8 @@
 import { Input } from "@nextui-org/react";
-import Select_Component from "../Select_Component";
+import Select_Component_load from "../Select_Component_load";
 import { useState } from "react";
 import { useDisclosure } from "@nextui-org/react";
+import useVehicle from "../../hooks/useVehicle";
 
 const Vehicle_form = ({
   values,
@@ -12,6 +13,8 @@ const Vehicle_form = ({
   errors,
   firstInputRef,
 }) => {
+  const { driveList, mainAcopladoData } = useVehicle();
+
   // estado usado para almacenar
   const [reload, setReload] = useState([]);
 
@@ -124,7 +127,7 @@ const Vehicle_form = ({
 
       {/* select tipoVehiculo y modelo */}
       <div className="flex flex-col sm:flex-row gap-4">
-        <Select_Component
+        <Select_Component_load
           name={"idTipoVehiculo"}
           route="tipo_vehiculos"
           label={"Tipos vehículo"}
@@ -138,7 +141,7 @@ const Vehicle_form = ({
           required={true}
         />
 
-        <Select_Component
+        <Select_Component_load
           name={"idModelo"}
           route="modelos"
           label={"Modelo / Marca"}
@@ -181,7 +184,7 @@ const Vehicle_form = ({
           }
         />
 
-        <Select_Component
+        <Select_Component_load
           name={"idTransportista"}
           route="estado_vehiculos"
           label={"Transportista"}
@@ -241,33 +244,35 @@ const Vehicle_form = ({
 
       {/* Select chofer y acoplado */}
       <div className="flex flex-col sm:flex-row gap-4">
-        <Select_Component
+        <Select_Component_load
           name={"idChoferAsignado"}
           route="tipo_usuarios"
           label={"Chofer"}
-          itemKey="cod_tipo_usuario"
-          detail="desc_tipo_usuario"
+          itemKey="cod_usuario"
+          detail="desc_usuario"
           value={values.idChoferAsignado}
           handleChange={handleChange}
           handleBlur={handleBlur}
           touched={touched}
           errors={errors}
           required={true}
+          dataList={driveList}
         />
-
-        <Select_Component
-          name={"idPatenteAcoplado"}
-          route="vehiculos"
-          label={"Pte. Acoplado"}
-          itemKey="cod_vehiculo"
-          detail="patente"
-          value={values.idPatenteAcoplado}
-          handleChange={handleChange}
-          handleBlur={handleBlur}
-          touched={touched}
-          errors={errors}
-          required={false}
-        />
+        <div className="w-full sm:w-[12rem]">
+          <Select_Component_load
+            name={"idPatenteAcoplado"}
+            route="vehiculos"
+            label={"Pte. Acoplado"}
+            itemKey="cod_vehiculo"
+            detail="patente"
+            value={values.idPatenteAcoplado}
+            handleChange={handleChange}
+            handleBlur={handleBlur}
+            touched={touched}
+            errors={errors}
+            required={false}
+          />
+        </div>
       </div>
     </>
   );

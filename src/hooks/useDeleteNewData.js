@@ -1,6 +1,5 @@
 import Swal from "sweetalert2";
 import apiDelete from "../api/apiDelete";
-import apiGet from "../api/apiGet";
 
 // function to delete data
 const deleteItemArray = ({ arrayData, idData, propertyId }) => {
@@ -14,6 +13,7 @@ const useDeleteNewData = ({
   route, // ruta del endpoint
   propertyId, // nombre del objeto que almacena el id del elemento a eliminar
   idData, // id del elemento a eliminar
+  dataKey, // nombre del state principal a ser actualizado
 }) => {
   const onDelete = async () => {
     try {
@@ -28,7 +28,7 @@ const useDeleteNewData = ({
         }).then(() =>
           // actualización de los datos de la tabla del componente
           updateStateComponent({
-            data: deleteItemArray({ arrayData, idData, propertyId }),
+            [dataKey]: deleteItemArray({ arrayData, idData, propertyId }),
           })
         );
       });

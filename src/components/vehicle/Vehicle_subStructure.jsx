@@ -12,21 +12,18 @@ import Select_Component from "../Select_Component";
 const Vehicle_subStructure = ({ data }) => {
   const { mainAcopladoData } = useVehicle();
 
-  // const dataVehiculo = {
-  //   descricion: data.desc_vehiculo,
-  //   anio: data.anio,
-  //   vencimientoSeguro: data.fecha_vigencia_seguro,
-  //   vencimientoRevicion: data.fecha_vigencia_revision,
-  //   choferAsignado: null,
-  //   vehiculoAcoplado: null,
-  // };
   const {
+    cod_vehiculo,
     desc_vehiculo,
-    desc_tipo_vehiculo,
     anio,
     fecha_vigencia_seguro,
     fecha_vigencia_revision,
+    cod_acoplado,
   } = data;
+
+  // obtención de la patente en base al cod_acoplado
+  const patenteAcoplado =
+    mainAcopladoData.find((item) => item.cod_vehiculo === cod_acoplado) || [];
 
   return (
     <Table
@@ -43,8 +40,8 @@ const Vehicle_subStructure = ({ data }) => {
         <TableColumn>Año vehículo</TableColumn>
         <TableColumn>Vencimiento seguro</TableColumn>
         <TableColumn>Vencimiento Revisión</TableColumn>
-        <TableColumn>Asociación</TableColumn>
-        {/* <TableColumn>Pte. Acoplado</TableColumn> */}
+        <TableColumn>Transportista</TableColumn>
+        <TableColumn>Pte. Acoplado</TableColumn>
       </TableHeader>
       <TableBody emptyContent={"Sin datos asignados"}>
         <TableRow key="1">
@@ -53,15 +50,17 @@ const Vehicle_subStructure = ({ data }) => {
           <TableCell>{fecha_vigencia_seguro}</TableCell>
           <TableCell>{fecha_vigencia_revision}</TableCell>
           <TableCell>Transportes Bullileo</TableCell>
-          {/* <TableCell>
-            {desc_tipo_vehiculo !== "ACOPLADO" ? (
-              <Select_Component object={mainAcopladoData} />
-            ) : (
-              <span className="bg-gray-400 px-4 py-2 rounded-md">
-                NO DISPONIBLE
-              </span>
-            )}
-          </TableCell> */}
+          <TableCell>
+            {
+              <Select_Component
+                codPrimary={cod_vehiculo.toString()}
+                rowData={patenteAcoplado.patente}
+                listData={mainAcopladoData}
+                codData={"cod_vehiculo"}
+                descData={"patente"}
+              />
+            }
+          </TableCell>
         </TableRow>
       </TableBody>
     </Table>

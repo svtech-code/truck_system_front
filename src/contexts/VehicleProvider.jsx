@@ -20,15 +20,21 @@ export const VehiculoProvider = ({ children, response }) => {
   const [vehicleData, setVehicleData] = useState({
     mainVehicleData: response, // datos primarios de los vehiculos
 
-    mainAcopladoData: response
-      ?.filter((item) => item.desc_tipo_vehiculo === "ACOPLADO")
-      ?.map((item) => item?.patente),
-
     numberOperationalVehicles: response?.filter(
       (item) => item?.desc_estado_vehiculo === "DISPONIBLE"
     ).length, // cantidad de vehiculos operativos
 
+    numberMaintanceVehicle: response?.filter(
+      (item) => item?.desc_estado_vehiculo === "MANTENIMIENTO"
+    ).length, // cantidad de vehiculos en mantenimiento
+
+    mainAcopladoData: response // ver como se trabajarán los acoplados
+      ?.filter((item) => item.desc_tipo_vehiculo !== "CARRO"),
+    // ?.map((item) => item?.patente), // lista de vehículos de tipo acomplado
+
     numberExpiredDocument: filterByData(response).length, // cantidad de vehiculos con documentos vencidos
+    stateVehicle: [],
+    driveList: [],
   });
 
   // función para actualizar los datos del objeto estado

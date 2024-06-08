@@ -10,6 +10,7 @@ const ActionButton = ({
   propertyId, // nombre de la propiedad que almacena el id
   propertyName, // nombre de la propiedad que almacena el nombre
   updateStateComponent, // actualizador de los estados del mantenedor
+  dataKey, // nombre del state principal a ser actualizado
 }) => {
   const handlerEdit = () => {
     updateStateComponent({
@@ -27,6 +28,7 @@ const ActionButton = ({
     route, // ruta del endpoint
     propertyId, // nombre del objeto que almacena el id
     idData: row[propertyId], // id del valor a eliminar
+    dataKey: dataKey,
   });
 
   return (

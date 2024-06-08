@@ -3,9 +3,9 @@ import { useCallback, useState } from "react";
 import HeaderComponent from "../Header_Component";
 import HeaderCardComponent from "../HeaderCard_Component";
 import { IoLogoModelS } from "react-icons/io";
-// import ModalNewData from "../../templates/ModalNewData";
 import DataTableComponent from "../DataTable_Component";
 import Structure_Component from "../structure/Structure_Component";
+import VehicleModel_structure from "./VehicleModel_structure";
 
 const VehicleModel_main = ({ vehicleModel_data }) => {
   // estados generales del componente
@@ -73,14 +73,13 @@ const VehicleModel_main = ({ vehicleModel_data }) => {
       {/* tabla de datos del mantenedor */}
       <DataTableComponent
         data={stateComponent.data} // datos de la tabla
-        structureData={Structure_Component({
-          data: stateComponent.data, // Array con los datos del mantenedor
-          titleColum: varString.title, // titulo de la columna
-          onOpen, // función para abrir modal
-          route: varString.route, // ruta para trabajar peticions axios
+        structureData={VehicleModel_structure({
+          data: stateComponent.data, // Array con los datos del mantenedorl
+          onOpen, // función para abrir el modal
+          route: varString.route, // ruta para trabajar con las peticiones axios
           propertyId: varString.propertyId, // propiedad del id
           propertyName: varString.propertyName, // propiedad de la descripción
-          updateStateComponent, // actualizador del objeto estados del componente
+          updateStateComponent, // actualizador del objeto state del componente
         })}
         onOpen={onOpen}
         downloadData={eventClickDownloadData}
