@@ -7,33 +7,22 @@ const VehicleModel_structure = ({
   route,
   propertyId,
   propertyName,
+  updateStateComponent,
 }) => {
   return [
     {
       name: "Modelo vehículo",
       selector: (row) => row.desc_modelo,
-      width: "300px",
+      width: "250px",
     },
     {
       name: "Marca vehículo",
       selector: (row) => row.desc_marca,
       width: "300px",
-      cell: (row) => (
-        <Select_Component
-          codPrimary={row.cod_modelo}
-          rowData={row.desc_modelo}
-          listData={data}
-          codData={"cod_marca"}
-          descData={"desc_marca"}
-        />
-      ),
     },
     {
       name: "Acciones",
       center: true,
-      //   width: "200px",
-      //   right: true,
-      //   center: true,
       style: {
         "justify-content": "flex-end",
       },
@@ -45,7 +34,7 @@ const VehicleModel_structure = ({
           route={route}
           propertyId={propertyId}
           propertyName={propertyName}
-          updateStateComponent={""}
+          updateStateComponent={updateStateComponent}
           dataKey={"data"}
         />
       ),

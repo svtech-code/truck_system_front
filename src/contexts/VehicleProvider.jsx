@@ -18,7 +18,7 @@ const filterByData = (array) => {
 export const VehiculoProvider = ({ children, response }) => {
   // estados para los datos principales
   const [vehicleData, setVehicleData] = useState({
-    mainVehicleData: response, // datos primarios de los vehiculos
+    data: response, // datos primarios de los vehiculos
 
     numberOperationalVehicles: response?.filter(
       (item) => item?.desc_estado_vehiculo === "DISPONIBLE"
@@ -35,6 +35,10 @@ export const VehiculoProvider = ({ children, response }) => {
     numberExpiredDocument: filterByData(response).length, // cantidad de vehiculos con documentos vencidos
     stateVehicle: [],
     driveList: [],
+    edit: false,
+    idEdit: null,
+    descriptionEdit: null,
+    error: null,
   });
 
   // función para actualizar los datos del objeto estado

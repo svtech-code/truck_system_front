@@ -10,6 +10,9 @@ import { Formik } from "formik";
 import { useEffect, useRef } from "react";
 
 const ModalBase = ({
+  propertyId,
+  stateComponent,
+  updateStateComponent,
   title,
   size,
   isOpen,
@@ -19,13 +22,27 @@ const ModalBase = ({
   validationSchema_generic,
   Form_generic,
 }) => {
+  // desestructuración de estados del componente principal
+  const { data, edit, idEdit } = stateComponent;
+
   // referencia para el input inicial
   const firstInputRef = useRef();
+
+  let dataEdit = [];
+  if (edit) {
+    dataEdit = data.find((data) => data[propertyId] === idEdit);
+    // console.log(data);
+  }
 
   // submit de datos del formulario
   const { onSubmit } = useSubmit_generic;
 
+  // texto personalizado para btn del modal
+  const textBtnSubmit = edit ? "Actualizar" : "Registrar";
+  const textBtnSubmitting = edit ? "Actualizando..." : "Registrando...";
+
   useEffect(() => {
+    if (!isOpen) updateStateComponent({ edit: false, idEdit: null });
     if (isOpen) firstInputRef.current.focus();
   }, [isOpen]);
 
@@ -49,7 +66,10 @@ const ModalBase = ({
 
             {/* controlador de formulario con formik */}
             <Formik
-              initialValues={initialValues_generic()}
+              initialValues={initialValues_generic({
+                data: edit ? dataEdit : null,
+              })}
+              // initialValues={initialValues_generic()}
               validationSchema={validationSchema_generic()}
               onSubmit={onSubmit(onClose)}
             >

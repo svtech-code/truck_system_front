@@ -8,8 +8,7 @@ export const Vehicle_structure = ({
   propertyId,
   propertyName,
 }) => {
-  const { mainVehicleData, stateVehicle, driveList, updateVehicleData } =
-    useVehicle();
+  const { data, stateVehicle, driveList, updateVehicleData } = useVehicle();
   return [
     {
       name: "Patente",
@@ -72,14 +71,14 @@ export const Vehicle_structure = ({
       width: "200px",
       cell: (row) => (
         <ActionButton
-          data={mainVehicleData}
+          data={data}
           row={row}
           onOpen={onOpen}
           route={route}
           propertyId={propertyId}
           propertyName={propertyName}
           updateStateComponent={updateVehicleData}
-          dataKey={"mainVehicleData"}
+          dataKey={"data"}
         />
       ),
     },

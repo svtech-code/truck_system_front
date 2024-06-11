@@ -1,8 +1,6 @@
 import { Chip, Select, SelectItem } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getData } from "../api/apiGet";
-
-// trabajar el estilo mediante objetos
 
 const Select_Component_load = ({
   dataList,
@@ -21,23 +19,69 @@ const Select_Component_load = ({
   reload,
   required,
 }) => {
-  const [list, setList] = useState(dataList || []);
-  const [isDataLoader, setIsDataLoader] = useState(!!dataList);
+  // estados para trabajar con el select
+  const [stateSelect, setStateSelect] = useState({
+    list: dataList || [],
+    isDataLoader: !!dataList,
+    selectedItem: "",
+  });
+
+  // actualizador de los estados
+  const updateStateSelect = useCallback((newState) => {
+    setStateSelect((prevState) => ({ ...prevState, ...newState }));
+  }, []);
+
+  // función para manejar la carga de datos del select
+  const updateSelectData = useCallback((responseList, idData) => {
+    const selected = responseList.find(
+      (item) => item[idData ? idData : detail] === value
+    );
+    const selectedValue = selected ? selected[itemKey].toString() : "";
+    updateStateSelect({ selectedItem: selectedValue });
+    handleChange({
+      target: {
+        name,
+        value: selectedValue,
+      },
+    });
+  }, []);
 
   useEffect(() => {
     const handlerLoad = async () => {
-      if (!isDataLoader && !dataList) {
+      if (!stateSelect.isDataLoader && !dataList) {
         const { response } = await getData({ endPoint: route });
-        setList(response);
-        setIsDataLoader(true);
+        updateStateSelect({ list: response, isDataLoader: true });
+        if (value !== "") {
+          updateSelectData(response);
+        }
       }
     };
 
+    if (name === "desc_chofer") {
+      updateSelectData(dataList);
+    }
+
+    if (name === "cod_acoplado") {
+      updateSelectData(dataList, itemKey);
+      // console.log(value);
+    }
+
     handlerLoad();
 
-    if (reload && reload.length > 0)
-      setList((prevList) => [...prevList, ...reload]);
+    if (reload && reload.length > 0) {
+      updateStateSelect({ list: (prevList) => [...prevList, ...reload] });
+    }
   }, [reload]);
+
+  const handleSelectedValue = (newValue) => {
+    updateStateSelect({ selectedItem: newValue });
+    handleChange({
+      target: {
+        name,
+        value: newValue,
+      },
+    });
+  };
 
   const isError = touched[name] && errors[name];
 
@@ -51,15 +95,17 @@ const Select_Component_load = ({
         size="md"
         variant="faded"
         color={isError ? "error" : "primary"}
-        value={value}
-        onChange={handleChange}
+        selectedKeys={
+          stateSelect.selectedItem ? [stateSelect.selectedItem] : []
+        }
+        onSelectionChange={(key) => handleSelectedValue(key.currentKey)}
         onBlur={handleBlur}
         isRequired={required}
-        isLoading={!isDataLoader}
+        isLoading={!stateSelect.isDataLoader}
         isInvalid={!!isError}
       >
-        {list.map((item) => (
-          <SelectItem key={item[itemKey]} value={item[itemKey]}>
+        {stateSelect.list.map((item) => (
+          <SelectItem key={item[itemKey]}>
             {subDetail ? `${item[detail]} - ${item[subDetail]}` : item[detail]}
           </SelectItem>
         ))}

@@ -30,7 +30,7 @@ const Vehicle_form = ({
       inputValue = inputValue.slice(0, 6) + "-" + inputValue.slice(6);
     }
 
-    setFieldValue("patente", inputValue);
+    setFieldValue("patente_completa", inputValue);
   };
 
   // estados para el manejo del modal
@@ -73,54 +73,60 @@ const Vehicle_form = ({
       {/* input patente, año y tonelaje */}
       <div className="flex flex-col xs:flex-row gap-4">
         <Input
-          color={touched.patente && errors.patente ? "danger" : "primary"}
-          name="patente"
+          color={
+            touched.patente_completa && errors.patente_completa
+              ? "danger"
+              : "primary"
+          }
+          name="patente_completa"
           type="text"
           label="Patente"
           labelPlacement="outside"
           variant="faded"
-          value={values.patente}
+          value={values.patente_completa}
           ref={firstInputRef}
           isRequired={true}
           onChange={myhandleChange}
           onBlur={handleBlur}
-          isInvalid={touched.patente && errors.patente}
-          errorMessage={touched.patente && errors.patente}
+          isInvalid={touched.patente_completa && errors.patente_completa}
+          errorMessage={touched.patente_completa && errors.patente_completa}
           className="w-full xxs:w-[8rem]"
           description="Patente completa"
         />
 
         <Input
-          color={
-            touched.anioVehiculo && errors.anioVehiculo ? "danger" : "primary"
-          }
-          name="anioVehiculo"
+          color={touched.anio && errors.anio ? "danger" : "primary"}
+          name="anio"
           type="number"
           label="Año"
           labelPlacement="outside"
           variant="faded"
-          value={values.anioVehiculo}
+          value={values.anio}
           isRequired={true}
           onChange={handleChange}
           onBlur={handleBlur}
-          isInvalid={touched.anioVehiculo && errors.anioVehiculo}
-          errorMessage={touched.anioVehiculo && errors.anioVehiculo}
+          isInvalid={touched.anio && errors.anio}
+          errorMessage={touched.anio && errors.anio}
           className="w-full xxs:w-[8rem]"
         />
 
         <Input
-          color={touched.tonelaje && errors.tonelaje ? "danger" : "primary"}
-          name="tonelaje"
+          color={
+            touched.cantidad_kilos && errors.cantidad_kilos
+              ? "danger"
+              : "primary"
+          }
+          name="cantidad_kilos"
           type="number"
           label="Tonelaje"
           labelPlacement="outside"
           variant="faded"
-          value={values.tonelaje}
+          value={values.cantidad_kilos}
           isRequired={true}
           onChange={handleChange}
           onBlur={handleBlur}
-          isInvalid={touched.tonelaje && errors.tonelaje}
-          errorMessage={touched.tonelaje && errors.tonelaje}
+          isInvalid={touched.cantidad_kilos && errors.cantidad_kilos}
+          errorMessage={touched.cantidad_kilos && errors.cantidad_kilos}
           className="w-full xxs:w-[8rem]"
         />
       </div>
@@ -128,12 +134,12 @@ const Vehicle_form = ({
       {/* select tipoVehiculo y modelo */}
       <div className="flex flex-col sm:flex-row gap-4">
         <Select_Component_load
-          name={"idTipoVehiculo"}
+          name={"desc_tipo_vehiculo"}
           route="tipo_vehiculos"
           label={"Tipos vehículo"}
           itemKey="cod_tipo_vehiculo"
           detail="desc_tipo_vehiculo"
-          value={values.idTipoVehiculo}
+          value={values.desc_tipo_vehiculo}
           handleChange={handleChange}
           handleBlur={handleBlur}
           touched={touched}
@@ -142,12 +148,12 @@ const Vehicle_form = ({
         />
 
         <Select_Component_load
-          name={"idModelo"}
+          name={"desc_modelo"}
           route="modelos"
           label={"Modelo / Marca"}
           itemKey="cod_modelo"
           detail="desc_modelo"
-          value={values.idModelo}
+          value={values.desc_modelo}
           handleChange={handleSelectChange}
           subDetail={"desc_marca"}
           allowNew={true}
@@ -163,25 +169,21 @@ const Vehicle_form = ({
       <div className="flex flex-col sm:flex-row gap-4">
         <Input
           color={
-            touched.descripcionVehiculo && errors.descripcionVehiculo
-              ? "danger"
-              : "primary"
+            touched.desc_vehiculo && errors.desc_vehiculo ? "danger" : "primary"
           }
-          name="descripcionVehiculo"
+          name="desc_vehiculo"
           type="text"
           label="Descripción"
           labelPlacement="outside"
           variant="faded"
-          value={values.descripcionVehiculo}
+          value={values.desc_vehiculo}
           isRequired={true}
           onChange={(e) =>
-            setFieldValue("descripcionVehiculo", e.target.value.toUpperCase())
+            setFieldValue("desc_vehiculo", e.target.value.toUpperCase())
           }
           onBlur={handleBlur}
-          isInvalid={touched.descripcionVehiculo && errors.descripcionVehiculo}
-          errorMessage={
-            touched.descripcionVehiculo && errors.descripcionVehiculo
-          }
+          isInvalid={touched.desc_vehiculo && errors.desc_vehiculo}
+          errorMessage={touched.desc_vehiculo && errors.desc_vehiculo}
         />
 
         <Select_Component_load
@@ -203,41 +205,47 @@ const Vehicle_form = ({
       <div className="flex flex-col sm:flex-row gap-4">
         <Input
           color={
-            touched.vencimientoSeguro && errors.vencimientoSeguro
+            touched.fecha_vigencia_seguro && errors.fecha_vigencia_seguro
               ? "danger"
               : "primary"
           }
-          name="vencimientoSeguro"
+          name="fecha_vigencia_seguro"
           type="date"
           label="Vencimiento seguro"
           labelPlacement="outside"
           variant="faded"
-          value={values.vencimientoSeguro}
+          value={values.fecha_vigencia_seguro}
           isRequired={true}
           onChange={handleChange}
           onBlur={handleBlur}
-          isInvalid={touched.vencimientoSeguro && errors.vencimientoSeguro}
-          errorMessage={touched.vencimientoSeguro && errors.vencimientoSeguro}
+          isInvalid={
+            touched.fecha_vigencia_seguro && errors.fecha_vigencia_seguro
+          }
+          errorMessage={
+            touched.fecha_vigencia_seguro && errors.fecha_vigencia_seguro
+          }
         />
 
         <Input
           color={
-            touched.vencimientoRevision && errors.vencimientoRevision
+            touched.fecha_vigencia_revision && errors.fecha_vigencia_revision
               ? "danger"
               : "primary"
           }
-          name="vencimientoRevision"
+          name="fecha_vigencia_revision"
           type="date"
           label="Vencimiento revisión"
           labelPlacement="outside"
           variant="faded"
-          value={values.vencimientoRevision}
+          value={values.fecha_vigencia_revision}
           isRequired={true}
           onChange={handleChange}
           onBlur={handleBlur}
-          isInvalid={touched.vencimientoRevision && errors.vencimientoRevision}
+          isInvalid={
+            touched.fecha_vigencia_revision && errors.fecha_vigencia_revision
+          }
           errorMessage={
-            touched.vencimientoRevision && errors.vencimientoRevision
+            touched.fecha_vigencia_revision && errors.fecha_vigencia_revision
           }
         />
       </div>
@@ -245,12 +253,12 @@ const Vehicle_form = ({
       {/* Select chofer y acoplado */}
       <div className="flex flex-col sm:flex-row gap-4">
         <Select_Component_load
-          name={"idChoferAsignado"}
-          route="tipo_usuarios"
+          name={"desc_chofer"}
+          route="usuarios"
           label={"Chofer"}
           itemKey="cod_usuario"
           detail="desc_usuario"
-          value={values.idChoferAsignado}
+          value={values.desc_chofer}
           handleChange={handleChange}
           handleBlur={handleBlur}
           touched={touched}
@@ -260,17 +268,18 @@ const Vehicle_form = ({
         />
         <div className="w-full sm:w-[12rem]">
           <Select_Component_load
-            name={"idPatenteAcoplado"}
+            name={"cod_acoplado"}
             route="vehiculos"
             label={"Pte. Acoplado"}
             itemKey="cod_vehiculo"
             detail="patente"
-            value={values.idPatenteAcoplado}
+            value={values.cod_acoplado}
             handleChange={handleChange}
             handleBlur={handleBlur}
             touched={touched}
             errors={errors}
             required={false}
+            dataList={mainAcopladoData}
           />
         </div>
       </div>

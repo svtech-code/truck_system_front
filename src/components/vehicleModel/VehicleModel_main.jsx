@@ -1,11 +1,15 @@
 import { useDisclosure } from "@nextui-org/react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import HeaderComponent from "../Header_Component";
 import HeaderCardComponent from "../HeaderCard_Component";
 import { IoLogoModelS } from "react-icons/io";
 import DataTableComponent from "../DataTable_Component";
-import Structure_Component from "../structure/Structure_Component";
 import VehicleModel_structure from "./VehicleModel_structure";
+import ModalBase from "../../templates/ModalBase";
+import usePostModel from "../../hooks/usePostModel";
+import initialValues_model from "../../utils/initialValues/modelValues";
+import modelValidation from "../../validations/modelValidation";
+import VehicleModel_form from "./VehicleModel_form";
 
 const VehicleModel_main = ({ vehicleModel_data }) => {
   // estados generales del componente
@@ -16,6 +20,11 @@ const VehicleModel_main = ({ vehicleModel_data }) => {
     descriptionEdit: null,
     error: null,
   });
+
+  // actualizador de los estados del componente
+  const updateStateComponent = useCallback((newState) => {
+    setStateComponent((prev) => ({ ...prev, ...newState }));
+  }, []);
 
   // constante con los string utilizados como parámetros
   const varString = {
@@ -32,11 +41,6 @@ const VehicleModel_main = ({ vehicleModel_data }) => {
       },
     ],
   };
-
-  // actualizador de los estados del componente
-  const updateStateComponent = useCallback((newState) => {
-    setStateComponent((prev) => ({ ...prev, ...newState }));
-  }, []);
 
   // estados para el manejo del modal
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -59,20 +63,27 @@ const VehicleModel_main = ({ vehicleModel_data }) => {
       </HeaderComponent>
 
       {/* modal del mantenedor */}
-      {/* <ModalNewData
+      <ModalBase
+        propertyId={varString.propertyId}
         stateComponent={stateComponent}
         updateStateComponent={updateStateComponent}
         title={varString.titleModal}
+        size={"xl"}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        route={varString.route}
-        propertyId={varString.propertyId}
-        propertyName={varString.propertyName}
-      /> */}
+        useSubmit_generic={usePostModel({
+          data: stateComponent.data,
+          updateStateComponent,
+        })}
+        initialValues_generic={initialValues_model}
+        validationSchema_generic={modelValidation}
+        Form_generic={(props) => <VehicleModel_form {...props} />}
+      />
 
       {/* tabla de datos del mantenedor */}
       <DataTableComponent
         data={stateComponent.data} // datos de la tabla
+        onOpen={onOpen} // función para abrir el modal
         structureData={VehicleModel_structure({
           data: stateComponent.data, // Array con los datos del mantenedorl
           onOpen, // función para abrir el modal
@@ -81,7 +92,6 @@ const VehicleModel_main = ({ vehicleModel_data }) => {
           propertyName: varString.propertyName, // propiedad de la descripción
           updateStateComponent, // actualizador del objeto state del componente
         })}
-        onOpen={onOpen}
         downloadData={eventClickDownloadData}
       />
     </>

@@ -17,7 +17,8 @@ import { getData } from "../../api/apiGet";
 
 const Vehicle_main = () => {
   const {
-    mainVehicleData,
+    data,
+    // mainVehicleData,
     numberOperationalVehicles,
     numberMaintanceVehicle,
     numberExpiredDocument,
@@ -89,13 +90,16 @@ const Vehicle_main = () => {
 
       {/* modal generico */}
       <ModalBase
+        propertyId={varString.propertyId}
+        stateComponent={useVehicle()}
+        updateStateComponent={updateVehicleData}
         title={varString.titleModal}
         size={"2xl"}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         useSubmit_generic={usePostVehicle({
-          data: mainVehicleData,
-          updateData: updateVehicleData,
+          data: data,
+          updateStateComponent: updateVehicleData,
         })}
         initialValues_generic={initialValues_vehicle}
         validationSchema_generic={vehicleValidation}
@@ -104,7 +108,7 @@ const Vehicle_main = () => {
 
       {/* tabla del mantenedor */}
       <DataTableComponent
-        data={mainVehicleData}
+        data={data}
         onOpen={onOpen}
         structureData={Vehicle_structure({
           // data: mainVehicleData, // array con los datos del mantenedor
@@ -112,9 +116,9 @@ const Vehicle_main = () => {
           route: varString.route, // ruta para trabajar peticiones axios
           propertyId: varString.propertyId, // propiedad del id
           propertyName: varString.propertyName, // propiedad de la descripción
+          // updateStateComponent: updateVehicleData,
         })}
-        subStructureData={Vehicle_subStructure}
-        // newData={eventClickNewData}
+        subStructureData={Vehicle_subStructure} // datos para la subEstructura
         downloadData={eventClickDownloadData}
       />
     </>
