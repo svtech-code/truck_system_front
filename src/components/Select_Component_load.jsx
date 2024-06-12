@@ -63,7 +63,6 @@ const Select_Component_load = ({
 
     if (name === "cod_acoplado") {
       updateSelectData(dataList, itemKey);
-      // console.log(value);
     }
 
     handlerLoad();

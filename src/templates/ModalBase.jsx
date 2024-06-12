@@ -31,7 +31,6 @@ const ModalBase = ({
   let dataEdit = [];
   if (edit) {
     dataEdit = data.find((data) => data[propertyId] === idEdit);
-    // console.log(data);
   }
 
   // submit de datos del formulario
