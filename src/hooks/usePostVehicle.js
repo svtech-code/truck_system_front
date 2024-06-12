@@ -1,63 +1,92 @@
 import Swal from "sweetalert2";
 import apiPost from "../api/apiPost";
 import useVehicle from "./useVehicle";
+import { updateArray } from "../utils/methodUpdateArray";
+import apiPut from "../api/apiPut";
 
 const usePostVehicle = ({ data, updateStateComponent }) => {
   const onSubmit =
     (onClose) =>
     async (values, { setSubmitting }) => {
-      // const { mainVehicleData, updateVehicleData } = useVehicle();
-      const {
-        cod_vehiculo,
-        desc_vehiculo,
-        cod_tipo_vehiculo,
-        cod_modelo,
-        cod_estado_vehiculo,
-        anio,
-        fecha_vigencia_seguro,
-        fecha_vigencia_revision,
-        cantidad_kilos,
-        patente_completa,
-        cod_chofer,
-        cod_acoplado,
-        cod_marca, // revisar si es necesario
-        idTransportista,
-      } = values;
+      // const {
+      //   cod_vehiculo,
+      //   desc_vehiculo,             --> listo / listo
+      //   cod_tipo_vehiculo,         --> desc_tipo_vehiculo listo
+      //   cod_modelo,                --> desc_modelo listo
+      //   cod_estado_vehiculo,       --> listo
+      //   anio,                      --> listo
+      //   fecha_vigencia_seguro,     --> listo
+      //   fecha_vigencia_revision,   --> listo
+      //   cantidad_kilos,            --> listo
+      //   patente_completa,          --> listo
+      //   cod_chofer,                --> desc_chofer listo
+      //   cod_acoplado,              --> listo
+      //   cod_marca,                 --> listo
+      //   idTransportista,           --> listo
+      // } = values;
+      const {cod_vehiculo, ...otherFields} = values;
+
+      const payload = {
+        ...otherFields,
+        desc_vehiculo: otherFields?.desc_vehiculo.toUpperCase(),
+        cod_tipo_vehiculo: otherFields?.desc_tipo_vehiculo,
+        cod_modelo: otherFields?.desc_modelo,
+        cod_chofer: otherFields?.desc_chofer,
+        patente: otherFields?.patente_completa.slice(0, -2),
+        cod_marca: 1,
+        idTransportista: 1, // valor momentaneamente fijo
+      }
+
       try {
         if (cod_vehiculo === null) {
-          // await apiPost({
-          //   route: "vehiculos",
-          //   object: {
-          //     desc_vehiculo: descripcionVehiculo,
-          //     cod_tipo_vehiculo: idTipoVehiculo,
-          //     cod_modelo: idModelo,
-          //     cod_estado_vehiculo: 1,
-          //     anio: anioVehiculo,
-          //     fecha_vigencia_seguro: vencimientoSeguro,
-          //     fecha_vigencia_revision: vencimientoRevision,
-          //     cantidad_kilos: tonelaje,
-          //     patente: patente.slice(0, -2),
-          //     patente_completa: patente,
-          //     cod_chofer: idChoferAsignado,
-          //     cod_acoplado: idPatenteAcoplado,
-          //     cod_marca: idTransportista,
-          //   },
-          // }).then((response) => {
-          //   Swal.fire({
-          //     icon: "success",
-          //     title: "Success",
-          //     text: "Registro almacenado",
-          //   }).then(() => {
-          //     console.log("actualizar array de datos");
-          //   });
-          // });
-          console.log("new");
-          console.log(values);
-        } else {
-          // console.log(`editar id: ${idVehicle}`);
-          console.log("edit");
-          console.log(values);
+          await apiPost({
+            route: "vehiculos",
+            object: payload,
+          }).then((response) => {
+            Swal.fire({
+              icon: "success",
+              title: "Success",
+              text: "Registro almacenado",
+            }).then(() => {
+              // actualización del array de datos
+              updateStateComponent({
+                data: updateArray({
+                  arrayData: data,
+                  idData: response?.data?.cod_vehiculo,
+                  idField: "cod_vehiculo",
+                  updateFields: response?.data,
+                })
+              })
+            });
+          });
+        } else {          
+          await apiPut({
+            route: `vehiculos/${cod_vehiculo.toString()}`,
+            object: payload,
+          }).then((response) => {
+            Swal.fire({
+              icon: "success",
+              title: "Success",
+              text: "Registro actualizado",
+            }).then(() => {
+              // actualización del array
+              updateStateComponent({
+                data: updateArray({
+                  arrayData: data,
+                  idData: cod_vehiculo,
+                  idField: "cod_vehiculo",
+                  updateFields: response?.data,
+                }),
+              });
+            });
+          });
+
+          console.log(otherFields);
+          console.log(payload);
         }
+
+        // cerrar modal
+        onClose();
       } catch (error) {
         console.log(error);
       } finally {
