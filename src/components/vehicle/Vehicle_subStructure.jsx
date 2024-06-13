@@ -49,10 +49,10 @@ const Vehicle_subStructure = ({ data }) => {
           <TableCell>{anio}</TableCell>
           <TableCell>{fecha_vigencia_seguro}</TableCell>
           <TableCell>{fecha_vigencia_revision}</TableCell>
-          <TableCell>Transportes Bullileo</TableCell>
+          <TableCell>cliente propietario del vehículo</TableCell>
           <TableCell>
             {
-              <Select_Component
+              <Select_Component // revisar a donde se pasa
                 codPrimary={cod_vehiculo.toString()}
                 rowData={patenteAcoplado.patente}
                 listData={mainAcopladoData}

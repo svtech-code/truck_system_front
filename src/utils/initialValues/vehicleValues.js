@@ -12,7 +12,7 @@ const defaultInitialValues = {
   desc_chofer: "",
   cod_acoplado: null,
   cod_marca: "",
-  idTransportista: "",
+  idTransportista: null,
 };
 
 const initialValues_vehicle = ({ data } = {}) => {

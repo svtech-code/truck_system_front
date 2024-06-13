@@ -24,7 +24,7 @@ const usePostVehicle = ({ data, updateStateComponent }) => {
       //   cod_marca,                 --> listo
       //   idTransportista,           --> listo
       // } = values;
-      const {cod_vehiculo, ...otherFields} = values;
+      const { cod_vehiculo, ...otherFields } = values;
 
       const payload = {
         ...otherFields,
@@ -33,9 +33,11 @@ const usePostVehicle = ({ data, updateStateComponent }) => {
         cod_modelo: otherFields?.desc_modelo,
         cod_chofer: otherFields?.desc_chofer,
         patente: otherFields?.patente_completa.slice(0, -2),
-        cod_marca: 1,
+        // cod_marca: 1,
         idTransportista: 1, // valor momentaneamente fijo
-      }
+        cod_acoplado:
+          otherFields?.cod_acoplado === "" ? null : otherFields?.cod_acoplado,
+      };
 
       try {
         if (cod_vehiculo === null) {
@@ -55,11 +57,13 @@ const usePostVehicle = ({ data, updateStateComponent }) => {
                   idData: response?.data?.cod_vehiculo,
                   idField: "cod_vehiculo",
                   updateFields: response?.data,
-                })
-              })
+                }),
+              });
             });
           });
-        } else {          
+          // console.log(otherFields);
+          // console.log(payload);
+        } else {
           await apiPut({
             route: `vehiculos/${cod_vehiculo.toString()}`,
             object: payload,
@@ -81,8 +85,8 @@ const usePostVehicle = ({ data, updateStateComponent }) => {
             });
           });
 
-          console.log(otherFields);
-          console.log(payload);
+          // console.log(otherFields);
+          // console.log(payload);
         }
 
         // cerrar modal

@@ -10,6 +10,7 @@ const Select_Component_load = ({
   detail,
   name,
   value,
+  subValue,
   handleChange,
   handleBlur,
   touched,
@@ -53,6 +54,19 @@ const Select_Component_load = ({
         updateStateSelect({ list: response, isDataLoader: true });
         if (value !== "") {
           updateSelectData(response);
+
+          if (name === "desc_modelo") {
+            const arrayModel = response.find(
+              (item) => item.desc_modelo === value
+            );
+
+            handleChange({
+              target: {
+                name: "cod_marca",
+                value: arrayModel.cod_marca,
+              },
+            });
+          }
         }
       }
     };
@@ -73,6 +87,19 @@ const Select_Component_load = ({
   }, [reload]);
 
   const handleSelectedValue = (newValue) => {
+    // condicional para trabajar con modelo y marca
+    if (name === "desc_modelo") {
+      const arrayModel = stateSelect.list.find(
+        (item) => item.cod_modelo.toString() === newValue
+      );
+      handleChange({
+        target: {
+          name: "cod_marca",
+          value: arrayModel.cod_marca,
+        },
+      });
+    }
+
     updateStateSelect({ selectedItem: newValue });
     handleChange({
       target: {

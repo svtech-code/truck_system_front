@@ -32,7 +32,7 @@ const vehicleValidation = () => {
         REGEX_numberString,
         "Solo se admiten letras, numeros y espacios !"
       ),
-    idTransportista: Yup.string().required("Seleccionar transportista !"),
+    // idTransportista: Yup.string().required("Seleccionar transportista !"),
     fecha_vigencia_seguro: Yup.date().required(
       "Seleccionar fecha vencimiento seguro"
     ),

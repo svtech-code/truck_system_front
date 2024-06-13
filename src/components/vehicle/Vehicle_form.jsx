@@ -154,10 +154,11 @@ const Vehicle_form = ({
           itemKey="cod_modelo"
           detail="desc_modelo"
           value={values.desc_modelo}
+          subValue={values}
           handleChange={handleSelectChange}
           subDetail={"desc_marca"}
           allowNew={true}
-          reload={reload} // pensado para la recarga al agregar nuevo modelo
+          reload={reload} // pensado para la recarga al agregar nuevo modelo por modal
           handleBlur={handleBlur}
           touched={touched}
           errors={errors}
@@ -186,7 +187,7 @@ const Vehicle_form = ({
           errorMessage={touched.desc_vehiculo && errors.desc_vehiculo}
         />
 
-        <Select_Component_load
+        {/* <Select_Component_load
           name={"idTransportista"}
           route="estado_vehiculos"
           label={"Transportista"}
@@ -197,8 +198,8 @@ const Vehicle_form = ({
           handleBlur={handleBlur}
           touched={touched}
           errors={errors}
-          required={true}
-        />
+          required={false} // cambiar a true, cuando el endpoint funcione
+        /> */}
       </div>
 
       {/* input fechas de vencimiento */}

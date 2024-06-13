@@ -13,7 +13,7 @@ const usePostModel = ({ data, updateStateComponent }) => {
 
         // ajuste de los datos a enviar
         const payload = {
-          desc_modelo: otherFields.desc_modelo?.toUpperCase(),
+          desc_modelo: otherFields?.desc_modelo?.toUpperCase(),
           cod_marca: otherFields?.desc_marca,
         };
 

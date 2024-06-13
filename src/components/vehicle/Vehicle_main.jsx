@@ -18,7 +18,6 @@ import { getData } from "../../api/apiGet";
 const Vehicle_main = () => {
   const {
     data,
-    // mainVehicleData,
     numberOperationalVehicles,
     numberMaintanceVehicle,
     numberExpiredDocument,
