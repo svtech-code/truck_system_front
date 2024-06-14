@@ -5,7 +5,6 @@ const VehicleModel_form = ({
   values,
   setFieldValue,
   handleBlur,
-  handleChange,
   touched,
   errors,
   firstInputRef,
@@ -37,7 +36,7 @@ const VehicleModel_form = ({
         itemKey={"cod_marca"}
         detail={"desc_marca"}
         value={values.desc_marca}
-        handleChange={handleChange}
+        setFieldValue={setFieldValue}
         handleBlur={handleBlur}
         touched={touched}
         errors={errors}

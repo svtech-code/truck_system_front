@@ -4,21 +4,19 @@ import { getData } from "../api/apiGet";
 
 const Select_Component_load = ({
   dataList,
-  route,
+  name,
   label,
   itemKey,
   detail,
-  name,
   value,
-  subValue,
-  handleChange,
+  setFieldValue,
   handleBlur,
   touched,
   errors,
-  subDetail,
-  allowNew,
-  reload,
   required,
+  subDetail, // valor para manejar la carga compuesta de modelo y marca
+  allowNew, // valor para manejar la opción de agregar nuevo dato al select
+  valueForUpdate,
 }) => {
   // estados para trabajar con el select
   const [stateSelect, setStateSelect] = useState({
@@ -39,74 +37,41 @@ const Select_Component_load = ({
     );
     const selectedValue = selected ? selected[itemKey].toString() : "";
     updateStateSelect({ selectedItem: selectedValue });
-    handleChange({
-      target: {
-        name,
-        value: selectedValue,
-      },
-    });
+    setFieldValue(name, selectedValue);
   }, []);
 
   useEffect(() => {
-    const handlerLoad = async () => {
-      if (!stateSelect.isDataLoader && !dataList) {
-        const { response } = await getData({ endPoint: route });
-        updateStateSelect({ list: response, isDataLoader: true });
-        if (value !== "") {
-          updateSelectData(response);
-
-          if (name === "desc_modelo") {
-            const arrayModel = response.find(
-              (item) => item.desc_modelo === value
-            );
-
-            handleChange({
-              target: {
-                name: "cod_marca",
-                value: arrayModel.cod_marca,
-              },
-            });
-          }
-        }
-      }
-    };
-
-    if (name === "desc_chofer") {
+    if (value !== "") {
       updateSelectData(dataList);
+      if (name === "desc_modelo") {
+        // console.log(dataList);
+        const arrayModel = dataList.find((item) => item.desc_modelo === value);
+        setFieldValue("cod_marca", arrayModel.cod_marca);
+      }
     }
 
-    if (name === "cod_acoplado") {
+    if (name === valueForUpdate) {
       updateSelectData(dataList, itemKey);
     }
-
-    handlerLoad();
-
-    if (reload && reload.length > 0) {
-      updateStateSelect({ list: (prevList) => [...prevList, ...reload] });
-    }
-  }, [reload]);
+    // handlerLoad();
+    // if (reload && reload.length > 0) {
+    //   updateStateSelect({ isDataLoader: false });
+    //   handlerReload();
+    // }
+  }, []);
 
   const handleSelectedValue = (newValue) => {
+    const value = newValue ? newValue : null;
     // condicional para trabajar con modelo y marca
-    if (name === "desc_modelo") {
+    if (name === "desc_modelo" && value !== "__new__") {
       const arrayModel = stateSelect.list.find(
-        (item) => item.cod_modelo.toString() === newValue
+        (item) => item.cod_modelo.toString() === value
       );
-      handleChange({
-        target: {
-          name: "cod_marca",
-          value: arrayModel.cod_marca,
-        },
-      });
+      setFieldValue("cod_marca", arrayModel.cod_marca);
     }
 
-    updateStateSelect({ selectedItem: newValue });
-    handleChange({
-      target: {
-        name,
-        value: newValue,
-      },
-    });
+    updateStateSelect({ selectedItem: value });
+    setFieldValue(name, value);
   };
 
   const isError = touched[name] && errors[name];

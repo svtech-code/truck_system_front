@@ -9,6 +9,7 @@ const Select_Component = ({
   listData, // lista de datos para el select
   codData, // codigo del dato
   descData, // descripcion del datos
+  row,
 }) => {
   // variables de state
   const [varState, setVarState] = useState({
@@ -35,6 +36,7 @@ const Select_Component = ({
           : new Set([]),
       });
     }
+    // console.log(row);
   }, [listData]);
 
   const handleSelectedValue = (newValue) => {
@@ -75,11 +77,6 @@ const Select_Component = ({
       .then((result) => {
         if (result.isConfirmed) {
           //  peticion put para el cambio de datos
-          console.log(`
-              se estan cambiando los siguientes datos
-              id del vehiculo: ${codPrimary}
-              id del estado: ${newValue}
-            `);
 
           // actualización del state del select
           updateVarState({ selectedValue: new Set([newValue]) });

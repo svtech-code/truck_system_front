@@ -1,7 +1,5 @@
 import { Input } from "@nextui-org/react";
 import Select_Component_load from "../Select_Component_load";
-import { useState } from "react";
-import { useDisclosure } from "@nextui-org/react";
 import useVehicle from "../../hooks/useVehicle";
 
 const Vehicle_form = ({
@@ -12,11 +10,9 @@ const Vehicle_form = ({
   touched,
   errors,
   firstInputRef,
+  onOpen,
 }) => {
-  const { driveList, mainAcopladoData } = useVehicle();
-
-  // estado usado para almacenar
-  const [reload, setReload] = useState([]);
+  const { modelVehicle, typeVehicle, drivers, mainAcopladoData } = useVehicle();
 
   // función manejador de la patente completa
   const myhandleChange = (e) => {
@@ -33,43 +29,18 @@ const Vehicle_form = ({
     setFieldValue("patente_completa", inputValue);
   };
 
-  // estados para el manejo del modal
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
-  // funcion para agregar nuevo dato desde el select
-  const handleSelectChange = (e) => {
-    if (e.target.value === "__new__") {
-      // onOpen();
-      console.log("modal para agregar modelo");
-      // Aquí puedes manejar la lógica para agregar un nuevo modelo
-      // lanzar modal para agregar nuevo modelo
-      // una vez agregado los datos, se deve actualizar el array en lo posible o volver a cargar este select
-      // console.log("Agregar nuevo modelo");
-      // setReload([
-      //   {
-      //     cod_modelo: 6,
-      //     desc_modelo: "S2",
-      //     desc_marca: "prueba",
-      //   },
-      // ]);
+  // manejador de nuevo modelo
+  const handleFieldValue = (name, value) => {
+    if (value === "__new__") {
+      onOpen();
+      setFieldValue(name, null); // para evitar que se envie con esta opción y obligar la selección de datos válidos
     } else {
-      handleChange(e);
+      setFieldValue(name, value);
     }
   };
 
   return (
     <>
-      {/* <ModalBase
-        title={"Modelo vehículo"}
-        size={"2xl"}
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        useSubmit_generic={useSubmitVehicle}
-        initialValues_generic={initialValues_vehicle}
-        validationSchema_generic={vehicleValidation}
-        Form_generic={(props) => <FormTest {...props} />}
-      /> */}
-
       {/* input patente, año y tonelaje */}
       <div className="flex flex-col xs:flex-row gap-4">
         <Input
@@ -134,13 +105,13 @@ const Vehicle_form = ({
       {/* select tipoVehiculo y modelo */}
       <div className="flex flex-col sm:flex-row gap-4">
         <Select_Component_load
+          dataList={typeVehicle}
           name={"desc_tipo_vehiculo"}
-          route="tipo_vehiculos"
           label={"Tipos vehículo"}
           itemKey="cod_tipo_vehiculo"
           detail="desc_tipo_vehiculo"
           value={values.desc_tipo_vehiculo}
-          handleChange={handleChange}
+          setFieldValue={setFieldValue}
           handleBlur={handleBlur}
           touched={touched}
           errors={errors}
@@ -148,21 +119,19 @@ const Vehicle_form = ({
         />
 
         <Select_Component_load
+          dataList={modelVehicle}
           name={"desc_modelo"}
-          route="modelos"
           label={"Modelo / Marca"}
           itemKey="cod_modelo"
           detail="desc_modelo"
           value={values.desc_modelo}
-          subValue={values}
-          handleChange={handleSelectChange}
-          subDetail={"desc_marca"}
-          allowNew={true}
-          reload={reload} // pensado para la recarga al agregar nuevo modelo por modal
+          setFieldValue={handleFieldValue}
           handleBlur={handleBlur}
           touched={touched}
           errors={errors}
           required={true}
+          subDetail={"desc_marca"}
+          allowNew={true}
         />
       </div>
 
@@ -254,33 +223,33 @@ const Vehicle_form = ({
       {/* Select chofer y acoplado */}
       <div className="flex flex-col sm:flex-row gap-4">
         <Select_Component_load
+          dataList={drivers}
           name={"desc_chofer"}
-          route="usuarios"
           label={"Chofer"}
           itemKey="cod_usuario"
           detail="desc_usuario"
           value={values.desc_chofer}
-          handleChange={handleChange}
+          setFieldValue={setFieldValue}
           handleBlur={handleBlur}
           touched={touched}
           errors={errors}
           required={true}
-          dataList={driveList}
         />
+
         <div className="w-full sm:w-[12rem]">
           <Select_Component_load
+            dataList={mainAcopladoData}
             name={"cod_acoplado"}
-            route="vehiculos"
             label={"Pte. Acoplado"}
             itemKey="cod_vehiculo"
             detail="patente"
             value={values.cod_acoplado}
-            handleChange={handleChange}
+            setFieldValue={setFieldValue}
             handleBlur={handleBlur}
             touched={touched}
             errors={errors}
             required={false}
-            dataList={mainAcopladoData}
+            valueForUpdate={"cod_acoplado"}
           />
         </div>
       </div>

@@ -2,6 +2,10 @@ import useVehicle from "../../hooks/useVehicle";
 import ActionButton from "../ActionButton";
 import Select_Component from "../Select_Component";
 
+const formatPatente = (patente) => {
+  return patente.replace(/(.{4})(.{2})/, "$1-$2");
+};
+
 export const Vehicle_structure = ({
   onOpen,
   route,
@@ -12,7 +16,7 @@ export const Vehicle_structure = ({
   return [
     {
       name: "Patente",
-      selector: (row) => row.patente,
+      selector: (row) => formatPatente(row.patente),
       width: "6rem",
     },
     {
@@ -37,6 +41,7 @@ export const Vehicle_structure = ({
     {
       name: "Estado",
       selector: (row) => row.desc_estado_vehiculo,
+      minWidth: "13rem",
       cell: (row) => (
         <Select_Component
           codPrimary={row.cod_vehiculo}
@@ -44,26 +49,26 @@ export const Vehicle_structure = ({
           listData={stateVehicle}
           codData={"cod_estado_vehiculo"}
           descData={"desc_estado_vehiculo"}
+          row={row}
           // updateVehicleData={updateVehicleData}
         />
       ),
-      minWidth: "13rem",
     },
     {
       name: "Chofer",
       selector: (row) => row.desc_chofer,
-      cell: (row) => (
-        <Select_Component
-          codPrimary={row.cod_vehiculo}
-          rowData={row.desc_chofer}
-          listData={driveList}
-          codData={"cod_usuario"}
-          descData={"desc_usuario"}
-          // updateVehicleData={updateVehicleData}
-        />
-      ),
       hide: "md",
       minWidth: "20rem",
+      // cell: (row) => (
+      //   <Select_Component
+      //     codPrimary={row.cod_vehiculo}
+      //     rowData={row.desc_chofer}
+      //     listData={driveList}
+      //     codData={"cod_usuario"}
+      //     descData={"desc_usuario"}
+      //     // updateVehicleData={updateVehicleData}
+      //   />
+      // ),
     },
     {
       name: "Acciones",

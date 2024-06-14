@@ -9,46 +9,35 @@ import {
 import { Formik } from "formik";
 import { useEffect, useRef } from "react";
 
-const ModalBase = ({
+const SubModalBase = ({
   propertyId,
-  stateComponent,
-  updateStateComponent,
   title,
   size,
-  isOpen,
-  onOpenChange,
+  isSecondOpen,
+  onSecondOpenChange,
   useSubmit_generic,
   initialValues_generic,
   validationSchema_generic,
   Form_generic,
 }) => {
-  // desestructuración de estados del componente principal
-  const { data, edit, idEdit } = stateComponent;
-
-  let dataEdit = [];
-  if (edit) {
-    dataEdit = data.find((data) => data[propertyId] === idEdit);
-  }
-
   // referencia para el input inicial
   const firstInputRef = useRef();
 
   // submit de datos del formulario
   const { onSubmit } = useSubmit_generic;
 
-  // texto personalizado para btn del modal
-  const textBtnSubmit = edit ? "Actualizar" : "Registrar";
-  const textBtnSubmitting = edit ? "Actualizando..." : "Registrando...";
+  // // texto personalizado para btn del modal
+  // const textBtnSubmit = edit ? "Actualizar" : "Registrar";
+  // const textBtnSubmitting = edit ? "Actualizando..." : "Registrando...";
 
   useEffect(() => {
-    if (!isOpen) updateStateComponent({ edit: false, idEdit: null });
-    if (isOpen) firstInputRef.current.focus();
-  }, [isOpen]);
+    if (isSecondOpen) firstInputRef.current.focus();
+  }, [isSecondOpen]);
 
   return (
     <Modal
-      isOpen={isOpen}
-      onOpenChange={onOpenChange}
+      isOpen={isSecondOpen}
+      onOpenChange={onSecondOpenChange}
       placement="center"
       isDismissable={false}
       backdrop="blur"
@@ -66,7 +55,7 @@ const ModalBase = ({
             {/* controlador de formulario con formik */}
             <Formik
               initialValues={initialValues_generic({
-                data: edit ? dataEdit : null,
+                data: null,
               })}
               validationSchema={validationSchema_generic()}
               onSubmit={onSubmit(onClose)}
@@ -112,7 +101,7 @@ const ModalBase = ({
                       type="submit"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? textBtnSubmitting : textBtnSubmit}
+                      Registrar
                     </Button>
                   </ModalFooter>
                 </form>
@@ -125,4 +114,4 @@ const ModalBase = ({
   );
 };
 
-export default ModalBase;
+export default SubModalBase;

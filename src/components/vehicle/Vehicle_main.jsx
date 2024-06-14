@@ -14,6 +14,11 @@ import Vehicle_form from "./Vehicle_form";
 import usePostVehicle from "../../hooks/usePostVehicle";
 import { useEffect } from "react";
 import { getData } from "../../api/apiGet";
+import VehicleModel_form from "../vehicleModel/VehicleModel_form";
+import usePostModel from "../../hooks/usePostModel";
+import initialValues_model from "../../utils/initialValues/modelValues";
+import modelValidation from "../../validations/modelValidation";
+import SubModalBase from "../../templates/SubModalBase";
 
 const Vehicle_main = () => {
   const {
@@ -50,17 +55,23 @@ const Vehicle_main = () => {
     ],
   };
 
-  // carga de datos estados y choferes
+  // carga de los datos principales
   useEffect(() => {
     const getDataVehicle = async () => {
-      const [estados, choferes] = await Promise.all([
+      // const estados = await getData({ endPoint: "estado_vehiculos" });
+      // updateVehicleData({ stateVehicle: estados?.response });
+      const [state, model, type, driver] = await Promise.all([
         getData({ endPoint: "estado_vehiculos" }),
+        getData({ endPoint: "modelos" }),
+        getData({ endPoint: "tipo_vehiculos" }),
         getData({ endPoint: "choferes" }),
       ]);
 
       updateVehicleData({
-        stateVehicle: estados?.response,
-        driveList: choferes?.response,
+        stateVehicle: state?.response,
+        modelVehicle: model?.response,
+        typeVehicle: type?.response,
+        drivers: driver?.response,
       });
     };
 
@@ -69,6 +80,16 @@ const Vehicle_main = () => {
 
   // estados para el manejo del modal
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  // const {
+  //   isOpen: isOneOpen,
+  //   onOpen: onOneOpen,
+  //   onOpenChange: onOneOpenChange,
+  // } = useDisclosure();
+  const {
+    isOpen: isSecondOpen,
+    onOpen: onSecondOpen,
+    onOpenChange: onSecondOpenChange,
+  } = useDisclosure();
 
   const eventClickDownloadData = () => alert("Descargar informacion");
 
@@ -102,20 +123,46 @@ const Vehicle_main = () => {
         })}
         initialValues_generic={initialValues_vehicle}
         validationSchema_generic={vehicleValidation}
-        Form_generic={(props) => <Vehicle_form {...props} />}
+        Form_generic={(props) => (
+          <Vehicle_form {...props} onOpen={onSecondOpen} />
+        )}
       />
+
+      {/* modal secundario */}
+      {/* <SubModalBase
+        propertyId={"desc_modelo"}
+        title={"Modelo de Vehículo"}
+        size={"xl"}
+        isSecondOpen={isSecondOpen}
+        onSecondOpenChange={onSecondOpenChange}
+        useSubmit_generic={usePostModel({ subAdd: true, updateVehicleData })}
+        initialValues_generic={initialValues_model}
+        validationSchema_generic={modelValidation}
+        Form_generic={(props) => <VehicleModel_form {...props} />}
+      /> */}
+      {/* <ModalBase
+        propertyId={"desc_modelo"}
+        stateComponent={{ data: "", edit: false, idEdit: null }}
+        title={"Modelo de Vehículo"}
+        size={"xl"}
+        isOpen={isSecondOpen}
+        onOpenChange={onSecondOpenChange}
+        useSubmit_generic={usePostModel({ subAdd: true, updateVehicleData })}
+        initialValues_generic={initialValues_model}
+        validationSchema_generic={modelValidation}
+        Form_generic={(props) => <VehicleModel_form {...props} />}
+        subModal={true} // para manejar la falta de updateStateComponent
+      /> */}
 
       {/* tabla del mantenedor */}
       <DataTableComponent
         data={data}
         onOpen={onOpen}
         structureData={Vehicle_structure({
-          // data: mainVehicleData, // array con los datos del mantenedor
           onOpen, // función para abrir el modal
           route: varString.route, // ruta para trabajar peticiones axios
           propertyId: varString.propertyId, // propiedad del id
           propertyName: varString.propertyName, // propiedad de la descripción
-          // updateStateComponent: updateVehicleData,
         })}
         subStructureData={Vehicle_subStructure} // datos para la subEstructura
         downloadData={eventClickDownloadData}

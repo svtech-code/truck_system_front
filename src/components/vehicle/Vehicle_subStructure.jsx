@@ -52,13 +52,14 @@ const Vehicle_subStructure = ({ data }) => {
           <TableCell>cliente propietario del vehículo</TableCell>
           <TableCell>
             {
-              <Select_Component // revisar a donde se pasa
-                codPrimary={cod_vehiculo.toString()}
-                rowData={patenteAcoplado.patente}
-                listData={mainAcopladoData}
-                codData={"cod_vehiculo"}
-                descData={"patente"}
-              />
+              patenteAcoplado.patente ?? "Sin acoplado"
+              // <Select_Component // revisar a donde se pasa
+              //   codPrimary={cod_vehiculo.toString()}
+              //   rowData={patenteAcoplado.patente}
+              //   listData={mainAcopladoData}
+              //   codData={"cod_vehiculo"}
+              //   descData={"patente"}
+              // />
             }
           </TableCell>
         </TableRow>

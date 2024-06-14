@@ -3,7 +3,12 @@ import apiPost from "../api/apiPost";
 import apiPut from "../api/apiPut";
 import { updateArray } from "../utils/methodUpdateArray";
 
-const usePostModel = ({ data, updateStateComponent }) => {
+const usePostModel = ({
+  data,
+  updateStateComponent,
+  subAdd,
+  updateVehicleData,
+}) => {
   const onSubmit =
     (onClose) =>
     async (values, { setSubmitting }) => {
@@ -27,15 +32,19 @@ const usePostModel = ({ data, updateStateComponent }) => {
               title: "success",
               text: "Registro almacenado",
             }).then(() => {
-              // actualización del array de datos
-              updateStateComponent({
-                data: updateArray({
-                  arrayData: data,
-                  idData: response?.data?.cod_modelo,
-                  idField: "cod_modelo",
-                  updateFields: response?.data,
-                }),
-              });
+              if (!subAdd) {
+                // actualización del array de datos
+                updateStateComponent({
+                  data: updateArray({
+                    arrayData: data,
+                    idData: response?.data?.cod_modelo,
+                    idField: "cod_modelo",
+                    updateFields: response?.data,
+                  }),
+                });
+              } else {
+                updateVehicleData({ reload: [response?.data] });
+              }
             });
           });
         } else {
