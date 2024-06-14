@@ -23,6 +23,10 @@ import SubModalBase from "../../templates/SubModalBase";
 const Vehicle_main = () => {
   const {
     data,
+    brandVehicle,
+    modelVehicle,
+    loadDataState,
+    drivers,
     numberOperationalVehicles,
     numberMaintanceVehicle,
     numberExpiredDocument,
@@ -58,10 +62,9 @@ const Vehicle_main = () => {
   // carga de los datos principales
   useEffect(() => {
     const getDataVehicle = async () => {
-      // const estados = await getData({ endPoint: "estado_vehiculos" });
-      // updateVehicleData({ stateVehicle: estados?.response });
-      const [state, model, type, driver] = await Promise.all([
+      const [state, brand, model, type, driver] = await Promise.all([
         getData({ endPoint: "estado_vehiculos" }),
+        getData({ endPoint: "marcas" }),
         getData({ endPoint: "modelos" }),
         getData({ endPoint: "tipo_vehiculos" }),
         getData({ endPoint: "choferes" }),
@@ -69,6 +72,7 @@ const Vehicle_main = () => {
 
       updateVehicleData({
         stateVehicle: state?.response,
+        brandVehicle: brand?.response,
         modelVehicle: model?.response,
         typeVehicle: type?.response,
         drivers: driver?.response,
@@ -78,13 +82,15 @@ const Vehicle_main = () => {
     getDataVehicle();
   }, []);
 
+  // efecto para manejar la carga de dato de los choferes, que es el dato que actualmente más demora
+  useEffect(() => {
+    if (drivers.length > 0) {
+      updateVehicleData({ loadDataState: false });
+    }
+  }, [drivers]);
+
   // estados para el manejo del modal
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  // const {
-  //   isOpen: isOneOpen,
-  //   onOpen: onOneOpen,
-  //   onOpenChange: onOneOpenChange,
-  // } = useDisclosure();
   const {
     isOpen: isSecondOpen,
     onOpen: onSecondOpen,
@@ -129,35 +135,29 @@ const Vehicle_main = () => {
       />
 
       {/* modal secundario */}
-      {/* <SubModalBase
+      <SubModalBase
         propertyId={"desc_modelo"}
         title={"Modelo de Vehículo"}
         size={"xl"}
         isSecondOpen={isSecondOpen}
         onSecondOpenChange={onSecondOpenChange}
-        useSubmit_generic={usePostModel({ subAdd: true, updateVehicleData })}
+        useSubmit_generic={usePostModel({
+          subAdd: true,
+          updateVehicleData,
+          modelVehicle,
+        })}
         initialValues_generic={initialValues_model}
         validationSchema_generic={modelValidation}
-        Form_generic={(props) => <VehicleModel_form {...props} />}
-      /> */}
-      {/* <ModalBase
-        propertyId={"desc_modelo"}
-        stateComponent={{ data: "", edit: false, idEdit: null }}
-        title={"Modelo de Vehículo"}
-        size={"xl"}
-        isOpen={isSecondOpen}
-        onOpenChange={onSecondOpenChange}
-        useSubmit_generic={usePostModel({ subAdd: true, updateVehicleData })}
-        initialValues_generic={initialValues_model}
-        validationSchema_generic={modelValidation}
-        Form_generic={(props) => <VehicleModel_form {...props} />}
-        subModal={true} // para manejar la falta de updateStateComponent
-      /> */}
+        Form_generic={(props) => (
+          <VehicleModel_form {...props} data={brandVehicle} />
+        )}
+      />
 
       {/* tabla del mantenedor */}
       <DataTableComponent
         data={data}
         onOpen={onOpen}
+        loaderData={loadDataState}
         structureData={Vehicle_structure({
           onOpen, // función para abrir el modal
           route: varString.route, // ruta para trabajar peticiones axios

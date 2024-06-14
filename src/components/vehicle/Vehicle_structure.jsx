@@ -12,7 +12,8 @@ export const Vehicle_structure = ({
   propertyId,
   propertyName,
 }) => {
-  const { data, stateVehicle, driveList, updateVehicleData } = useVehicle();
+  const { data, stateVehicle, driveList, loadDataState, updateVehicleData } =
+    useVehicle();
   return [
     {
       name: "Patente",
@@ -84,6 +85,7 @@ export const Vehicle_structure = ({
           propertyName={propertyName}
           updateStateComponent={updateVehicleData}
           dataKey={"data"}
+          loaderData={loadDataState}
         />
       ),
     },

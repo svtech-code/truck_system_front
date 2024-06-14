@@ -1,4 +1,4 @@
-import { Button } from "@nextui-org/react";
+import { Button, Spinner } from "@nextui-org/react";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import useDeleteNewData from "../hooks/useDeleteNewData";
 
@@ -11,7 +11,10 @@ const ActionButton = ({
   propertyName, // nombre de la propiedad que almacena el nombre
   updateStateComponent, // actualizador de los estados del mantenedor
   dataKey, // nombre del state principal a ser actualizado
+  loaderData, // estado para manejar la carga masiva de datos
 }) => {
+  const loader = loaderData ? loaderData : false;
+
   const handlerEdit = () => {
     updateStateComponent({
       edit: true,
@@ -39,8 +42,9 @@ const ActionButton = ({
         color="primary"
         aria-label="Edit"
         onClick={handlerEdit}
+        isDisabled={loader}
       >
-        <FaEdit size={20} />
+        {loader ? <Spinner size="sm" color="default" /> : <FaEdit size={20} />}
       </Button>
 
       {/* btn delete */}

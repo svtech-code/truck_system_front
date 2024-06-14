@@ -10,11 +10,13 @@ import usePostModel from "../../hooks/usePostModel";
 import initialValues_model from "../../utils/initialValues/modelValues";
 import modelValidation from "../../validations/modelValidation";
 import VehicleModel_form from "./VehicleModel_form";
+import { getData } from "../../api/apiGet";
 
 const VehicleModel_main = ({ vehicleModel_data }) => {
   // estados generales del componente
   const [stateComponent, setStateComponent] = useState({
     data: vehicleModel_data,
+    brands: [],
     edit: false,
     idEdit: null,
     descriptionEdit: null,
@@ -24,6 +26,15 @@ const VehicleModel_main = ({ vehicleModel_data }) => {
   // actualizador de los estados del componente
   const updateStateComponent = useCallback((newState) => {
     setStateComponent((prev) => ({ ...prev, ...newState }));
+  }, []);
+
+  useEffect(() => {
+    const getMarcas = async () => {
+      const marcas = await getData({ endPoint: "marcas" });
+      updateStateComponent({ brands: marcas?.response });
+    };
+
+    getMarcas();
   }, []);
 
   // constante con los string utilizados como parámetros
@@ -77,7 +88,9 @@ const VehicleModel_main = ({ vehicleModel_data }) => {
         })}
         initialValues_generic={initialValues_model}
         validationSchema_generic={modelValidation}
-        Form_generic={(props) => <VehicleModel_form {...props} />}
+        Form_generic={(props) => (
+          <VehicleModel_form {...props} data={stateComponent.brands} />
+        )}
       />
 
       {/* tabla de datos del mantenedor */}

@@ -1,6 +1,5 @@
 import { Chip, Select, SelectItem } from "@nextui-org/react";
 import { useCallback, useEffect, useState } from "react";
-import { getData } from "../api/apiGet";
 
 const Select_Component_load = ({
   dataList,
@@ -41,14 +40,13 @@ const Select_Component_load = ({
   }, []);
 
   useEffect(() => {
-    if (value !== "") {
-      updateSelectData(dataList);
-      if (name === "desc_modelo") {
-        // console.log(dataList);
-        const arrayModel = dataList.find((item) => item.desc_modelo === value);
-        setFieldValue("cod_marca", arrayModel.cod_marca);
-      }
-    }
+    // if (value !== "") {
+    //   updateSelectData(dataList);
+    //   if (name === "desc_modelo") {
+    //     const arrayModel = dataList.find((item) => item.desc_modelo === value);
+    //     setFieldValue("cod_marca", arrayModel.cod_marca);
+    //   }
+    // }
 
     if (name === valueForUpdate) {
       updateSelectData(dataList, itemKey);

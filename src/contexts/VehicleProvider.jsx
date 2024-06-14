@@ -20,13 +20,15 @@ export const VehiculoProvider = ({ children, response }) => {
   const [vehicleData, setVehicleData] = useState({
     data: response, // datos primarios de los vehiculos
     stateVehicle: [], // estados de un vehículo
-    modelVehicle: [], // modelos de un vehículo
+    brandVehicle: [], // marcas de vehiculo
+    modelVehicle: [], // modelos de vehículo
     typeVehicle: [], // tipos de vehículos
     drivers: [], // lista de choferes
     edit: false, // estado para edición de datos
     idEdit: null, // id del valor a ser editado
     descriptionEdit: null, // descripción del valor a ser editado
     error: null, // estado para almacenar los errores
+    loadDataState: true,
 
     numberExpiredDocument: filterByData(response).length, // cantidad de vehiculos con documentos vencidos
 

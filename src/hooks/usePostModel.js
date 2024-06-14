@@ -8,6 +8,7 @@ const usePostModel = ({
   updateStateComponent,
   subAdd,
   updateVehicleData,
+  modelVehicle,
 }) => {
   const onSubmit =
     (onClose) =>
@@ -42,9 +43,11 @@ const usePostModel = ({
                     updateFields: response?.data,
                   }),
                 });
-              } else {
-                updateVehicleData({ reload: [response?.data] });
               }
+              if (subAdd && modelVehicle)
+                updateVehicleData({
+                  modelVehicle: [...modelVehicle, response?.data],
+                });
             });
           });
         } else {

@@ -1,5 +1,7 @@
 import { Input } from "@nextui-org/react";
 import Select_Component_load from "../Select_Component_load";
+import { useEffect, useState } from "react";
+import { getData } from "../../api/apiGet";
 
 const VehicleModel_form = ({
   values,
@@ -8,6 +10,7 @@ const VehicleModel_form = ({
   touched,
   errors,
   firstInputRef,
+  data,
 }) => {
   return (
     <div className="flex flex-col sm:flex-row gap-4">
@@ -30,8 +33,8 @@ const VehicleModel_form = ({
       />
 
       <Select_Component_load
+        dataList={data}
         name={"desc_marca"}
-        route={"marcas"}
         label={"Marca asociada"}
         itemKey={"cod_marca"}
         detail={"desc_marca"}

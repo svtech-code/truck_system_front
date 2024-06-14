@@ -14,6 +14,7 @@ const DataTableComponent = ({
   subStructureData,
   onOpen,
   downloadData,
+  loaderData, // manejador del spinner de carga, solo se usa cuando se pasa como prop
 }) => {
   // estados del dataTable
   const [stateData, setStateData] = useState({
@@ -38,6 +39,7 @@ const DataTableComponent = ({
           updateStateData,
           onClickAdd: onOpen,
           onClickDownload: downloadData,
+          loaderData,
         })}
         columns={structureData}
         data={providerFilter({ data: data, filter: stateData.filterData })}

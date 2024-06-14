@@ -1,4 +1,4 @@
-import { Button } from "@nextui-org/react";
+import { Button, Spinner } from "@nextui-org/react";
 import { IoSearchSharp } from "react-icons/io5";
 import { MdClear, MdDownload, MdOpenInNew } from "react-icons/md";
 
@@ -7,14 +7,20 @@ const HeaderDataTableComponent = ({
   updateStateData,
   onClickAdd,
   onClickDownload,
+  loaderData,
 }) => {
+  const loader = loaderData ? loaderData : false; // para manejar el spinner de carga cuando existen muchas peticiones
+
   return (
     <header className="relative w-full flex gap-3 items-center justify-center sm:justify-between flex-wrap">
       {/* btn para agregar un nuevo registro */}
       <Button
         color="primary"
         variant="ghost"
-        startContent={<MdOpenInNew size={25} />}
+        isDisabled={loader}
+        startContent={
+          loader ? <Spinner size="sm" /> : <MdOpenInNew size={25} />
+        }
         onPress={onClickAdd}
       >
         Nuevo registro
@@ -24,7 +30,14 @@ const HeaderDataTableComponent = ({
         {/* btn para descargar informe */}
         <Button
           color="success"
-          startContent={<MdDownload size={25} />}
+          isDisabled={loader}
+          startContent={
+            loader ? (
+              <Spinner size="sm" color="success" />
+            ) : (
+              <MdDownload size={25} />
+            )
+          }
           variant="ghost"
           onPress={onClickDownload}
         >
