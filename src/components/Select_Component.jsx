@@ -2,6 +2,7 @@ import { Select, SelectItem } from "@nextui-org/react";
 import { useCallback, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import apiPut from "../api/apiPut";
+import useVehicle from "../hooks/useVehicle";
 
 const Select_Component = ({
   codPrimary, // codigo del valor principal a modificar
@@ -11,6 +12,9 @@ const Select_Component = ({
   descData, // descripcion del datos
   row,
 }) => {
+  const { data, typeVehicle, modelVehicle, stateVehicle, updateVehicleData } =
+    useVehicle();
+
   // variables de state
   const [varState, setVarState] = useState({
     loading: true,
@@ -76,14 +80,45 @@ const Select_Component = ({
       })
       .then((result) => {
         if (result.isConfirmed) {
-          //  peticion put para el cambio de datos
+          // array de datos para actualizar estado !!
+          const payload = {
+            ...row,
+            cod_tipo_vehiculo: typeVehicle.find(
+              (item) => item.desc_tipo_vehiculo === row.desc_tipo_vehiculo
+            ).cod_tipo_vehiculo,
+            cod_modelo: modelVehicle.find(
+              (item) => item.desc_modelo === row.desc_modelo
+            ).cod_modelo,
+            cod_marca: modelVehicle.find(
+              (item) => item.desc_modelo === row.desc_modelo
+            ).cod_marca,
+            cod_estado_vehiculo: newValue,
+          };
 
-          // actualización del state del select
-          updateVarState({ selectedValue: new Set([newValue]) });
+          apiPut({
+            route: `vehiculos/${codPrimary}`,
+            object: payload,
+          }).then((response) => {
+            // actualización del state del select
+            updateVarState({ selectedValue: new Set([newValue]) });
 
-          Toast.fire({
-            icon: "success",
-            title: "Modificación de datos exitosa!!",
+            updateVehicleData({
+              data: data.map((item) =>
+                item.cod_vehiculo === codPrimary
+                  ? {
+                      ...item,
+                      desc_estado_vehiculo: stateVehicle.find(
+                        (item) => item.cod_estado_vehiculo === Number(newValue)
+                      ).desc_estado_vehiculo,
+                    }
+                  : item
+              ),
+            });
+
+            Toast.fire({
+              icon: "success",
+              title: "Modificación de datos exitosa!!",
+            });
           });
         }
       });

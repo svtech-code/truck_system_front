@@ -20,6 +20,31 @@ import initialValues_model from "../../utils/initialValues/modelValues";
 import modelValidation from "../../validations/modelValidation";
 import SubModalBase from "../../templates/SubModalBase";
 
+const varString = {
+  title: "Registro de vehículos",
+  titleModal: "Registro de vehículo",
+  route: "vehiculos",
+  propertyId: "cod_vehiculo",
+  propertyName: "desc_modelo", // agregar array con propertis name
+  cards: [
+    {
+      titleCard: "Operativos",
+      iconCard: <GiTruck size={35} />,
+      countCard: "numberOperationalVehicles",
+    },
+    {
+      titleCard: "Mantenimiento",
+      iconCard: <GiMechanicGarage size={35} />,
+      countCard: "numberMaintanceVehicle",
+    },
+    {
+      titleCard: "Vencimiento",
+      iconCard: <HiClipboardDocumentList size={35} />,
+      countCard: "numberExpiredDocument",
+    },
+  ],
+};
+
 const Vehicle_main = () => {
   const {
     data,
@@ -33,33 +58,12 @@ const Vehicle_main = () => {
     updateVehicleData,
   } = useVehicle();
 
-  // constante con los string utilizados como parámetros
-  const varString = {
-    title: "Registro de vehículos",
-    titleModal: "Registro de vehículo",
-    route: "vehiculos",
-    propertyId: "cod_vehiculo",
-    propertyName: "desc_modelo", // agregar array con propertis name
-    cards: [
-      {
-        titleCard: "Operativos",
-        iconCard: <GiTruck size={35} />,
-        countCard: numberOperationalVehicles,
-      },
-      {
-        titleCard: "Mantenimiento",
-        iconCard: <GiMechanicGarage size={35} />,
-        countCard: numberMaintanceVehicle,
-      },
-      {
-        titleCard: "Vencimiento",
-        iconCard: <HiClipboardDocumentList size={35} />,
-        countCard: numberExpiredDocument,
-      },
-    ],
+  const counterCard = {
+    numberOperationalVehicles,
+    numberMaintanceVehicle,
+    numberExpiredDocument,
   };
 
-  // carga de los datos principales
   useEffect(() => {
     const getDataVehicle = async () => {
       const [state, brand, model, type, driver] = await Promise.all([
@@ -82,7 +86,6 @@ const Vehicle_main = () => {
     getDataVehicle();
   }, []);
 
-  // efecto para manejar la carga de dato de los choferes, que es el dato que actualmente más demora
   useEffect(() => {
     if (drivers.length > 0) {
       updateVehicleData({ loadDataState: false });
@@ -109,7 +112,7 @@ const Vehicle_main = () => {
             key={index}
             title={card.titleCard}
             icon={card.iconCard}
-            count={card.countCard}
+            count={counterCard[card.countCard]}
           />
         ))}
       </HeaderComponent>

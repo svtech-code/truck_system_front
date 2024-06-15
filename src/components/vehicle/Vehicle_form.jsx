@@ -38,7 +38,6 @@ const Vehicle_form = ({
       setFieldValue(name, value);
     }
   };
-  // console.log(typeVehicle);
 
   return (
     <>

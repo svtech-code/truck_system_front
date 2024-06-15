@@ -12,8 +12,7 @@ export const Vehicle_structure = ({
   propertyId,
   propertyName,
 }) => {
-  const { data, stateVehicle, driveList, loadDataState, updateVehicleData } =
-    useVehicle();
+  const { data, stateVehicle, loadDataState, updateVehicleData } = useVehicle();
   return [
     {
       name: "Patente",
@@ -51,7 +50,6 @@ export const Vehicle_structure = ({
           codData={"cod_estado_vehiculo"}
           descData={"desc_estado_vehiculo"}
           row={row}
-          // updateVehicleData={updateVehicleData}
         />
       ),
     },
@@ -60,16 +58,6 @@ export const Vehicle_structure = ({
       selector: (row) => row.desc_chofer,
       hide: "md",
       minWidth: "20rem",
-      // cell: (row) => (
-      //   <Select_Component
-      //     codPrimary={row.cod_vehiculo}
-      //     rowData={row.desc_chofer}
-      //     listData={driveList}
-      //     codData={"cod_usuario"}
-      //     descData={"desc_usuario"}
-      //     // updateVehicleData={updateVehicleData}
-      //   />
-      // ),
     },
     {
       name: "Acciones",
