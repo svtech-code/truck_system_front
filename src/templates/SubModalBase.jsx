@@ -10,18 +10,17 @@ import { Formik } from "formik";
 import { useEffect, useRef } from "react";
 
 const SubModalBase = ({
-  propertyId,
   title,
   size,
-  isSecondOpen,
-  onSecondOpenChange,
+  isOpen,
+  onOpenChange,
   useSubmit_generic,
   initialValues_generic,
   validationSchema_generic,
   Form_generic,
 }) => {
   // referencia para el input inicial
-  const firstInputRef = useRef();
+  const secondInputRef = useRef(null);
 
   // submit de datos del formulario
   const { onSubmit } = useSubmit_generic;
@@ -31,13 +30,13 @@ const SubModalBase = ({
   // const textBtnSubmitting = edit ? "Actualizando..." : "Registrando...";
 
   useEffect(() => {
-    if (isSecondOpen) firstInputRef.current.focus();
-  }, [isSecondOpen]);
+    if (isOpen) secondInputRef.current.focus();
+  }, [isOpen]);
 
   return (
     <Modal
-      isOpen={isSecondOpen}
-      onOpenChange={onSecondOpenChange}
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
       placement="center"
       isDismissable={false}
       backdrop="blur"
@@ -80,7 +79,7 @@ const SubModalBase = ({
                       handleChange={handleChange}
                       touched={touched}
                       errors={errors}
-                      firstInputRef={firstInputRef}
+                      inputRef={secondInputRef}
                     />
                   </ModalBody>
 

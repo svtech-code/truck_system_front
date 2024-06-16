@@ -1,6 +1,13 @@
-import { Input } from "@nextui-org/react";
+import { Input, useDisclosure } from "@nextui-org/react";
 import Select_Component_load from "../Select_Component_load";
 import useVehicle from "../../hooks/useVehicle";
+import { useCallback, useState } from "react";
+
+import VehicleModel_form from "../vehicleModel/VehicleModel_form";
+import usePostModel from "../../hooks/usePostModel";
+import initialValues_model from "../../utils/initialValues/modelValues";
+import modelValidation from "../../validations/modelValidation";
+import SubModalBase from "../../templates/SubModalBase";
 
 const Vehicle_form = ({
   values,
@@ -9,10 +16,16 @@ const Vehicle_form = ({
   handleChange,
   touched,
   errors,
-  firstInputRef,
-  onOpen,
+  inputRef,
 }) => {
-  const { modelVehicle, typeVehicle, drivers, mainAcopladoData } = useVehicle();
+  const {
+    modelVehicle,
+    typeVehicle,
+    drivers,
+    mainAcopladoData,
+    brandVehicle,
+    updateVehicleData,
+  } = useVehicle();
 
   // función manejador de la patente completa
   const myhandleChange = (e) => {
@@ -29,15 +42,18 @@ const Vehicle_form = ({
     setFieldValue("patente_completa", inputValue);
   };
 
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [dataModel, setDataModel] = useState(null);
+
   // manejador de nuevo modelo
-  const handleFieldValue = (name, value) => {
+  const handleFieldValue = useCallback((name, value) => {
     if (value === "__new__") {
       onOpen();
-      setFieldValue(name, null); // para evitar que se envie con esta opción y obligar la selección de datos válidos
+      setFieldValue(name, null);
     } else {
       setFieldValue(name, value);
     }
-  };
+  }, []);
 
   return (
     <>
@@ -55,7 +71,7 @@ const Vehicle_form = ({
           labelPlacement="outside"
           variant="faded"
           value={values.patente_completa}
-          ref={firstInputRef}
+          ref={inputRef}
           isRequired={true}
           onChange={myhandleChange}
           onBlur={handleBlur}
@@ -132,6 +148,10 @@ const Vehicle_form = ({
           required={true}
           subDetail={"desc_marca"}
           allowNew={true}
+          updateVehicleData={updateVehicleData}
+          modelVehicle={modelVehicle}
+          brandVehicle={brandVehicle}
+          dataModel={dataModel}
         />
       </div>
 
@@ -253,8 +273,25 @@ const Vehicle_form = ({
           />
         </div>
       </div>
+
+      <SubModalBase
+        propertyId={"desc_modelo"}
+        title={"Modelo de Vehículo"}
+        size={"xl"}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        useSubmit_generic={usePostModel({
+          subAdd: true,
+          modelVehicle,
+          setDataModel,
+        })}
+        initialValues_generic={initialValues_model}
+        validationSchema_generic={modelValidation}
+        Form_generic={(props) => (
+          <VehicleModel_form {...props} data={brandVehicle} />
+        )}
+      />
     </>
   );
 };
-
 export default Vehicle_form;

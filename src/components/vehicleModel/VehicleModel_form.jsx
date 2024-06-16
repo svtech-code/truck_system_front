@@ -1,7 +1,6 @@
 import { Input } from "@nextui-org/react";
 import Select_Component_load from "../Select_Component_load";
-import { useEffect, useState } from "react";
-import { getData } from "../../api/apiGet";
+import { useEffect, useRef } from "react";
 
 const VehicleModel_form = ({
   values,
@@ -9,9 +8,13 @@ const VehicleModel_form = ({
   handleBlur,
   touched,
   errors,
-  firstInputRef,
+  inputRef,
   data,
 }) => {
+  useEffect(() => {
+    if (inputRef && inputRef.current) inputRef.current.focus();
+  }, [inputRef]);
+
   return (
     <div className="flex flex-col sm:flex-row gap-4">
       <Input
@@ -22,7 +25,7 @@ const VehicleModel_form = ({
         labelPlacement="outside"
         variant="faded"
         value={values.desc_modelo}
-        ref={firstInputRef}
+        ref={inputRef}
         isRequired={true}
         onChange={(e) =>
           setFieldValue("desc_modelo", e.target.value.toUpperCase())

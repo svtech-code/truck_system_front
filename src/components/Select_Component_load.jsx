@@ -1,4 +1,5 @@
-import { Chip, Select, SelectItem } from "@nextui-org/react";
+import { Chip, Select, SelectItem, useDisclosure } from "@nextui-org/react";
+import { list } from "postcss";
 import { useCallback, useEffect, useState } from "react";
 
 const Select_Component_load = ({
@@ -16,6 +17,7 @@ const Select_Component_load = ({
   subDetail, // valor para manejar la carga compuesta de modelo y marca
   allowNew, // valor para manejar la opción de agregar nuevo dato al select
   valueForUpdate,
+  dataModel,
 }) => {
   // estados para trabajar con el select
   const [stateSelect, setStateSelect] = useState({
@@ -40,9 +42,20 @@ const Select_Component_load = ({
   }, []);
 
   useEffect(() => {
+    if (dataModel && name === "desc_modelo")
+      updateStateSelect({ list: dataModel, selectedItem: "" });
+  }, [dataModel]);
+
+  useEffect(() => {
     if (value !== "") {
       updateSelectData(dataList);
-      if (name === "desc_modelo") {
+
+      if (
+        name === "desc_modelo" &&
+        value !== "__new__" &&
+        value !== "" &&
+        value !== null
+      ) {
         const arrayModel = dataList.find((item) => item.desc_modelo === value);
         setFieldValue("cod_marca", arrayModel.cod_marca);
       }
@@ -54,6 +67,7 @@ const Select_Component_load = ({
   }, []);
 
   const handleSelectedValue = (newValue) => {
+    // console.log(newValue);
     const value = newValue ? newValue : null;
     // condicional para trabajar con modelo y marca
     if (name === "desc_modelo" && value !== "__new__") {
@@ -93,11 +107,7 @@ const Select_Component_load = ({
             {subDetail ? `${item[detail]} - ${item[subDetail]}` : item[detail]}
           </SelectItem>
         ))}
-        {allowNew && (
-          <SelectItem key="__new__" value="__new__">
-            Agregar Nuevo
-          </SelectItem>
-        )}
+        {allowNew && <SelectItem key="__new__">Agregar Nuevo</SelectItem>}
       </Select>
       {isError && (
         <Chip color="danger" variant="light">

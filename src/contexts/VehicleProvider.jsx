@@ -29,7 +29,7 @@ export const VehiculoProvider = ({ children, response }) => {
     descriptionEdit: null, // descripción del valor a ser editado
     error: null, // estado para almacenar los errores
     loadDataState: true,
-
+    initialValueForm: {},
     numberExpiredDocument: filterByData(response).length, // cantidad de vehiculos con documentos vencidos
 
     numberOperationalVehicles: response?.filter(

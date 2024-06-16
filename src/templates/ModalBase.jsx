@@ -31,7 +31,7 @@ const ModalBase = ({
   }
 
   // referencia para el input inicial
-  const firstInputRef = useRef();
+  const firstInputRef = useRef(null);
 
   // submit de datos del formulario
   const { onSubmit } = useSubmit_generic;
@@ -91,7 +91,7 @@ const ModalBase = ({
                       handleChange={handleChange}
                       touched={touched}
                       errors={errors}
-                      firstInputRef={firstInputRef}
+                      inputRef={firstInputRef}
                     />
                   </ModalBody>
 

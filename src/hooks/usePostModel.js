@@ -7,7 +7,7 @@ const usePostModel = ({
   data,
   updateStateComponent,
   subAdd,
-  updateVehicleData,
+  setDataModel,
   modelVehicle,
 }) => {
   const onSubmit =
@@ -44,10 +44,7 @@ const usePostModel = ({
                   }),
                 });
               }
-              if (subAdd && modelVehicle)
-                updateVehicleData({
-                  modelVehicle: [...modelVehicle, response?.data],
-                });
+              if (subAdd) setDataModel([...modelVehicle, response?.data]);
             });
           });
         } else {
