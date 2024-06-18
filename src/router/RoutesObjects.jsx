@@ -18,26 +18,6 @@ export const RoutesObjects = [
     path: "/vehicle",
     element: <Vehicle />,
     loader: () => getData({ endPoint: "vehiculos" }),
-    // loader: async () => {
-    //   const [vehiculos, estados, choferes] = await Promise.all([
-    //     getData({ endPoint: "vehiculos" }),
-    //     // getData({ endPoint: "estado_vehiculos" }),
-    //     // getData({ endPoint: "choferes" }),
-    //   ]);
-
-    //   // verificar si hay errores en la consulta
-    //   const error = vehiculos?.error || estados?.error;
-
-    //   return {
-    //     response: {
-    //       vehiculos: vehiculos.response,
-    //       // estados: estados.response,
-    //       // choferes: choferes?.response,
-    //     },
-    //     error,
-    //   };
-    //   // return { vehiculos };
-    // },
   },
   { path: "/driver", element: <Driver /> },
   { path: "/loadingorder", element: <LoadingOrder /> },
