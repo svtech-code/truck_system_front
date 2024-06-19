@@ -4,7 +4,7 @@ import useAuthentication from "../../hooks/useAuthentication";
 import loginValidation from "../../validations/loginValidation";
 
 import { Formik } from "formik";
-import { Button, Input, button } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { FaUserAlt, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 
