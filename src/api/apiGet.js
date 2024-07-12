@@ -1,4 +1,3 @@
-import { useCallback, useState } from "react";
 import axios from "./axios";
 
 const apiGet = async ({ route, param }) => {
@@ -15,6 +14,8 @@ const apiGet = async ({ route, param }) => {
   return response;
 };
 
+export default apiGet;
+
 export const getData = async ({ endPoint }) => {
   try {
     const getDataResponse = await apiGet({ route: endPoint });
@@ -26,35 +27,3 @@ export const getData = async ({ endPoint }) => {
     // throw new Error(error.message);
   }
 };
-
-// export const getDataSelect = async ({ endPoint }) => {
-//   // estado de la functión get
-//   const [stateGet, setStateGet] = useState({
-//     response: [],
-//     error: null,
-//     isLoading: false,
-//   });
-
-//   // actualizador del estado de la función get
-//   const updateStateGet = useCallback((newState) => {
-//     setStateGet((prevState) => ({ ...prevState, ...newState }));
-//   }, []);
-
-//   try {
-//     updateStateGet({ isLoading: true });
-//     const getDataResponse = await apiGet({ route: endPoint });
-//     updateStateGet({ response: await getDataResponse?.data });
-//   } catch (error) {
-//     updateStateGet({ error: error });
-//   } finally {
-//     updateStateGet({ isLoading: false });
-//   }
-
-//   return {
-//     response: stateGet.response,
-//     error: stateGet.error,
-//     isLoading: stateGet.isLoading,
-//   };
-// };
-
-export default apiGet;
