@@ -102,18 +102,36 @@ const Select_Component = ({
             // actualización del state del select
             updateVarState({ selectedValue: new Set([newValue]) });
 
+            // copia de los datos con estadoc actualizado
+            const updateData = data.map((item) =>
+              item.cod_vehiculo === codPrimary
+                ? {
+                    ...item,
+                    desc_estado_vehiculo: stateVehicle.find(
+                      (item) => item.cod_estado_vehiculo === Number(newValue)
+                    ).desc_estado_vehiculo,
+                  }
+                : item
+            );
+
+            // actualización de los datos primarios y cantidades de las tarjetas
             updateVehicleData({
-              data: data.map((item) =>
-                item.cod_vehiculo === codPrimary
-                  ? {
-                      ...item,
-                      desc_estado_vehiculo: stateVehicle.find(
-                        (item) => item.cod_estado_vehiculo === Number(newValue)
-                      ).desc_estado_vehiculo,
-                    }
-                  : item
-              ),
+              data: updateData,
             });
+
+            // updateVehicleData({
+            //   data: data.map((item) =>
+            //     item.cod_vehiculo === codPrimary
+            //       ? {
+            //           ...item,
+            //           desc_estado_vehiculo: stateVehicle.find(
+            //             (item) => item.cod_estado_vehiculo === Number(newValue)
+            //           ).desc_estado_vehiculo,
+            //         }
+            //       : item
+            //   ),
+            // });
+            // console.log(response);
 
             Toast.fire({
               icon: "success",

@@ -16,37 +16,14 @@ import NavBar_logo from "./NavBar_logo";
 import NavBar_profile from "./NavBar_profile";
 import NavBar_item from "./NavBar_item";
 import NavBar_menuItem from "./NavBar_menuItem";
-import {
-  FaChevronDown,
-  FaClipboardList,
-  FaTruck,
-  FaTruckPickup,
-  FaUser,
-  FaUsersCog,
-} from "react-icons/fa";
-// import NavBar_DropdownItem from "./NavBar_DropdownItem";
+import { FaChevronDown } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { HiStatusOnline } from "react-icons/hi";
-import { MdModelTraining } from "react-icons/md";
+import { navLinkMenuMovile, navLinkSubMenuDesktop } from "./objectMenu";
 
 const NabBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const navigate = useNavigate();
-
-  // lista de objetos path para menu movile
-  const navLinksMenu = [
-    { to: "/home", title: "Home", onClick: toggleMenu },
-    { to: "/vehicle", title: "Registro vehículos", onClick: toggleMenu },
-    { to: "/driver", title: "Gestión chofer", onClick: toggleMenu },
-    { to: "/loadingorder", title: "Orden carga", onClick: toggleMenu },
-    { to: "/userType", title: "Tipos usuario", onClick: toggleMenu },
-    { to: "/vehicletype", title: "Tipos vehículo", onClick: toggleMenu },
-    { to: "/vehiclebrand", title: "Marcas vehículo", onClick: toggleMenu },
-    { to: "/vehiclestate", title: "Estados vehículo", onClick: toggleMenu },
-    { to: "/vehiclemodel", title: "Modelos vehículo", onClick: toggleMenu },
-    { to: "/report", title: "Reporte", onClick: toggleMenu },
-  ];
 
   return (
     <Navbar
@@ -78,113 +55,45 @@ const NabBar = () => {
 
       {/* lista de rutas */}
       <NavbarContent
-        className="hidden md:flex gap-6 w-full text-white font-semibold"
+        className="hidden md:flex gap-5 w-full text-white font-semibold"
         justify="center"
       >
         <NavBar_logo />
 
         <NavBar_item to={"/home"} title={"Home"} />
 
-        {/* componentizar elemento ------!!!!! */}
-        {/* seccion gestion */}
-        <Dropdown>
-          <NavbarItem>
-            <DropdownTrigger>
-              <Button
-                disableRipple
-                className="flex flex-col bg-transparent text-white mt-2 hover:scale-105"
-              >
-                <div className="flex gap-2 w-full items-center text-[1rem] font-semibold">
-                  Gestión
-                  <FaChevronDown />
-                </div>
-                <Divider className="w-0 group-hover:w-[100%] h-[.20rem] bg-white opacity-80 transition-all duration-300 rounded-full" />
-              </Button>
-            </DropdownTrigger>
-          </NavbarItem>
-          <DropdownMenu aria-label="management dropdown menu">
-            <DropdownItem
-              key={"vehicle"}
-              startContent={<FaTruck />}
-              onClick={() => navigate("/vehicle")}
+        {/* menus con submenu */}
+        {navLinkSubMenuDesktop.map((menu) => (
+          <Dropdown key={menu.label}>
+            <NavbarItem>
+              <DropdownTrigger>
+                <Button
+                  disableRipple
+                  className="flex flex-col bg-transparent text-white mt-1 hover:scale-105 p-1 group"
+                >
+                  <div className="flex gap-2 w-full items-center text-[1rem] font-semibold">
+                    {menu.label}
+                    <FaChevronDown />
+                  </div>
+                  <Divider className="self-center w-0 group-hover:w-[100%] h-[.20rem] bg-white opacity-80 transition-all duration-300 rounded-full" />
+                </Button>
+              </DropdownTrigger>
+            </NavbarItem>
+            <DropdownMenu
+              aria-label={`${menu.label.toLowerCase()} dropdown menu`}
             >
-              Registro vehículos
-            </DropdownItem>
-            <DropdownItem
-              key={"driver"}
-              startContent={<FaUser />}
-              onClick={() => navigate("/driver")}
-            >
-              Gestión chofer
-            </DropdownItem>
-            <DropdownItem
-              key={"loadingorder"}
-              startContent={<FaClipboardList />}
-              onClick={() => navigate("/loadingorder")}
-            >
-              Orden carga
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-
-        {/* seccion mantenedor */}
-        <Dropdown>
-          <NavbarItem>
-            <DropdownTrigger>
-              <Button
-                disableRipple
-                className="flex flex-col bg-transparent text-white mt-2 hover:scale-105"
-              >
-                <div className="flex gap-2 w-full items-center text-[1rem] font-semibold">
-                  Mantenimiento
-                  <FaChevronDown />
-                </div>
-                <Divider className="w-0 group-hover:w-[100%] h-[.20rem] bg-white opacity-80 transition-all duration-300 rounded-full" />
-              </Button>
-            </DropdownTrigger>
-          </NavbarItem>
-          <DropdownMenu aria-label="management dropdown menu">
-            <DropdownItem
-              key={"userType"}
-              startContent={<FaUsersCog />}
-              onClick={() => navigate("/usertype")}
-            >
-              Tipos usuario
-            </DropdownItem>
-
-            <DropdownItem
-              key={"vehicletype"}
-              startContent={<FaTruckPickup />}
-              onClick={() => navigate("/vehicletype")}
-            >
-              Tipos vehículo
-            </DropdownItem>
-
-            <DropdownItem
-              key={"vehiclebrand"}
-              startContent={<FaClipboardList />}
-              onClick={() => navigate("/vehiclebrand")}
-            >
-              Marcas vehículo
-            </DropdownItem>
-
-            <DropdownItem
-              key={"vehiclestate"}
-              startContent={<HiStatusOnline />}
-              onClick={() => navigate("/vehiclestate")}
-            >
-              Estados vehículo
-            </DropdownItem>
-
-            <DropdownItem
-              key={"vehiclemodel"}
-              startContent={<MdModelTraining />}
-              onClick={() => navigate("/vehiclemodel")}
-            >
-              Modelos vehículo
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+              {menu.items.map((item) => (
+                <DropdownItem
+                  key={item.key}
+                  startContent={item.icon}
+                  onClick={() => navigate(item.path)}
+                >
+                  {item.label}
+                </DropdownItem>
+              ))}
+            </DropdownMenu>
+          </Dropdown>
+        ))}
 
         <NavBar_item to={"/report"} title={"Reporte"} />
       </NavbarContent>
@@ -202,8 +111,13 @@ const NabBar = () => {
 
       {/* lista de rutas vista compacta */}
       <NavbarMenu>
-        {navLinksMenu.map(({ to, title, onClick }) => (
-          <NavBar_menuItem key={to} to={to} title={title} onClick={onClick} />
+        {navLinkMenuMovile.map(({ to, title }) => (
+          <NavBar_menuItem
+            key={to}
+            to={to}
+            title={title}
+            onClick={toggleMenu}
+          />
         ))}
       </NavbarMenu>
     </Navbar>

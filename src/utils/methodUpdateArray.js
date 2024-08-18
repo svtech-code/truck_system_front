@@ -5,15 +5,9 @@ export const updateArray = ({ arrayData, idData, idField, updateFields }) => {
 
   // si existe el id, se actualiza el array de datos
   if (existId) {
-    return arrayData.map((item) => {
-      if (item[idField] === idData) {
-        return {
-          ...item,
-          ...updateFields,
-        };
-      }
-      return item;
-    });
+    return arrayData.map((item) =>
+      item[idField] === idData ? { ...item, ...updateFields } : item
+    );
   }
 
   // si no existe el id, se agregan los nuevos datos

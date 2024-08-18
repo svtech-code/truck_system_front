@@ -32,7 +32,7 @@ const usePostVehicle = ({ data, updateStateComponent }) => {
               title: "Success",
               text: "Registro almacenado",
             }).then(() => {
-              // actualización del array de datos
+              // actualización del contexto
               updateStateComponent({
                 data: updateArray({
                   arrayData: data,
@@ -53,7 +53,7 @@ const usePostVehicle = ({ data, updateStateComponent }) => {
               title: "Success",
               text: "Registro actualizado",
             }).then(() => {
-              // actualización del array
+              // actualización del contexto
               updateStateComponent({
                 data: updateArray({
                   arrayData: data,

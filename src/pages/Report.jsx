@@ -1,7 +1,7 @@
 import Maintence from "../components/Maintence";
 
 const Report = () => {
-  retrun(<Maintence />);
+  return <Maintence />;
 };
 
 export default Report;

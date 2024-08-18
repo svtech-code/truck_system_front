@@ -363,7 +363,7 @@ const LoadingOrder_main = () => {
         />
       </HeaderComponent>
 
-      <section className="flex mt-6 gap-2">
+      <section className="flex mt-6 gap-2 overflow-auto">
         {/* tabla de datos */}
         <article className="grow">
           <DataTableComponent
@@ -375,23 +375,6 @@ const LoadingOrder_main = () => {
 
         {/* informacion complementaria */}
         <aside className="flex flex-col w-[15rem] gap-4">
-          {/* detalles del vehiculo */}
-          <article className="p-4 border-gray-200 rounded-lg border">
-            <header className="text-2xl mb-2">Detalles vehículo</header>
-            <table className="w-full">
-              <tbody className="flex flex-col gap-1">
-                <tr className="flex justify-between">
-                  <th>Tipo:</th>
-                  <td>Tracto camión</td>
-                </tr>
-                <tr className="flex justify-between">
-                  <th>Patente:</th>
-                  <td>FGYD-45</td>
-                </tr>
-              </tbody>
-            </table>
-          </article>
-
           {/* articulo de gastos */}
           <article className="p-4 border-gray-200 rounded-lg border">
             <header className="text-2xl mb-2">Gastos</header>

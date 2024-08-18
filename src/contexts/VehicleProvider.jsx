@@ -7,12 +7,28 @@ const VehiculeContext = createContext({});
 const filterByData = (array) => {
   const currentDate = new Date(); // obtención de la fecha actual
 
-  const filterData = array.filter((item) => {
-    const fechaRevision = new Date(item.fecha_vigencia_revision);
-    return fechaRevision < currentDate;
-  });
+  return array.filter(
+    (item) => new Date(item.fecha_vigencia_revision) < currentDate
+  );
+};
 
-  return filterData;
+// función para calcular valores con base en el array de datos
+const calculateDeriveData = (data) => {
+  return {
+    numberExpiredDocument: filterByData(data).length, // cantidad de vehiculos con documentos de revisión vencidos
+
+    numberOperationalVehicles: data?.filter(
+      (item) => item?.desc_estado_vehiculo === "DISPONIBLE"
+    ).length, // cantidad de vehiculos operativos
+
+    numberMaintanceVehicle: data?.filter(
+      (item) => item?.desc_estado_vehiculo === "MANTENIMIENTO"
+    ).length, // cantidad de vehiculos en mantenimiento
+
+    mainAcopladoData: data // ver como se trabajarán los acoplados
+      ?.filter((item) => item.desc_tipo_vehiculo === "CARRO")
+      ?.filter((item) => item.desc_estado_vehiculo === "DISPONIBLE"),
+  };
 };
 
 export const VehiculoProvider = ({ children, response }) => {
@@ -29,25 +45,22 @@ export const VehiculoProvider = ({ children, response }) => {
     descriptionEdit: null, // descripción del valor a ser editado
     error: null, // estado para almacenar los errores
     loadDataState: true,
-    initialValueForm: {},
-    numberExpiredDocument: filterByData(response).length, // cantidad de vehiculos con documentos vencidos
-
-    numberOperationalVehicles: response?.filter(
-      (item) => item?.desc_estado_vehiculo === "DISPONIBLE"
-    ).length, // cantidad de vehiculos operativos
-
-    numberMaintanceVehicle: response?.filter(
-      (item) => item?.desc_estado_vehiculo === "MANTENIMIENTO"
-    ).length, // cantidad de vehiculos en mantenimiento
-
-    mainAcopladoData: response // ver como se trabajarán los acoplados
-      ?.filter((item) => item.desc_tipo_vehiculo === "CARRO")
-      ?.filter((item) => item.desc_estado_vehiculo === "DISPONIBLE"),
+    ...calculateDeriveData(response), // calculo de los valores de las tarjetas
   });
 
   // función para actualizar los datos del objeto estado
   const updateVehicleData = useCallback((newData) => {
-    setVehicleData((prevData) => ({ ...prevData, ...newData }));
+    setVehicleData((prevData) => {
+      const updatedData = { ...prevData, ...newData };
+
+      // recalcular los valores derivados cuando cambian los datos
+      if (newData.data) {
+        const derivedData = calculateDeriveData(newData.data);
+        return { ...updatedData, ...derivedData };
+      }
+
+      return updatedData;
+    });
   }, []);
 
   // memorización de los datos del contexto

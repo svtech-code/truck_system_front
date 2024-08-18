@@ -19,7 +19,7 @@ const varString = {
   titleModal: "Registro de vehículo",
   route: "vehiculos",
   propertyId: "cod_vehiculo",
-  propertyName: "desc_modelo", // agregar array con propertis name
+  propertyName: "desc_modelo",
   cards: [
     {
       titleCard: "Operativos",

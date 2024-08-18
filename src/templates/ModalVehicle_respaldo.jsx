@@ -11,7 +11,7 @@ import useSubmitVehicle from "../hooks/useSubmitVehicle";
 import vehicleValidation from "../validations/vehicleValidation";
 import { Formik } from "formik";
 import Select_Component from "../components/Select_Component";
-import { useEffect, useState } from "react";
+// import { useEffect } from "react";
 import initialValues_vehicle from "../utils/initialValues/vehicleValues";
 
 const ModalVehicle = ({ title, isOpen, onOpenChange }) => {
@@ -30,10 +30,10 @@ const ModalVehicle = ({ title, isOpen, onOpenChange }) => {
   const validationSchema = vehicleValidation();
 
   // reestablecer la acción del modal y el id (add or update)
-  useEffect(() => {
-    // if (!isOpen) updateStateComponent({ edit: false, idEdit: null });
-    // if (isOpen) inputRef.current.focus();
-  }, [isOpen]);
+  // useEffect(() => {
+  //   // if (!isOpen) updateStateComponent({ edit: false, idEdit: null });
+  //   // if (isOpen) inputRef.current.focus();
+  // }, [isOpen]);
 
   return (
     <>
@@ -162,7 +162,7 @@ const ModalVehicle = ({ title, isOpen, onOpenChange }) => {
                           }
                         />
                       </div>
-                      
+
                       {/* input descripcion y capacidad */}
                       <div className="flex flex-col sm:flex-row gap-4">
                         <Input

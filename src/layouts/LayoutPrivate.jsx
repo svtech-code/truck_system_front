@@ -13,11 +13,14 @@ const LayoutPrivate = () => {
   }, [authentication]);
 
   return (
-    <div className="relative flex flex-col gap-1 min-h-screen p-1">
-      <NavBar />
-      <main className="flex flex-grow flex-col rounded-xl overflow-hidden">
+    <div className="relative flex flex-col gap-1 h-screen p-1">
+      <header className="w-full relative flex-shrink-0">
+        <NavBar />
+      </header>
+      <main className="flex flex-grow flex-col rounded-xl overflow-y-auto">
         <Outlet />
       </main>
+
       <Footer />
     </div>
   );

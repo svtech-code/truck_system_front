@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import {
   providerFilter,
@@ -28,11 +28,36 @@ const DataTableComponent = ({
     setStateData((prev) => ({ ...prev, ...newState }));
   };
 
+  // función especifica para trabajar con el scroll de la tabla ==>
+  const [scrollHeight, setScrollHeight] = useState("");
+
+  useEffect(() => {
+    // Función para actualizar el valor de scrollHeight basado en la altura de la ventana
+    const updateScrollHeight = () => {
+      if (window.innerHeight < 860) {
+        setScrollHeight("490px");
+      } else {
+        setScrollHeight("");
+      }
+    };
+
+    // Escuchar los cambios de tamaño de la ventana
+    window.addEventListener("resize", updateScrollHeight);
+
+    // Llamar a la función en el montaje inicial
+    updateScrollHeight();
+
+    // Limpiar el evento de redimensionamiento cuando el componente se desmonta
+    return () => window.removeEventListener("resize", updateScrollHeight);
+  }, []);
+  // =============================================================>
+
   return (
     <section className="relative flex flex-col p-2">
       <DataTable
         customStyles={styleDataTable}
         fixedHeader
+        fixedHeaderScrollHeight={scrollHeight}
         subHeader
         subHeaderComponent={HeaderDataTableComponent({
           filter: stateData.filterData,

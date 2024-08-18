@@ -11,6 +11,8 @@ import Vehicle from "../pages/Vehicle";
 import { getData } from "../api/apiGet";
 import VehicleModel from "../pages/VehicleModel";
 import VehicleState from "../pages/VehicleState";
+import Report from "../pages/Report";
+import Taxpayer from "../pages/Taxpayer";
 
 export const RoutesObjects = [
   { path: "/home", element: <Home /> },
@@ -21,6 +23,11 @@ export const RoutesObjects = [
   },
   { path: "/driver", element: <Driver /> },
   { path: "/loadingorder", element: <LoadingOrder /> },
+  {
+    path: "/taxpayer",
+    element: <Taxpayer />,
+    loader: () => getData({ endPoint: "contribuyentes" }),
+  },
   {
     path: "/usertype",
     element: <UserType />,
@@ -46,7 +53,7 @@ export const RoutesObjects = [
     element: <VehicleModel />,
     loader: () => getData({ endPoint: "modelos" }),
   },
-  { path: "/report", element: <LoadingOrder /> },
+  { path: "/report", element: <Report /> },
   { path: "/profile", element: <Profile /> },
   { path: "/message", element: <Message /> },
   { path: "/setting", element: <Setting /> },
