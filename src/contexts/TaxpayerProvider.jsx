@@ -9,6 +9,7 @@ export const TaxpayerProvider = ({ children, response }) => {
     data: response,
     numberTaxpayers: response.length,
     error: null,
+    loadDataState: true,
   });
 
   // función para actualizar los datos del objeto

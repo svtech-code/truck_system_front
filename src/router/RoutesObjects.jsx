@@ -13,6 +13,7 @@ import VehicleModel from "../pages/VehicleModel";
 import VehicleState from "../pages/VehicleState";
 import Report from "../pages/Report";
 import Taxpayer from "../pages/Taxpayer";
+import Georeference from "../pages/Georeference";
 
 export const RoutesObjects = [
   { path: "/home", element: <Home /> },
@@ -27,6 +28,11 @@ export const RoutesObjects = [
     path: "/taxpayer",
     element: <Taxpayer />,
     loader: () => getData({ endPoint: "contribuyentes" }),
+  },
+  {
+    path: "/georeference",
+    element: <Georeference />,
+    loader: () => getData({ endPoint: "georeferencias" }),
   },
   {
     path: "/usertype",

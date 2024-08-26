@@ -1,29 +1,29 @@
-import { FaUserTie } from "react-icons/fa";
-import useTaxpayer from "../../hooks/useTaxpayer";
+import { SiOpenstreetmap } from "react-icons/si";
+import useGeoreference from "../../hooks/useGeoreference";
 import HeaderComponent from "../Header_Component";
 import HeaderCardComponent from "../HeaderCard_Component";
-import DataTableComponent from "../DataTable_Component";
-import { Taxpayer_structure } from "./Taxpayer_structure";
 import { useState } from "react";
+import DataTableComponent from "../DataTable_Component";
+import { Georeference_structure } from "./Georeference_structure";
 
 const varString = {
-  title: "Contribuyentes",
-  titleModal: "Contribuyente",
-  route: "contribuyente",
-  propertyId: "cod_contribuyente",
+  title: "Georeferencias",
+  titleModal: "Georeferencia",
+  route: "georeferencia",
+  propertyId: "cod_georeferencia",
   propertyName: "",
   cards: [
     {
-      titleCard: "Mis contribuyentes",
-      iconCard: <FaUserTie size={35} />,
-      countCard: "numberTaxpayers",
+      titleCard: "Mis georeferencias",
+      iconCard: <SiOpenstreetmap size={35} />,
+      countCard: "numberGeoreference",
     },
   ],
 };
 
-const Taxpayer_main = () => {
-  const { data, numberTaxpayers } = useTaxpayer();
-  const counterCard = { numberTaxpayers };
+const Georeference_main = () => {
+  const { data, numberGeoreference } = useGeoreference();
+  const counterCard = { numberGeoreference };
 
   // estados para el manejo del modal
   const [open, setOpen] = useState(false);
@@ -50,7 +50,7 @@ const Taxpayer_main = () => {
       <DataTableComponent
         data={data}
         onOpen={() => setOpen(true)}
-        structureData={Taxpayer_structure({
+        structureData={Georeference_structure({
           onOpen: () => setOpen(true),
           route: varString.route,
           propertyId: varString.propertyId,
@@ -62,4 +62,4 @@ const Taxpayer_main = () => {
   );
 };
 
-export default Taxpayer_main;
+export default Georeference_main;

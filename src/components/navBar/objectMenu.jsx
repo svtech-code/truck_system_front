@@ -1,5 +1,6 @@
 import {
   FaClipboardList,
+  FaMapMarkedAlt,
   FaTruck,
   FaTruckPickup,
   FaUser,
@@ -16,6 +17,7 @@ export const navLinkMenuMovile = [
   { to: "/driver", title: "Gestión chofer" },
   { to: "/loadingorder", title: "Orden carga" },
   { to: "/taxpayer", title: "Contribuyente" },
+  { to: "/georeference", title: "Georeferencia" },
   { to: "/userType", title: "Tipos usuario" },
   { to: "/vehicletype", title: "Tipos vehículo" },
   { to: "/vehiclebrand", title: "Marcas vehículo" },
@@ -57,6 +59,12 @@ export const navLinkSubMenuDesktop = [
         icon: <FaUserTie />,
         label: "Contribuyente",
         path: "/taxpayer",
+      },
+      {
+        key: "georeference",
+        icon: <FaMapMarkedAlt />,
+        label: "Georeferencia",
+        path: "/georeference",
       },
       {
         key: "userType",

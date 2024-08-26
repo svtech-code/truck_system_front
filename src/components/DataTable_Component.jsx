@@ -9,11 +9,11 @@ import InfoDataTable from "./InfoDataTable_component";
 import HeaderDataTableComponent from "./HeaderDataTable_Component";
 
 const DataTableComponent = ({
-  data,
-  structureData,
-  subStructureData,
-  onOpen,
-  downloadData,
+  data, //necesario
+  structureData, // necesario
+  subStructureData, // opcional
+  onOpen, // opcional
+  downloadData, // opcional
   loaderData, // manejador del spinner de carga, solo se usa cuando se pasa como prop
 }) => {
   // estados del dataTable
