@@ -1,6 +1,6 @@
 import useVehicle from "../../hooks/useVehicle";
 import ActionButton from "../ActionButton";
-import Select_Component from "../Select_Component";
+import Vehicle_SelectComponent from "./Vehicle_SelectComponent";
 
 const formatPatente = (patente) => {
   return patente.replace(/(.{4})(.{2})/, "$1-$2");
@@ -43,7 +43,7 @@ export const Vehicle_structure = ({
       selector: (row) => row.desc_estado_vehiculo,
       minWidth: "13rem",
       cell: (row) => (
-        <Select_Component
+        <Vehicle_SelectComponent
           codPrimary={row.cod_vehiculo}
           rowData={row.desc_estado_vehiculo}
           listData={stateVehicle}

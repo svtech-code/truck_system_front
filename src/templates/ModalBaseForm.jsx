@@ -9,7 +9,7 @@ import {
 import { Formik } from "formik";
 import { useEffect, useRef } from "react";
 
-const ModalBase = ({
+const ModalBaseForm = ({
   propertyId,
   stateComponent,
   updateStateComponent,
@@ -125,4 +125,4 @@ const ModalBase = ({
   );
 };
 
-export default ModalBase;
+export default ModalBaseForm;

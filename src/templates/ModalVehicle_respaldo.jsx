@@ -10,9 +10,8 @@ import {
 import useSubmitVehicle from "../hooks/useSubmitVehicle";
 import vehicleValidation from "../validations/vehicleValidation";
 import { Formik } from "formik";
-import Select_Component from "../components/Select_Component";
-// import { useEffect } from "react";
 import initialValues_vehicle from "../utils/initialValues/vehicleValues";
+import Vehicle_SelectComponent from "../components/vehicle/Vehicle_SelectComponent";
 
 const ModalVehicle = ({ title, isOpen, onOpenChange }) => {
   // impotación del submit de datos
@@ -125,13 +124,13 @@ const ModalVehicle = ({ title, isOpen, onOpenChange }) => {
                       </div>
                       {/* input tipoVehiculo, marca, modelo */}
                       <div className="flex flex-col sm:flex-row gap-4">
-                        <Select_Component
+                        <Vehicle_SelectComponent
                           route="tipo_vehiculos"
                           label={"Tipos vehículo"}
                           itemKey="cod_tipo_vehiculo"
                           detail="desc_tipo_vehiculo"
                         />
-                        <Select_Component
+                        <Vehicle_SelectComponent
                           route="marcas"
                           label={"Marcas"}
                           itemKey="cod_marca"
@@ -260,7 +259,7 @@ const ModalVehicle = ({ title, isOpen, onOpenChange }) => {
                       </div>
 
                       {/* select de contribullete */}
-                      <Select_Component
+                      <Vehicle_SelectComponent
                         route="estado_vehiculos"
                         label={"Contribullente"}
                         itemKey="cod_estado_vehiculo"
@@ -269,14 +268,14 @@ const ModalVehicle = ({ title, isOpen, onOpenChange }) => {
 
                       {/* input chofer y acoplado */}
                       <div className="flex flex-col sm:flex-row gap-4">
-                        <Select_Component
+                        <Vehicle_SelectComponent
                           route="tipo_usuarios"
                           label={"Chofer"}
                           itemKey="cod_tipo_usuario"
                           detail="desc_tipo_usuario"
                         />
 
-                        <Select_Component
+                        <Vehicle_SelectComponent
                           route="vehiculos"
                           label={"Pte. Acoplado"}
                           itemKey="cod_vehiculo"

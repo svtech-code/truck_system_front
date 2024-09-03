@@ -5,13 +5,14 @@ import HeaderCardComponent from "../HeaderCard_Component";
 import DataTableComponent from "../DataTable_Component";
 import { Taxpayer_structure } from "./Taxpayer_structure";
 import { useState } from "react";
+import Taxpayer_subStructure from "./Taxpayer_subStructure";
 
 const varString = {
   title: "Contribuyentes",
   titleModal: "Contribuyente",
-  route: "contribuyente",
+  route: "contribuyentes",
   propertyId: "cod_contribuyente",
-  propertyName: "",
+  propertyName: "desc_contribuyente",
   cards: [
     {
       titleCard: "Mis contribuyentes",
@@ -56,6 +57,7 @@ const Taxpayer_main = () => {
           propertyId: varString.propertyId,
           propertyName: varString.propertyName,
         })}
+        subStructureData={Taxpayer_subStructure}
         downloadData={eventClickDownloadData}
       />
     </>

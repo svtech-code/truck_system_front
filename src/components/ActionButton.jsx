@@ -38,9 +38,8 @@ const ActionButton = ({
     <div className="flex gap-4 items-center">
       {/* btn update */}
       <Button
-        // isIconOnly
         color="primary"
-        aria-label="Edit"
+        aria-label="edit-data"
         onClick={handlerEdit}
         isDisabled={loader}
       >
@@ -48,7 +47,12 @@ const ActionButton = ({
       </Button>
 
       {/* btn delete */}
-      <Button color="danger" aria-label="Edit" onClick={onDelete}>
+      <Button
+        color="danger"
+        aria-label="delete-data"
+        onClick={onDelete}
+        isDisabled={loader}
+      >
         <FaTrashAlt size={20} />
       </Button>
     </div>

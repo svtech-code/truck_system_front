@@ -7,7 +7,6 @@ import {
   TableRow,
 } from "@nextui-org/react";
 import useVehicle from "../../hooks/useVehicle";
-import Select_Component from "../Select_Component";
 
 const Vehicle_subStructure = ({ data }) => {
   const { mainAcopladoData } = useVehicle();
@@ -43,6 +42,7 @@ const Vehicle_subStructure = ({ data }) => {
         <TableColumn>Transportista</TableColumn>
         <TableColumn>Pte. Acoplado</TableColumn>
       </TableHeader>
+
       <TableBody emptyContent={"Sin datos asignados"}>
         <TableRow key="1">
           <TableCell>{desc_vehiculo}</TableCell>
@@ -50,18 +50,7 @@ const Vehicle_subStructure = ({ data }) => {
           <TableCell>{fecha_vigencia_seguro}</TableCell>
           <TableCell>{fecha_vigencia_revision}</TableCell>
           <TableCell>cliente propietario del vehículo</TableCell>
-          <TableCell>
-            {
-              patenteAcoplado.patente ?? "Sin acoplado"
-              // <Select_Component // revisar a donde se pasa
-              //   codPrimary={cod_vehiculo.toString()}
-              //   rowData={patenteAcoplado.patente}
-              //   listData={mainAcopladoData}
-              //   codData={"cod_vehiculo"}
-              //   descData={"patente"}
-              // />
-            }
-          </TableCell>
+          <TableCell>{patenteAcoplado.patente ?? "Sin acoplado"}</TableCell>
         </TableRow>
       </TableBody>
     </Table>

@@ -12,10 +12,12 @@ export const Taxpayer_structure = ({
     {
       name: "RUN",
       selector: (row) => row.run_contribuyente,
+      maxWidth: "8rem",
     },
     {
       name: "Nombre",
       selector: (row) => row.nombre_contribuyente,
+      maxWidth: "15rem",
     },
     {
       name: "Paterno",
@@ -26,13 +28,19 @@ export const Taxpayer_structure = ({
       selector: (row) => row.apellido_materno_contribuyente,
     },
     {
+      name: "Comuna",
+      selector: (row) => row.desc_comuna,
+      hide: "md",
+    },
+    {
       name: "Dirección",
       selector: (row) => row.direccion_contribuyente,
+      hide: "md",
     },
     {
       name: "Acciones",
       center: true,
-      width: "200px",
+      // maxWidth: "10rem",
       cell: (row) => (
         <ActionButton
           data={data}

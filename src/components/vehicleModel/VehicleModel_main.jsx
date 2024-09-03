@@ -5,7 +5,7 @@ import HeaderCardComponent from "../HeaderCard_Component";
 import { IoLogoModelS } from "react-icons/io";
 import DataTableComponent from "../DataTable_Component";
 import VehicleModel_structure from "./VehicleModel_structure";
-import ModalBase from "../../templates/ModalBase";
+import ModalBaseForm from "../../templates/ModalBaseForm";
 import usePostModel from "../../hooks/usePostModel";
 import initialValues_model from "../../utils/initialValues/modelValues";
 import modelValidation from "../../validations/modelValidation";
@@ -74,7 +74,7 @@ const VehicleModel_main = ({ vehicleModel_data }) => {
       </HeaderComponent>
 
       {/* modal del mantenedor */}
-      <ModalBase
+      <ModalBaseForm
         propertyId={varString.propertyId}
         stateComponent={stateComponent}
         updateStateComponent={updateStateComponent}

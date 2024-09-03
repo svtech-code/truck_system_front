@@ -1,10 +1,10 @@
 import { Select, SelectItem } from "@nextui-org/react";
 import { useCallback, useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import apiPut from "../api/apiPut";
-import useVehicle from "../hooks/useVehicle";
+import useVehicle from "../../hooks/useVehicle";
+import apiPut from "../../api/apiPut";
 
-const Select_Component = ({
+const Vehicle_SelectComponent = ({
   codPrimary, // codigo del valor principal a modificar
   rowData, // valor del dato
   listData, // lista de datos para el select
@@ -40,7 +40,6 @@ const Select_Component = ({
           : new Set([]),
       });
     }
-    // console.log(row);
   }, [listData]);
 
   const handleSelectedValue = (newValue) => {
@@ -119,20 +118,6 @@ const Select_Component = ({
               data: updateData,
             });
 
-            // updateVehicleData({
-            //   data: data.map((item) =>
-            //     item.cod_vehiculo === codPrimary
-            //       ? {
-            //           ...item,
-            //           desc_estado_vehiculo: stateVehicle.find(
-            //             (item) => item.cod_estado_vehiculo === Number(newValue)
-            //           ).desc_estado_vehiculo,
-            //         }
-            //       : item
-            //   ),
-            // });
-            // console.log(response);
-
             Toast.fire({
               icon: "success",
               title: "Modificación de datos exitosa!!",
@@ -144,7 +129,7 @@ const Select_Component = ({
 
   return (
     <Select
-      aria-label="Estado vehiculo"
+      aria-label="multiselection"
       placeholder={varState.loading ? "Cargando..." : "Seleccionar"}
       size="md"
       variant="faded"
@@ -160,4 +145,4 @@ const Select_Component = ({
   );
 };
 
-export default Select_Component;
+export default Vehicle_SelectComponent;

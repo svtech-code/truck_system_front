@@ -175,20 +175,6 @@ const Vehicle_form = ({
           isInvalid={touched.desc_vehiculo && errors.desc_vehiculo}
           errorMessage={touched.desc_vehiculo && errors.desc_vehiculo}
         />
-
-        {/* <Select_Component_load
-          name={"idTransportista"}
-          route="estado_vehiculos"
-          label={"Transportista"}
-          itemKey="cod_estado_vehiculo"
-          detail="desc_estado_vehiculo"
-          value={values.idTransportista}
-          handleChange={handleChange}
-          handleBlur={handleBlur}
-          touched={touched}
-          errors={errors}
-          required={false} // cambiar a true, cuando el endpoint funcione
-        /> */}
       </div>
 
       {/* input fechas de vencimiento */}

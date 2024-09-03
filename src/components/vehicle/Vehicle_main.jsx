@@ -6,7 +6,7 @@ import Vehicle_subStructure from "./Vehicle_subStructure";
 import HeaderCardComponent from "../HeaderCard_Component";
 import { GiMechanicGarage, GiTruck } from "react-icons/gi";
 import { HiClipboardDocumentList } from "react-icons/hi2";
-import ModalBase from "../../templates/ModalBase";
+import ModalBaseForm from "../../templates/ModalBaseForm";
 import initialValues_vehicle from "../../utils/initialValues/vehicleValues";
 import vehicleValidation from "../../validations/vehicleValidation";
 import Vehicle_form from "./Vehicle_form";
@@ -115,7 +115,7 @@ const Vehicle_main = () => {
       </HeaderComponent>
 
       {/* modal generico */}
-      <ModalBase
+      <ModalBaseForm
         propertyId={varString.propertyId}
         stateComponent={useVehicle()}
         updateStateComponent={updateVehicleData}
