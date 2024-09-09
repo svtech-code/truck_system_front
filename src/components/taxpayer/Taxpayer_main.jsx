@@ -6,6 +6,11 @@ import DataTableComponent from "../DataTable_Component";
 import { Taxpayer_structure } from "./Taxpayer_structure";
 import { useState } from "react";
 import Taxpayer_subStructure from "./Taxpayer_subStructure";
+import ModalBaseForm from "../../templates/ModalBaseForm";
+import initialValues_taxpayer from "../../utils/initialValues/taxpayerValues";
+import taxpayerValidation from "../../validations/TaxpayerValidation";
+import Taxpayer_form from "./Taxpayer_form";
+import useSubmitTaxpayer from "../../hooks/submit/useSubmitTaxpayer";
 
 const varString = {
   title: "Contribuyentes",
@@ -23,7 +28,7 @@ const varString = {
 };
 
 const Taxpayer_main = () => {
-  const { data, numberTaxpayers } = useTaxpayer();
+  const { data, numberTaxpayers, updateTaxpayerData } = useTaxpayer();
   const counterCard = { numberTaxpayers };
 
   // estados para el manejo del modal
@@ -46,6 +51,22 @@ const Taxpayer_main = () => {
       </HeaderComponent>
 
       {/* modal generico */}
+      <ModalBaseForm
+        propertyId={varString.propertyId}
+        stateComponent={useTaxpayer()}
+        updateStateComponent={updateTaxpayerData}
+        title={varString.titleModal}
+        size={"2xl"}
+        isOpen={open}
+        onOpenChange={() => setOpen(false)}
+        useSubmit_generic={useSubmitTaxpayer({
+          data: data,
+          updateStateComponent: updateTaxpayerData,
+        })}
+        initialValues_generic={initialValues_taxpayer}
+        validationSchema_generic={taxpayerValidation}
+        Form_generic={(props) => <Taxpayer_form {...props} />}
+      />
 
       {/* tabla del mantenedor */}
       <DataTableComponent

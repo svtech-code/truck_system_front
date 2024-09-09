@@ -40,7 +40,6 @@ export const Taxpayer_structure = ({
     {
       name: "Acciones",
       center: true,
-      // maxWidth: "10rem",
       cell: (row) => (
         <ActionButton
           data={data}
