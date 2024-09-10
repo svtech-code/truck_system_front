@@ -13,7 +13,7 @@ const Taxpayer_form = ({
   errors,
   inputRef,
 }) => {
-  const {} = useTaxpayer();
+  const { commune } = useTaxpayer();
 
   return (
     <>
@@ -282,9 +282,9 @@ const Taxpayer_form = ({
         {/* comuna */}
         <div className="w-[20rem]">
           <SelectComponent
-            listData={[{ id: 2, comuna: "linares" }]}
-            codData={"id"}
-            descData={"comuna"}
+            listData={commune}
+            codData={"cod_comuna"}
+            descData={"desc_comuna"}
             sizeSelect={"md"}
             label={"Comuna"}
             isRequired={true}
@@ -303,6 +303,10 @@ const Taxpayer_form = ({
           Asociar georeferencias
         </Button>
         {/* desplegar modal para seleccionar georeferencias */}
+        {/* 
+          ->  el modal deberá ser una lista con todas las georeferencias y deberá permitir asociar o desasociar una
+          ->  deberá tener un boton para crear una georeferencia y un input para filtrara georeferencias
+        */}
         {/* que también permita agergar nuevas georeferencias */}
       </div>
 

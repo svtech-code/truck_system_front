@@ -4,13 +4,14 @@ import HeaderComponent from "../Header_Component";
 import HeaderCardComponent from "../HeaderCard_Component";
 import DataTableComponent from "../DataTable_Component";
 import { Taxpayer_structure } from "./Taxpayer_structure";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Taxpayer_subStructure from "./Taxpayer_subStructure";
 import ModalBaseForm from "../../templates/ModalBaseForm";
 import initialValues_taxpayer from "../../utils/initialValues/taxpayerValues";
 import taxpayerValidation from "../../validations/TaxpayerValidation";
 import Taxpayer_form from "./Taxpayer_form";
 import useSubmitTaxpayer from "../../hooks/submit/useSubmitTaxpayer";
+import { getData } from "../../api/apiGet";
 
 const varString = {
   title: "Contribuyentes",
@@ -30,6 +31,22 @@ const varString = {
 const Taxpayer_main = () => {
   const { data, numberTaxpayers, updateTaxpayerData } = useTaxpayer();
   const counterCard = { numberTaxpayers };
+
+  useEffect(() => {
+    const getDataTaxpayer = async () => {
+      const [communes, georeferences] = await Promise.all([
+        getData({ endPoint: "comunas" }),
+        getData({ endPoint: "georeferencias" }),
+      ]);
+
+      updateTaxpayerData({
+        commune: communes?.response,
+        georeference: georeferences?.response,
+      });
+    };
+
+    getDataTaxpayer();
+  }, []);
 
   // estados para el manejo del modal
   const [open, setOpen] = useState(false);
