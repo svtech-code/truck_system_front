@@ -11,6 +11,7 @@ import { useCallback, useState } from "react";
 import ModalBaseTable from "../../templates/ModalBaseTable";
 import Taxpayer_georeferencesTable from "./Taxpayer_georeferencesTable";
 import Taxpayer_SelectComponent from "./Taxpayer_SelectComponent";
+import SelectComponent from "../SelectComponent";
 
 const Taxpayer_subStructure = ({ data }) => {
   const {
@@ -51,7 +52,7 @@ const Taxpayer_subStructure = ({ data }) => {
         size={"2xl"}
         isOpen={open}
         onOpenChange={() => handleModalClose()}
-        table={Taxpayer_georeferencesTable}
+        table={() => Taxpayer_georeferencesTable({ dataTaxpayerTable: data })}
       />
 
       <Table
@@ -77,12 +78,19 @@ const Taxpayer_subStructure = ({ data }) => {
             <TableCell>{telefono1_contribuyente}</TableCell>
             <TableCell>{telefono2_contribuyente}</TableCell>
             <TableCell>
-              <Taxpayer_SelectComponent
+              {/* <Taxpayer_SelectComponent
                 codPrimary={cod_contribuyente}
                 rowData={desc_state_taxpayer}
                 listData={listStateTaxpayer}
                 codData={"cod_state_taxpayer"}
                 descData={"desc_state_taxpayer"}
+              /> */}
+              <SelectComponent
+                listData={listStateTaxpayer}
+                codData={"cod_state_taxpayer"}
+                descData={"desc_state_taxpayer"}
+                sizeSelect={"md"}
+                notFormImplement
               />
             </TableCell>
             <TableCell>

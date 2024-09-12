@@ -6,12 +6,14 @@ const SelectComponent = ({
   codData, // nombre de la propiedad id del objeto
   descData, // nombre de la descripción a utilizar del objeto
   sizeSelect, // string del tamaño del elemento
-  label, // label del select
-  isRequired = false,
-  isInvalid,
-  errorMessage,
-  name, // nombre del campo formik
-  setFieldValue, // función para actualizar el valor en formik
+  label, // label del select, idealmente para formularios
+  isRequired = false, // requerimiento, solo para formularios
+  isInvalid, // parametro de validación, solo para formularios
+  errorMessage, // mensaje de error, solo para formularios
+  name, // nombre del campo formik, solo para formularios
+  setFieldValue, // función para actualizar el valor en formik, solo para formularios
+  notFormImplement, // para uso fuera de formularios
+  formImplement, // para uso en formularios
 }) => {
   // variables state del componente
   const [varState, setVarState] = useState({
@@ -37,7 +39,6 @@ const SelectComponent = ({
       labelPlacement="outside"
       label={varState.loading ? "Cargando..." : label}
       size={sizeSelect}
-      // variant="faded"
       variant="bordered"
       color="primary"
       isRequired={isRequired}
@@ -45,7 +46,6 @@ const SelectComponent = ({
       selectedKeys={varState.selectedValue}
       onSelectionChange={(key) => handleSelectedValue(key.currentKey)}
       isInvalid={isInvalid}
-      // isInvalid={true}
       errorMessage={errorMessage}
     >
       {listData.map((item) => (
