@@ -9,6 +9,7 @@ import initialValues_model from "../../utils/initialValues/modelValues";
 import modelValidation from "../../validations/modelValidation";
 import SubModalBase from "../../templates/SubModalBase";
 import SelectComponent from "../SelectComponent";
+import { FaCar } from "react-icons/fa";
 
 const Vehicle_form = ({
   values,
@@ -118,6 +119,10 @@ const Vehicle_form = ({
           errorMessage={touched.cantidad_kilos && errors.cantidad_kilos}
           className="w-full xxs:w-[8rem]"
         />
+
+        <div className="hidden xs:flex justify-center items-center pl-10 ">
+          <FaCar size={80} />
+        </div>
       </div>
 
       {/* select tipoVehiculo y modelo */}
@@ -162,51 +167,8 @@ const Vehicle_form = ({
         />
       </div>
 
-      {/* input descripción */}
-      <div className="flex w-full">
-        <Input
-          color={
-            touched.desc_vehiculo && errors.desc_vehiculo ? "danger" : "primary"
-          }
-          name="desc_vehiculo"
-          type="text"
-          label="Descripción"
-          labelPlacement="outside"
-          variant="faded"
-          value={values.desc_vehiculo}
-          isRequired={true}
-          onChange={(e) =>
-            setFieldValue("desc_vehiculo", e.target.value.toUpperCase())
-          }
-          onBlur={handleBlur}
-          isInvalid={touched.desc_vehiculo && errors.desc_vehiculo}
-          errorMessage={touched.desc_vehiculo && errors.desc_vehiculo}
-        />
-      </div>
-
-      {/* select contribuyente */}
-      <div className="flex pb-2 w-full">
-        <SelectComponent
-          listData={taxpayers}
-          codDataArray={"cod_contribuyente"}
-          descDataArray={"desc_contribuyente"}
-          codData={"cod_transportista"}
-          descData={"desc_transportista"}
-          label={"Transportista"}
-          isRequired={true}
-          isInvalid={
-            touched.cod_transportista && errors.cod_transportista ? true : false
-          }
-          errorMessage={touched.cod_transportista && errors.cod_transportista}
-          name={"cod_transportista"}
-          setFieldValue={setFieldValue}
-          formImplement
-          loadForCod={values.cod_transportista}
-        />
-      </div>
-
       {/* input fechas de vencimiento */}
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="flex flex-col sm:flex-row gap-4 pt-2">
         <Input
           color={
             touched.fecha_vigencia_seguro && errors.fecha_vigencia_seguro
@@ -254,6 +216,49 @@ const Vehicle_form = ({
         />
       </div>
 
+      {/* input descripción */}
+      <div className="flex w-full">
+        <Input
+          color={
+            touched.desc_vehiculo && errors.desc_vehiculo ? "danger" : "primary"
+          }
+          name="desc_vehiculo"
+          type="text"
+          label="Descripción"
+          labelPlacement="outside"
+          variant="faded"
+          value={values.desc_vehiculo}
+          isRequired={true}
+          onChange={(e) =>
+            setFieldValue("desc_vehiculo", e.target.value.toUpperCase())
+          }
+          onBlur={handleBlur}
+          isInvalid={touched.desc_vehiculo && errors.desc_vehiculo}
+          errorMessage={touched.desc_vehiculo && errors.desc_vehiculo}
+        />
+      </div>
+
+      {/* select contribuyente */}
+      <div className="flex w-full">
+        <SelectComponent
+          listData={taxpayers}
+          codDataArray={"cod_contribuyente"}
+          descDataArray={"desc_contribuyente"}
+          codData={"cod_transportista"}
+          descData={"desc_transportista"}
+          label={"Transportista"}
+          isRequired={true}
+          isInvalid={
+            touched.cod_transportista && errors.cod_transportista ? true : false
+          }
+          errorMessage={touched.cod_transportista && errors.cod_transportista}
+          name={"cod_transportista"}
+          setFieldValue={setFieldValue}
+          formImplement
+          loadForCod={values.cod_transportista}
+        />
+      </div>
+
       {/* Select chofer y acoplado */}
       <div className="flex flex-col sm:flex-row gap-4">
         <SelectComponent
@@ -292,6 +297,7 @@ const Vehicle_form = ({
         </div>
       </div>
 
+      {/* modal para crear un sub dato */}
       <SubModalBase
         propertyId={"desc_modelo"}
         title={"Modelo de Vehículo"}

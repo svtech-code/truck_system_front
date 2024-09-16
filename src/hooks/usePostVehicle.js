@@ -18,28 +18,26 @@ const usePostVehicle = ({ data, updateStateComponent }) => {
 
       try {
         if (cod_vehiculo === null) {
-          // await apiPost({
-          //   route: "vehiculos",
-          //   object: payload,
-          // }).then((response) => {
-          //   Swal.fire({
-          //     icon: "success",
-          //     title: "Success",
-          //     text: "Registro almacenado",
-          //   }).then(() => {
-          //     // actualización del contexto
-          //     updateStateComponent({
-          //       data: updateArray({
-          //         arrayData: data,
-          //         idData: response?.data?.cod_vehiculo,
-          //         idField: "cod_vehiculo",
-          //         updateFields: response?.data,
-          //       }),
-          //     });
-          //   });
-          // });
-          console.log(values);
-          console.log(payload);
+          await apiPost({
+            route: "vehiculos",
+            object: payload,
+          }).then((response) => {
+            Swal.fire({
+              icon: "success",
+              title: "Success",
+              text: "Registro almacenado",
+            }).then(() => {
+              // actualización del contexto
+              updateStateComponent({
+                data: updateArray({
+                  arrayData: data,
+                  idData: response?.data?.cod_vehiculo,
+                  idField: "cod_vehiculo",
+                  updateFields: response?.data,
+                }),
+              });
+            });
+          });
         } else {
           await apiPut({
             route: `vehiculos/${cod_vehiculo.toString()}`,

@@ -41,9 +41,13 @@ const SelectComponent = ({
       const arrayForDesc = listData.find(
         (item) => item[descDataArray] === loadForDesc
       );
+      // asignación del select
       updateVarState({
         selectedValue: new Set([arrayForDesc[codDataArray].toString()]),
       });
+
+      // asignación del value de datos
+      setFieldValue(name, arrayForDesc[codDataArray].toString());
       return;
     }
   }, []);
