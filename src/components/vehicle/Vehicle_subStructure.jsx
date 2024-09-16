@@ -14,6 +14,7 @@ const Vehicle_subStructure = ({ data }) => {
   const {
     cod_vehiculo,
     desc_vehiculo,
+    desc_transportista,
     anio,
     fecha_vigencia_seguro,
     fecha_vigencia_revision,
@@ -49,7 +50,7 @@ const Vehicle_subStructure = ({ data }) => {
           <TableCell>{anio}</TableCell>
           <TableCell>{fecha_vigencia_seguro}</TableCell>
           <TableCell>{fecha_vigencia_revision}</TableCell>
-          <TableCell>cliente propietario del vehículo</TableCell>
+          <TableCell>{desc_transportista}</TableCell>
           <TableCell>{patenteAcoplado.patente ?? "Sin acoplado"}</TableCell>
         </TableRow>
       </TableBody>

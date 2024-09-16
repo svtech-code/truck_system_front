@@ -24,8 +24,8 @@ const vehicleValidation = () => {
       .positive()
       .integer()
       .required("Tonelaje requerido !"),
-    desc_tipo_vehiculo: Yup.string().required("Seleccionar tipo !"),
-    desc_modelo: Yup.string().required("Seleccionar modelo !"),
+    // desc_tipo_vehiculo: Yup.string().required("Seleccionar tipo !"),
+    // desc_modelo: Yup.string().required("Seleccionar modelo !"),
     desc_vehiculo: Yup.string()
       .required("Descripción obligatoria")
       .matches(
@@ -39,7 +39,7 @@ const vehicleValidation = () => {
     fecha_vigencia_revision: Yup.date().required(
       "Seleccionar fecha vencimiento revisión"
     ),
-    desc_chofer: Yup.string().required("Seleccionar chofer !"),
+    // desc_chofer: Yup.string().required("Seleccionar chofer !"),
   });
 };
 

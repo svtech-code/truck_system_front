@@ -8,6 +8,7 @@ import usePostModel from "../../hooks/usePostModel";
 import initialValues_model from "../../utils/initialValues/modelValues";
 import modelValidation from "../../validations/modelValidation";
 import SubModalBase from "../../templates/SubModalBase";
+import SelectComponent from "../SelectComponent";
 
 const Vehicle_form = ({
   values,
@@ -22,6 +23,7 @@ const Vehicle_form = ({
     modelVehicle,
     typeVehicle,
     drivers,
+    taxpayers,
     mainAcopladoData,
     brandVehicle,
     updateVehicleData,
@@ -120,20 +122,25 @@ const Vehicle_form = ({
 
       {/* select tipoVehiculo y modelo */}
       <div className="flex flex-col sm:flex-row gap-4">
-        <Select_Component_load
-          dataList={typeVehicle}
-          name={"desc_tipo_vehiculo"}
-          label={"Tipos vehículo"}
-          itemKey="cod_tipo_vehiculo"
-          detail="desc_tipo_vehiculo"
-          value={values.desc_tipo_vehiculo}
+        <SelectComponent
+          listData={typeVehicle}
+          codDataArray={"cod_tipo_vehiculo"}
+          descDataArray={"desc_tipo_vehiculo"}
+          codData={"cod_tipo_vehiculo"}
+          descData={"desc_tipo_vehiculo"}
+          label={"Tipo vehículo"}
+          isRequired={true}
+          isInvalid={
+            touched.cod_tipo_vehiculo && errors.cod_tipo_vehiculo ? true : false
+          }
+          errorMessage={touched.cod_tipo_vehiculo && errors.cod_tipo_vehiculo}
+          name={"cod_tipo_vehiculo"}
           setFieldValue={setFieldValue}
-          handleBlur={handleBlur}
-          touched={touched}
-          errors={errors}
-          required={true}
+          formImplement
+          loadForDesc={values.desc_tipo_vehiculo}
         />
 
+        {/* ver como trabajar la carga de un submodal con más de un dato compuesto */}
         <Select_Component_load
           dataList={modelVehicle}
           name={"desc_modelo"}
@@ -155,8 +162,8 @@ const Vehicle_form = ({
         />
       </div>
 
-      {/* input descripción y select transportista */}
-      <div className="flex flex-col sm:flex-row gap-4">
+      {/* input descripción */}
+      <div className="flex w-full">
         <Input
           color={
             touched.desc_vehiculo && errors.desc_vehiculo ? "danger" : "primary"
@@ -174,6 +181,27 @@ const Vehicle_form = ({
           onBlur={handleBlur}
           isInvalid={touched.desc_vehiculo && errors.desc_vehiculo}
           errorMessage={touched.desc_vehiculo && errors.desc_vehiculo}
+        />
+      </div>
+
+      {/* select contribuyente */}
+      <div className="flex pb-2 w-full">
+        <SelectComponent
+          listData={taxpayers}
+          codDataArray={"cod_contribuyente"}
+          descDataArray={"desc_contribuyente"}
+          codData={"cod_transportista"}
+          descData={"desc_transportista"}
+          label={"Transportista"}
+          isRequired={true}
+          isInvalid={
+            touched.cod_transportista && errors.cod_transportista ? true : false
+          }
+          errorMessage={touched.cod_transportista && errors.cod_transportista}
+          name={"cod_transportista"}
+          setFieldValue={setFieldValue}
+          formImplement
+          loadForCod={values.cod_transportista}
         />
       </div>
 
@@ -228,34 +256,38 @@ const Vehicle_form = ({
 
       {/* Select chofer y acoplado */}
       <div className="flex flex-col sm:flex-row gap-4">
-        <Select_Component_load
-          dataList={drivers}
-          name={"desc_chofer"}
+        <SelectComponent
+          listData={drivers}
+          codDataArray={"cod_usuario"}
+          descDataArray={"desc_usuario"}
+          codData={"cod_chofer"}
+          descData={"desc_chofer"}
           label={"Chofer"}
-          itemKey="cod_usuario"
-          detail="desc_usuario"
-          value={values.desc_chofer}
+          isRequired={true}
+          isInvalid={touched.cod_chofer && errors.cod_chofer ? true : false}
+          errorMessage={touched.cod_chofer && errors.cod_chofer}
+          name={"cod_chofer"}
           setFieldValue={setFieldValue}
-          handleBlur={handleBlur}
-          touched={touched}
-          errors={errors}
-          required={true}
+          formImplement
+          loadForCod={values.cod_chofer}
         />
 
         <div className="w-full sm:w-[12rem]">
-          <Select_Component_load
-            dataList={mainAcopladoData}
+          <SelectComponent
+            listData={mainAcopladoData}
+            codDataArray={"cod_vehiculo"}
+            descDataArray={"patente"}
+            codData={"cod_acoplado"}
+            descData={"patente"}
+            label={"Acoplado"}
+            isInvalid={
+              touched.cod_acoplado && errors.cod_acoplado ? true : false
+            }
+            errorMessage={touched.cod_acoplado && errors.cod_acoplado}
             name={"cod_acoplado"}
-            label={"Pte. Acoplado"}
-            itemKey="cod_vehiculo"
-            detail="patente"
-            value={values.cod_acoplado}
             setFieldValue={setFieldValue}
-            handleBlur={handleBlur}
-            touched={touched}
-            errors={errors}
-            required={false}
-            valueForUpdate={"cod_acoplado"}
+            formImplement
+            loadForCod={values.cod_acoplado}
           />
         </div>
       </div>

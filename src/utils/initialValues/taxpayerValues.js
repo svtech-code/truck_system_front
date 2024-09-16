@@ -1,4 +1,5 @@
 const defaultInitialValues = {
+  cod_contribuyente: null,
   run_contribuyente: "",
   nombre_contribuyente: "",
   apellido_paterno_contribuyente: "",

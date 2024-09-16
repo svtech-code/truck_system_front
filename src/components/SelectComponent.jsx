@@ -3,17 +3,19 @@ import { useCallback, useEffect, useState } from "react";
 
 const SelectComponent = ({
   listData, // objeto con la lista para mostrar
-  codData, // nombre de la propiedad id del objeto
-  descData, // nombre de la descripción a utilizar del objeto
-  sizeSelect, // string del tamaño del elemento
+  codDataArray, // nombre de la propiedad id del objeto lista para la consulta
+  descDataArray, // nombre de la descripción del objeto lista para la consulta
+  codData, // nombre de la propiedad id del objeto para el componente para el submit
+  descData, // nombre de la descripción del objeto para el componente para el submit
   label, // label del select, idealmente para formularios
   isRequired = false, // requerimiento, solo para formularios
   isInvalid, // parametro de validación, solo para formularios
   errorMessage, // mensaje de error, solo para formularios
   name, // nombre del campo formik, solo para formularios
   setFieldValue, // función para actualizar el valor en formik, solo para formularios
-  notFormImplement, // para uso fuera de formularios
   formImplement, // para uso en formularios
+  loadForDesc, // si hay que cargar valor por la descripción
+  loadForCod, // si hay que cargar valor por el codigo
 }) => {
   // variables state del componente
   const [varState, setVarState] = useState({
@@ -24,13 +26,47 @@ const SelectComponent = ({
   // actualizador de los estados del componente
   const updateVarState = useCallback((newValue) => {
     setVarState((preValue) => ({ ...preValue, ...newValue }));
-  });
+  }, []);
 
+  // use effect para cargar select en la edición de datos, por codigo y/o descripción
+  useEffect(() => {
+    // carga el select por medio del codigo
+    if (loadForCod && loadForCod !== null) {
+      updateVarState({ selectedValue: new Set([loadForCod.toString()]) });
+      return;
+    }
+
+    // carga del select por medio de la descripción
+    if (loadForDesc && loadForDesc !== "") {
+      const arrayForDesc = listData.find(
+        (item) => item[descDataArray] === loadForDesc
+      );
+      updateVarState({
+        selectedValue: new Set([arrayForDesc[codDataArray].toString()]),
+      });
+      return;
+    }
+  }, []);
+
+  // función para asignar valor al seleccionar un dato
   const handleSelectedValue = (newValue) => {
-    // controlar si la selección es la misma que el valor acutual
-    // if (!newValue) return;
-    updateVarState({ selectedValue: new Set([newValue]) });
-    setFieldValue(name, newValue);
+    // manejo del select para entorno dentro de un formulario
+    if (formImplement) {
+      updateVarState({ selectedValue: new Set([newValue]) });
+      setFieldValue(name, newValue);
+
+      // // para asignar la descripción del transportista
+      // if (loadForCod && loadForCod !== null) {
+      //   const newArray = listData.find(
+      //     (item) => item[codData].toString() === newValue.toString()
+      //   );
+      //   setFieldValue(descData, newArray.desc_contribuyente);
+      // }
+
+      return;
+    }
+
+    console.log("trabajo fuera de un formulario");
   };
 
   return (
@@ -38,8 +74,8 @@ const SelectComponent = ({
       aria-label="select data"
       labelPlacement="outside"
       label={varState.loading ? "Cargando..." : label}
-      size={sizeSelect}
-      variant="bordered"
+      size="md"
+      variant="faded"
       color="primary"
       isRequired={isRequired}
       isLoading={varState.loading}
@@ -49,7 +85,7 @@ const SelectComponent = ({
       errorMessage={errorMessage}
     >
       {listData.map((item) => (
-        <SelectItem key={item[codData]}>{item[descData]}</SelectItem>
+        <SelectItem key={item[codDataArray]}>{item[descDataArray]}</SelectItem>
       ))}
     </Select>
   );

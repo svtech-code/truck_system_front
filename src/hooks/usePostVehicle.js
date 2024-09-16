@@ -12,37 +12,34 @@ const usePostVehicle = ({ data, updateStateComponent }) => {
       const payload = {
         ...otherFields,
         desc_vehiculo: otherFields?.desc_vehiculo.toUpperCase(),
-        cod_tipo_vehiculo: otherFields?.desc_tipo_vehiculo,
         cod_modelo: otherFields?.desc_modelo,
-        cod_chofer: otherFields?.desc_chofer,
         patente: otherFields?.patente_completa.slice(0, -2),
-        idTransportista: 1, // valor momentaneamente fijo
-        cod_acoplado:
-          otherFields?.cod_acoplado === "" ? null : otherFields?.cod_acoplado,
       };
 
       try {
         if (cod_vehiculo === null) {
-          await apiPost({
-            route: "vehiculos",
-            object: payload,
-          }).then((response) => {
-            Swal.fire({
-              icon: "success",
-              title: "Success",
-              text: "Registro almacenado",
-            }).then(() => {
-              // actualización del contexto
-              updateStateComponent({
-                data: updateArray({
-                  arrayData: data,
-                  idData: response?.data?.cod_vehiculo,
-                  idField: "cod_vehiculo",
-                  updateFields: response?.data,
-                }),
-              });
-            });
-          });
+          // await apiPost({
+          //   route: "vehiculos",
+          //   object: payload,
+          // }).then((response) => {
+          //   Swal.fire({
+          //     icon: "success",
+          //     title: "Success",
+          //     text: "Registro almacenado",
+          //   }).then(() => {
+          //     // actualización del contexto
+          //     updateStateComponent({
+          //       data: updateArray({
+          //         arrayData: data,
+          //         idData: response?.data?.cod_vehiculo,
+          //         idField: "cod_vehiculo",
+          //         updateFields: response?.data,
+          //       }),
+          //     });
+          //   });
+          // });
+          console.log(values);
+          console.log(payload);
         } else {
           await apiPut({
             route: `vehiculos/${cod_vehiculo.toString()}`,
