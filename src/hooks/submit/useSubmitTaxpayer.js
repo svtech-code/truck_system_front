@@ -16,29 +16,30 @@ const useSubmitTaxpayer = ({ data, updateStateComponent }) => {
 
       try {
         if (cod_contribuyente === null) {
-          // await apiPost({
-          //   route: "contribuyentes",
-          //   object: payload,
-          // }).then((response) => {
-          //   Swal.fire({
-          //     icon: "success",
-          //     title: "Success",
-          //     text: "Registro almacenado",
-          //   }).then(() => {
-          //     // actualización del contexto de contribuyentes
-          //     updateStateComponent({
-          //       data: updateArray({
-          //         arrayData: data,
-          //         idData: response?.data?.cod_contribuyente,
-          //         idField: "cod_contribuyente",
-          //         updateFields: response?.data,
-          //       }),
-          //     });
-          //   });
-          // });
-          console.log(payload);
+          await apiPost({
+            route: "contribuyentes",
+            object: payload,
+          }).then((response) => {
+            Swal.fire({
+              icon: "success",
+              title: "Success",
+              text: "Registro almacenado",
+            }).then(() => {
+              // actualización del contexto de contribuyentes
+              updateStateComponent({
+                data: updateArray({
+                  arrayData: data,
+                  idData: response?.data?.cod_contribuyente,
+                  idField: "cod_contribuyente",
+                  updateFields: response?.data,
+                }),
+              });
+            });
+          });
+          // console.log(payload);
         } else {
           console.log("Modificación de usuario: cod " + cod_contribuyente);
+          console.log(payload);
         }
       } catch (error) {
         console.log(error);

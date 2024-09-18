@@ -1,5 +1,7 @@
+import apiPut from "../../api/apiPut";
 import useVehicle from "../../hooks/useVehicle";
 import ActionButton from "../ActionButton";
+import SelectComponent from "../SelectComponent";
 import Vehicle_SelectComponent from "./Vehicle_SelectComponent";
 
 const formatPatente = (patente) => {
@@ -12,7 +14,34 @@ export const Vehicle_structure = ({
   propertyId,
   propertyName,
 }) => {
-  const { data, stateVehicle, loadDataState, updateVehicleData } = useVehicle();
+  const {
+    data,
+    stateVehicle,
+    typeVehicle,
+    modelVehicle,
+    loadDataState,
+    updateVehicleData,
+  } = useVehicle();
+
+  // función para actualizar el estado de un vehiculo en función del cambio o modificación del select estado
+  const generateUpdatePayload = (newValue, row, typeVehicle, modelVehicle) => {
+    const payload = {
+      ...row,
+      cod_tipo_vehiculo: typeVehicle.find(
+        (item) => item.desc_tipo_vehiculo === row.desc_tipo_vehiculo
+      ).cod_tipo_vehiculo,
+      cod_modelo: modelVehicle.find(
+        (item) => item.desc_modelo === row.desc_modelo
+      ).cod_modelo,
+      cod_marca: modelVehicle.find(
+        (item) => item.desc_modelo === row.desc_modelo
+      ).cod_marca,
+      cod_estado_vehiculo: newValue,
+    };
+
+    return payload;
+  };
+
   return [
     {
       name: "Patente",
@@ -40,16 +69,24 @@ export const Vehicle_structure = ({
     },
     {
       name: "Estado",
-      selector: (row) => row.desc_estado_vehiculo,
       minWidth: "13rem",
       cell: (row) => (
-        <Vehicle_SelectComponent
-          codPrimary={row.cod_vehiculo}
-          rowData={row.desc_estado_vehiculo}
-          listData={stateVehicle}
-          codData={"cod_estado_vehiculo"}
-          descData={"desc_estado_vehiculo"}
-          row={row}
+        <SelectComponent
+          arrayDataForSelect={stateVehicle}
+          nameCodDataInArray={"cod_estado_vehiculo"}
+          nameDescDataInArray={"desc_estado_vehiculo"}
+          nameCodDataInContext={"cod_estado_vehiculo"}
+          loadForDesc={row.desc_estado_vehiculo}
+          codPrimaryDataContext={row.cod_vehiculo}
+          nameCodPrimaryDataContext={"cod_estado_vehiculo"}
+          arrayContextData={data}
+          nameDataContext={"data"}
+          updateContextData={updateVehicleData}
+          arrayRowDataTable={row}
+          routeUpdate={"vehiculos"}
+          onUpdateData={(newValue) =>
+            generateUpdatePayload(newValue, row, typeVehicle, modelVehicle)
+          }
         />
       ),
     },

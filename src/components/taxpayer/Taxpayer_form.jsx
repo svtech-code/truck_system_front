@@ -282,16 +282,17 @@ const Taxpayer_form = ({
         {/* comuna */}
         <div className="w-[20rem]">
           <SelectComponent
-            listData={commune}
-            codData={"cod_comuna"}
-            descData={"desc_comuna"}
-            sizeSelect={"md"}
+            arrayDataForSelect={commune}
+            nameCodDataInArray={"cod_comuna"}
+            nameDescDataInArray={"desc_comuna"}
+            nameCodDataInContext={"cod_comuna"}
+            name={"cod_comuna"}
+            setFieldValue={setFieldValue}
             label={"Comuna"}
             isRequired={true}
             isInvalid={touched.cod_comuna && errors.cod_comuna ? true : false}
             errorMessage={touched.cod_comuna && errors.cod_comuna}
-            setFieldValue={setFieldValue}
-            name={"cod_comuna"}
+            loadForCod={values.cod_comuna}
           />
         </div>
       </div>

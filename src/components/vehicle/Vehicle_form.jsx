@@ -128,20 +128,18 @@ const Vehicle_form = ({
       {/* select tipoVehiculo y modelo */}
       <div className="flex flex-col sm:flex-row gap-4">
         <SelectComponent
-          listData={typeVehicle}
-          codDataArray={"cod_tipo_vehiculo"}
-          descDataArray={"desc_tipo_vehiculo"}
-          codData={"cod_tipo_vehiculo"}
-          descData={"desc_tipo_vehiculo"}
+          arrayDataForSelect={typeVehicle}
+          nameCodDataInArray={"cod_tipo_vehiculo"}
+          nameDescDataInArray={"desc_tipo_vehiculo"}
+          nameCodDataInContext={"cod_tipo_vehiculo"}
+          name={"cod_tipo_vehiculo"}
+          setFieldValue={setFieldValue}
           label={"Tipo vehículo"}
           isRequired={true}
           isInvalid={
             touched.cod_tipo_vehiculo && errors.cod_tipo_vehiculo ? true : false
           }
           errorMessage={touched.cod_tipo_vehiculo && errors.cod_tipo_vehiculo}
-          name={"cod_tipo_vehiculo"}
-          setFieldValue={setFieldValue}
-          formImplement
           loadForDesc={values.desc_tipo_vehiculo}
         />
 
@@ -241,20 +239,18 @@ const Vehicle_form = ({
       {/* select contribuyente */}
       <div className="flex w-full">
         <SelectComponent
-          listData={taxpayers}
-          codDataArray={"cod_contribuyente"}
-          descDataArray={"desc_contribuyente"}
-          codData={"cod_transportista"}
-          descData={"desc_transportista"}
+          arrayDataForSelect={taxpayers}
+          nameCodDataInArray={"cod_contribuyente"}
+          nameDescDataInArray={"desc_contribuyente"}
+          nameCodDataInContext={"cod_transportista"}
+          name={"cod_transportista"}
+          setFieldValue={setFieldValue}
           label={"Transportista"}
           isRequired={true}
           isInvalid={
             touched.cod_transportista && errors.cod_transportista ? true : false
           }
           errorMessage={touched.cod_transportista && errors.cod_transportista}
-          name={"cod_transportista"}
-          setFieldValue={setFieldValue}
-          formImplement
           loadForCod={values.cod_transportista}
         />
       </div>
@@ -262,36 +258,32 @@ const Vehicle_form = ({
       {/* Select chofer y acoplado */}
       <div className="flex flex-col sm:flex-row gap-4">
         <SelectComponent
-          listData={drivers}
-          codDataArray={"cod_usuario"}
-          descDataArray={"desc_usuario"}
-          codData={"cod_chofer"}
-          descData={"desc_chofer"}
+          arrayDataForSelect={drivers}
+          nameCodDataInArray={"cod_usuario"}
+          nameDescDataInArray={"desc_usuario"}
+          nameCodDataInContext={"cod_chofer"}
+          name={"cod_chofer"}
+          setFieldValue={setFieldValue}
           label={"Chofer"}
           isRequired={true}
           isInvalid={touched.cod_chofer && errors.cod_chofer ? true : false}
           errorMessage={touched.cod_chofer && errors.cod_chofer}
-          name={"cod_chofer"}
-          setFieldValue={setFieldValue}
-          formImplement
           loadForCod={values.cod_chofer}
         />
 
         <div className="w-full sm:w-[12rem]">
           <SelectComponent
-            listData={mainAcopladoData}
-            codDataArray={"cod_vehiculo"}
-            descDataArray={"patente"}
-            codData={"cod_acoplado"}
-            descData={"patente"}
+            arrayDataForSelect={mainAcopladoData}
+            nameCodDataInArray={"cod_vehiculo"}
+            nameDescDataInArray={"patente"}
+            nameCodDataInContext={"cod_acoplado"}
+            name={"cod_acoplado"}
+            setFieldValue={setFieldValue}
             label={"Acoplado"}
             isInvalid={
               touched.cod_acoplado && errors.cod_acoplado ? true : false
             }
             errorMessage={touched.cod_acoplado && errors.cod_acoplado}
-            name={"cod_acoplado"}
-            setFieldValue={setFieldValue}
-            formImplement
             loadForCod={values.cod_acoplado}
           />
         </div>

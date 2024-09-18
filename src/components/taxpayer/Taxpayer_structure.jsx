@@ -1,5 +1,6 @@
 import useTaxpayer from "../../hooks/useTaxpayer";
 import ActionButton from "../ActionButton";
+import SelectComponent from "../SelectComponent";
 
 export const Taxpayer_structure = ({
   onOpen,
@@ -8,16 +9,32 @@ export const Taxpayer_structure = ({
   propertyName,
 }) => {
   const { data, updateTaxpayerData } = useTaxpayer();
+
+  const stateTaxpayer = [
+    {
+      cod_state_taxpayer: 1,
+      desc_state_taxpayer: "ACTIVO",
+    },
+    {
+      cod_state_taxpayer: 2,
+      desc_state_taxpayer: "INACTIVO",
+    },
+    {
+      cod_state_taxpayer: 3,
+      desc_state_taxpayer: "BLOQUEADO",
+    },
+  ];
+
   return [
     {
       name: "RUN",
       selector: (row) => row.run_contribuyente,
-      maxWidth: "8rem",
+      maxWidth: "10rem",
     },
     {
-      name: "Nombre",
+      name: "Nombres",
       selector: (row) => row.nombre_contribuyente,
-      maxWidth: "15rem",
+      maxWidth: "20rem",
     },
     {
       name: "Paterno",
@@ -28,13 +45,27 @@ export const Taxpayer_structure = ({
       selector: (row) => row.apellido_materno_contribuyente,
     },
     {
-      name: "Comuna",
-      selector: (row) => row.desc_comuna,
-      hide: "md",
+      name: "Estado",
+      cell: (row) => (
+        <SelectComponent
+          arrayDataForSelect={stateTaxpayer}
+          nameCodDataInArray={"cod_state_taxpayer"}
+          nameDescDataInArray={"desc_state_taxpayer"}
+          nameCodDataInContext={"estado_contribuyente"}
+          loadForCod={row.estado_contribuyente}
+          codPrimaryDataContext={row.cod_contribuyente}
+          nameCodPrimaryDataContext={"cod_contribuyente"}
+          arrayContextData={data}
+          nameDataContext={"data"}
+          updateContextData={updateTaxpayerData}
+          arrayRowDataTable={row}
+          placeholder
+        />
+      ),
     },
     {
-      name: "Dirección",
-      selector: (row) => row.direccion_contribuyente,
+      name: "Comuna",
+      selector: (row) => row.desc_comuna,
       hide: "md",
     },
     {

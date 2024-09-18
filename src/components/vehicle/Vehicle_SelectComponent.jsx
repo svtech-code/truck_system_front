@@ -44,7 +44,7 @@ const Vehicle_SelectComponent = ({
 
   const handleSelectedValue = (newValue) => {
     // controlar si la selección es la misma que el valor acutual
-    if (!newValue) return;
+    if (!newValue) return; // evita que el valor de destiquee
 
     // Creación de las alertas personalizadas ============>
     const swalWithBootstrapButtons = Swal.mixin({
@@ -55,10 +55,12 @@ const Vehicle_SelectComponent = ({
       buttonsStyling: false,
     });
 
+    console.log(row);
+
     const Toast = Swal.mixin({
       toast: true,
       position: "top-end",
-      showConfirmButton: false,
+      showCancelButton: false,
       timer: 1500,
       timerProgressBar: true,
       didOpen: (toast) => {
@@ -69,7 +71,7 @@ const Vehicle_SelectComponent = ({
 
     swalWithBootstrapButtons
       .fire({
-        title: "Confirmación de modificación",
+        title: "Confirmar modificación",
         text: "Esta seguro de realizar la modificación ?",
         icon: "question",
         showCancelButton: true,
@@ -80,6 +82,7 @@ const Vehicle_SelectComponent = ({
       .then((result) => {
         if (result.isConfirmed) {
           // array de datos para actualizar estado !!
+          console.log(log(typeVehicle));
           const payload = {
             ...row,
             cod_tipo_vehiculo: typeVehicle.find(
@@ -130,6 +133,7 @@ const Vehicle_SelectComponent = ({
   return (
     <Select
       aria-label="multiselection"
+      labelPlacement="outside"
       placeholder={varState.loading ? "Cargando..." : "Seleccionar"}
       size="md"
       variant="faded"

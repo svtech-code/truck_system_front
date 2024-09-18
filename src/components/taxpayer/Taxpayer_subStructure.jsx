@@ -10,13 +10,12 @@ import {
 import { useCallback, useState } from "react";
 import ModalBaseTable from "../../templates/ModalBaseTable";
 import Taxpayer_georeferencesTable from "./Taxpayer_georeferencesTable";
-import Taxpayer_SelectComponent from "./Taxpayer_SelectComponent";
-import SelectComponent from "../SelectComponent";
 
 const Taxpayer_subStructure = ({ data }) => {
   const {
     desc_contribuyente,
-    estado_contribuyente,
+    // estado_contribuyente,
+    email,
     telefono1_contribuyente,
     telefono2_contribuyente,
     cod_contribuyente,
@@ -25,25 +24,25 @@ const Taxpayer_subStructure = ({ data }) => {
   const [open, setOpen] = useState(false);
   const handleModalClose = useCallback(() => setOpen(false), []);
 
-  const listStateTaxpayer = [
-    {
-      cod_state_taxpayer: 1,
-      desc_state_taxpayer: "ACTIVO",
-    },
-    {
-      cod_state_taxpayer: 2,
-      desc_state_taxpayer: "INACTIVO",
-    },
-    {
-      cod_state_taxpayer: 3,
-      desc_state_taxpayer: "BLOQUEADO",
-    },
-  ];
+  // const listStateTaxpayer = [
+  //   {
+  //     cod_state_taxpayer: 1,
+  //     desc_state_taxpayer: "ACTIVO",
+  //   },
+  //   {
+  //     cod_state_taxpayer: 2,
+  //     desc_state_taxpayer: "INACTIVO",
+  //   },
+  //   {
+  //     cod_state_taxpayer: 3,
+  //     desc_state_taxpayer: "BLOQUEADO",
+  //   },
+  // ];
 
   // descripción del estado según el id del estado
-  const desc_state_taxpayer = listStateTaxpayer.find(
-    (state) => state.cod_state_taxpayer === estado_contribuyente
-  )?.desc_state_taxpayer;
+  // const desc_state_taxpayer = listStateTaxpayer.find(
+  //   (state) => state.cod_state_taxpayer === estado_contribuyente
+  // )?.desc_state_taxpayer;
 
   return (
     <>
@@ -65,11 +64,13 @@ const Taxpayer_subStructure = ({ data }) => {
         }}
       >
         <TableHeader>
-          <TableColumn>Descripción contribuyente</TableColumn>
-          <TableColumn>Telefono 1</TableColumn>
-          <TableColumn>Telefono 2</TableColumn>
-          <TableColumn>Estado</TableColumn> {/*ver si agrego select o btn */}
-          <TableColumn>Georeferencias</TableColumn>
+          <TableColumn className="w-[40%]">
+            Descripción contribuyente
+          </TableColumn>
+          <TableColumn className="w-[10%]">Telefono 1</TableColumn>
+          <TableColumn className="w-[10%]">Telefono 2</TableColumn>
+          <TableColumn className="w-[25%]">E-mail</TableColumn>
+          <TableColumn className="w-[15%]">Georeferencias</TableColumn>
         </TableHeader>
 
         <TableBody emptyContent={"Sin datos asignados"}>
@@ -77,22 +78,7 @@ const Taxpayer_subStructure = ({ data }) => {
             <TableCell>{desc_contribuyente}</TableCell>
             <TableCell>{telefono1_contribuyente}</TableCell>
             <TableCell>{telefono2_contribuyente}</TableCell>
-            <TableCell>
-              {/* <Taxpayer_SelectComponent
-                codPrimary={cod_contribuyente}
-                rowData={desc_state_taxpayer}
-                listData={listStateTaxpayer}
-                codData={"cod_state_taxpayer"}
-                descData={"desc_state_taxpayer"}
-              /> */}
-              <SelectComponent
-                listData={listStateTaxpayer}
-                codData={"cod_state_taxpayer"}
-                descData={"desc_state_taxpayer"}
-                sizeSelect={"md"}
-                notFormImplement
-              />
-            </TableCell>
+            <TableCell>{email}</TableCell>
             <TableCell>
               <Button
                 color="warning"
