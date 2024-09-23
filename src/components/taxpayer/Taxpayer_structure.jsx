@@ -10,6 +10,17 @@ export const Taxpayer_structure = ({
 }) => {
   const { data, updateTaxpayerData } = useTaxpayer();
 
+  // función para actualizar el estado de un contribuyente
+  const generatePayloadForUpdate = (newValue, row) => {
+    const payload = {
+      ...row,
+      estado_contribuyente: newValue,
+    };
+
+    return payload;
+  };
+
+  // array con el estado de contribuyentes
   const stateTaxpayer = [
     {
       cod_state_taxpayer: 1,
@@ -59,7 +70,10 @@ export const Taxpayer_structure = ({
           nameDataContext={"data"}
           updateContextData={updateTaxpayerData}
           arrayRowDataTable={row}
-          placeholder
+          routeUpdate={"contribuyentes"}
+          generatePayloadForUpdate={(newValue) =>
+            generatePayloadForUpdate(newValue, row)
+          }
         />
       ),
     },

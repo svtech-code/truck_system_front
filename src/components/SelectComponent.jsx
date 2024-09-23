@@ -23,7 +23,7 @@ const SelectComponent = ({
   loadForCod, // para cargar valor del select por medio del código (opcional, uso en formularios)
   arrayRowDataTable, // valor de la fila a modificar (opcional, solo para editar datos de una fila)
   routeUpdate, // ruta para actualizar datos (opciona)
-  onUpdateData, // función para actualizar un estado (opcional, para uso en DataTabla)
+  generatePayloadForUpdate, // función para generar datos de actualización (opcional para actualización de estados)
 }) => {
   // variables state del componente
   const [varState, setVarState] = useState({
@@ -41,35 +41,38 @@ const SelectComponent = ({
     // carga el select por medio del codigo
     // if (loadForCod) {
     //   updateVarState({
-    //     // loading: false,
+    // loading: false,
     //     selectedValue: new Set([loadForCod.toString()]),
     //   });
     //   return;
     // }
 
-    // carga del select por medio de la descripción
-    if (loadForDesc && loadForDesc !== "" && arrayDataForSelect.length > 0) {
-      const arrayForDesc = arrayDataForSelect.find(
-        (item) => item[nameDescDataInArray] === loadForDesc
-      );
+    // // carga del select por medio de la descripción
+    // if (loadForDesc && loadForDesc !== "" && arrayDataForSelect.length > 0) {
+    //   const arrayForDesc = arrayDataForSelect.find(
+    //     (item) => item[nameDescDataInArray] === loadForDesc
+    //   );
 
-      // asignación del select
-      updateVarState({
-        loading: false,
-        selectedValue: new Set([arrayForDesc[nameCodDataInArray].toString()]),
-      });
+    //   // asignación del select
+    //   updateVarState({
+    //     loading: false,
+    //     selectedValue: new Set([arrayForDesc[nameCodDataInArray].toString()]),
+    //   });
 
-      // controlar el uso de setFieldValue, solo si esta presente (solo para formularios)
-      if (setFieldValue) {
-        setFieldValue(name, arrayForDesc[nameCodDataInArray].toString());
-      }
-      return;
-    }
+    //   // controlar el uso de setFieldValue, solo si esta presente (solo para formularios)
+    //   if (setFieldValue) {
+    //     setFieldValue(name, arrayForDesc[nameCodDataInArray].toString());
+    //   }
+    //   return;
+    // }
 
     const loadSelectedValue = () => {
       if (loadForCod) {
         // carga el select por medio del codigo
-        updateVarState({ selectedValue: new Set([loadForCod.toString()]) });
+        updateVarState({
+          loading: false,
+          selectedValue: new Set([loadForCod.toString()]),
+        });
       } else if (loadForDesc && arrayDataForSelect.length > 0) {
         const arrayForDesc = arrayDataForSelect.find(
           (item) => item[nameDescDataInArray] === loadForDesc
@@ -90,6 +93,8 @@ const SelectComponent = ({
         }
       }
     };
+
+    loadSelectedValue();
   }, [arrayDataForSelect]);
 
   // creación de estilos para alerta sweetAlert
@@ -133,9 +138,10 @@ const SelectComponent = ({
         })
         .then((result) => {
           if (result.isConfirmed) {
-            // update de datos mediante apiPut
-            const payload = onUpdateData(selectedKey);
+            // obtención de los datos para actualización
+            const payload = generatePayloadForUpdate(selectedKey);
 
+            // update de datos mediante apiPut
             apiPut({
               route: `${routeUpdate}/${codPrimaryDataContext}`,
               object: payload,

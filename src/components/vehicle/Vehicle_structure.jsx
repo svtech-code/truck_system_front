@@ -24,7 +24,12 @@ export const Vehicle_structure = ({
   } = useVehicle();
 
   // función para actualizar el estado de un vehiculo en función del cambio o modificación del select estado
-  const generateUpdatePayload = (newValue, row, typeVehicle, modelVehicle) => {
+  const generatePayloadForUpdate = (
+    newValue,
+    row,
+    typeVehicle,
+    modelVehicle
+  ) => {
     const payload = {
       ...row,
       cod_tipo_vehiculo: typeVehicle.find(
@@ -84,8 +89,8 @@ export const Vehicle_structure = ({
           updateContextData={updateVehicleData}
           arrayRowDataTable={row}
           routeUpdate={"vehiculos"}
-          onUpdateData={(newValue) =>
-            generateUpdatePayload(newValue, row, typeVehicle, modelVehicle)
+          generatePayloadForUpdate={(newValue) =>
+            generatePayloadForUpdate(newValue, row, typeVehicle, modelVehicle)
           }
         />
       ),

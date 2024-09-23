@@ -1,96 +1,70 @@
-import {
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
-} from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { useCallback, useState } from "react";
 import ModalBaseTable from "../../templates/ModalBaseTable";
 import Taxpayer_georeferencesTable from "./Taxpayer_georeferencesTable";
 
 const Taxpayer_subStructure = ({ data }) => {
   const {
-    desc_contribuyente,
-    // estado_contribuyente,
+    direccion_contribuyente,
     email,
     telefono1_contribuyente,
     telefono2_contribuyente,
+    desc_contribuyente,
     cod_contribuyente,
+    transportista,
   } = data;
 
-  const [open, setOpen] = useState(false);
-  const handleModalClose = useCallback(() => setOpen(false), []);
-
-  // const listStateTaxpayer = [
-  //   {
-  //     cod_state_taxpayer: 1,
-  //     desc_state_taxpayer: "ACTIVO",
-  //   },
-  //   {
-  //     cod_state_taxpayer: 2,
-  //     desc_state_taxpayer: "INACTIVO",
-  //   },
-  //   {
-  //     cod_state_taxpayer: 3,
-  //     desc_state_taxpayer: "BLOQUEADO",
-  //   },
-  // ];
-
-  // descripción del estado según el id del estado
-  // const desc_state_taxpayer = listStateTaxpayer.find(
-  //   (state) => state.cod_state_taxpayer === estado_contribuyente
-  // )?.desc_state_taxpayer;
+  // const [open, setOpen] = useState(false);
+  // const handleModalClose = useCallback(() => setOpen(false), []);
 
   return (
     <>
-      <ModalBaseTable
-        title={"Lista de georeferencias"}
-        size={"2xl"}
-        isOpen={open}
-        onOpenChange={() => handleModalClose()}
-        table={() => Taxpayer_georeferencesTable({ dataTaxpayerTable: data })}
-      />
+      <div className="border p-2 mt-1 mb-2 bg-gray-200 rounded-lg overflow-hidden">
+        <table className="w-full">
+          <thead className="text-left bg-gray-50">
+            <tr>
+              <th className="w-[45%] p-2 rounded-l-lg">Dirección</th>
+              <th className="w-[20%]">E-mail</th>
+              <th className="w-[10%]">Teléfono 1</th>
+              <th className="w-[10%]">Teléfono 2</th>
+              <th className="w-[15%] rounded-r-lg">Vículos</th>
+            </tr>
+          </thead>
 
-      <Table
-        aria-label="data-taxpayer"
-        className="p-2"
-        selectionMode="single"
-        classNames={{
-          wrapper: "bg-gray-300",
-          th: "font-bold text-[.8rem]",
-        }}
-      >
-        <TableHeader>
-          <TableColumn className="w-[40%]">
-            Descripción contribuyente
-          </TableColumn>
-          <TableColumn className="w-[10%]">Telefono 1</TableColumn>
-          <TableColumn className="w-[10%]">Telefono 2</TableColumn>
-          <TableColumn className="w-[25%]">E-mail</TableColumn>
-          <TableColumn className="w-[15%]">Georeferencias</TableColumn>
-        </TableHeader>
-
-        <TableBody emptyContent={"Sin datos asignados"}>
-          <TableRow key="1">
-            <TableCell>{desc_contribuyente}</TableCell>
-            <TableCell>{telefono1_contribuyente}</TableCell>
-            <TableCell>{telefono2_contribuyente}</TableCell>
-            <TableCell>{email}</TableCell>
-            <TableCell>
-              <Button
-                color="warning"
-                variant="ghost"
-                onPress={() => setOpen(true)}
-              >
-                Lista de georeferencias
-              </Button>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
+          <tbody>
+            <tr className="hover:bg-gray-300 transition-all duration-300">
+              <td className="p-3 rounded-l-lg">{direccion_contribuyente}</td>
+              <td>{email}</td>
+              <td>{telefono1_contribuyente}</td>
+              <td>{telefono2_contribuyente}</td>
+              <td className="rounded-r-lg">
+                <Button color="warning" variant="ghost">
+                  Georeferencias
+                </Button>
+              </td>
+            </tr>
+            <tr className="hover:bg-gray-300 transition-all duration-300">
+              <td colSpan={4} className="py-3 rounded-l-lg">
+                <span className="bg-gray-50 font-bold rounded-lg py-3 px-2 mr-2">
+                  Descripción del contribuyente:
+                </span>
+                {desc_contribuyente}
+              </td>
+              <td className="rounded-r-lg">
+                <span
+                  className={`p-2 rounded-lg border-2 ${
+                    transportista
+                      ? "border-green-400 text-green-400"
+                      : "border-red-400 text-red-400"
+                  }`}
+                >
+                  {transportista ? "Es transportista" : "No es transportista"}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </>
   );
 };

@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import apiPost from "../../api/apiPost";
 import { updateArray } from "../../utils/methodUpdateArray";
+import apiPut from "../../api/apiPut";
 
 const useSubmitTaxpayer = ({ data, updateStateComponent }) => {
   const onSubmit =
@@ -36,11 +37,31 @@ const useSubmitTaxpayer = ({ data, updateStateComponent }) => {
               });
             });
           });
-          // console.log(payload);
         } else {
-          console.log("Modificación de usuario: cod " + cod_contribuyente);
-          console.log(payload);
+          await apiPut({
+            route: `contribuyentes/${cod_contribuyente.toString()}`,
+            object: payload,
+          }).then((response) => {
+            Swal.fire({
+              icon: "success",
+              title: "Success",
+              text: "Registro actualizado",
+            }).then(() => {
+              // actualización del contexto
+              updateStateComponent({
+                data: updateArray({
+                  arrayData: data,
+                  idData: cod_contribuyente,
+                  idField: "cod_contribuyente",
+                  updateFields: response?.data,
+                }),
+              });
+            });
+          });
         }
+
+        // cerrar modal
+        onClose();
       } catch (error) {
         console.log(error);
       } finally {

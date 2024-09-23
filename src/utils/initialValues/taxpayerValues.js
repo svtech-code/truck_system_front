@@ -13,6 +13,7 @@ const defaultInitialValues = {
   transportista: true,
   estado_contribuyente: 1,
   desc_contribuyente: "",
+  desc_comuna: "",
   georeferencias: [],
 };
 

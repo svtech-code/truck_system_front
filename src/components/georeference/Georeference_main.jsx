@@ -5,6 +5,7 @@ import HeaderCardComponent from "../HeaderCard_Component";
 import { useState } from "react";
 import DataTableComponent from "../DataTable_Component";
 import { Georeference_structure } from "./Georeference_structure";
+import Georeference_subStructure from "./Georeference_subStructure";
 
 const varString = {
   title: "Georeferencias",
@@ -56,6 +57,7 @@ const Georeference_main = () => {
           propertyId: varString.propertyId,
           propertyName: varString.propertyName,
         })}
+        subStructureData={Georeference_subStructure}
         downloadData={eventClickDownloadData}
       />
     </>

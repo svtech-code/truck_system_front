@@ -14,6 +14,18 @@ export const Georeference_structure = ({
       selector: (row) => row.direccion,
     },
     {
+      name: "Número",
+      selector: (row) => row.numero,
+    },
+    {
+      name: "Comuna",
+      selector: (row) => row.desc_comuna,
+    },
+    {
+      name: "Referencia dirección",
+      selector: (row) => row.referencia_direccion,
+    },
+    {
       name: "Acciones",
       center: true,
       width: "200px",

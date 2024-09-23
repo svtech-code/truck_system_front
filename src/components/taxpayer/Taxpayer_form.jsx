@@ -299,7 +299,14 @@ const Taxpayer_form = ({
 
       {/* georeferencias y selección de transportista */}
       <div className="flex gap-x-4 justify-between">
-        <Checkbox>El contribuyente es transportista?</Checkbox>
+        <Checkbox
+          name="transportista"
+          isSelected={values.transportista}
+          onChange={() => setFieldValue("transportista", !values.transportista)}
+        >
+          El contribuyente es transportista?
+        </Checkbox>
+
         <Button className="w-[17rem] text-lg" color="warning" variant="flat">
           Asociar georeferencias
         </Button>
