@@ -14,11 +14,18 @@ const Taxpayer_subStructure = ({ data }) => {
     transportista,
   } = data;
 
-  // const [open, setOpen] = useState(false);
-  // const handleModalClose = useCallback(() => setOpen(false), []);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
+      <ModalBaseTable
+        title={"Georeferencias"}
+        size={"2xl"}
+        isOpen={open}
+        onOpenChange={() => setOpen(false)}
+        table={() => Taxpayer_georeferencesTable({ dataTaxpayerTable: data })}
+      />
+
       <div className="border p-2 mt-1 mb-2 bg-gray-200 rounded-lg overflow-hidden">
         <table className="w-full">
           <thead className="text-left bg-gray-50">
@@ -38,7 +45,11 @@ const Taxpayer_subStructure = ({ data }) => {
               <td>{telefono1_contribuyente}</td>
               <td>{telefono2_contribuyente}</td>
               <td className="rounded-r-lg">
-                <Button color="warning" variant="ghost">
+                <Button
+                  color="warning"
+                  variant="ghost"
+                  onPress={() => setOpen(true)}
+                >
                   Georeferencias
                 </Button>
               </td>

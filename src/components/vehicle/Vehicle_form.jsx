@@ -1,7 +1,7 @@
-import { Input, useDisclosure } from "@nextui-org/react";
+import { Input, useDisclosure, useTable } from "@nextui-org/react";
 import Select_Component_load from "../Select_Component_load";
 import useVehicle from "../../hooks/useVehicle";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import VehicleModel_form from "../vehicleModel/VehicleModel_form";
 import usePostModel from "../../hooks/usePostModel";
@@ -47,6 +47,7 @@ const Vehicle_form = ({
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [dataModel, setDataModel] = useState(null);
+  const [disableSelect, setDisableSelect] = useState(true);
 
   // manejador de nuevo modelo
   const handleFieldValue = useCallback((name, value) => {
@@ -73,7 +74,9 @@ const Vehicle_form = ({
           label="Patente"
           labelPlacement="outside"
           variant="faded"
-          value={values.patente_completa}
+          value={
+            values.patente_completa ? values.patente_completa.toUpperCase() : ""
+          }
           ref={inputRef}
           isRequired={true}
           onChange={myhandleChange}
@@ -91,7 +94,7 @@ const Vehicle_form = ({
           label="Año"
           labelPlacement="outside"
           variant="faded"
-          value={values.anio}
+          value={values.anio || ""}
           isRequired={true}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -111,7 +114,7 @@ const Vehicle_form = ({
           label="Tonelaje"
           labelPlacement="outside"
           variant="faded"
-          value={values.cantidad_kilos}
+          value={values.cantidad_kilos || ""}
           isRequired={true}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -225,7 +228,7 @@ const Vehicle_form = ({
           label="Descripción"
           labelPlacement="outside"
           variant="faded"
-          value={values.desc_vehiculo}
+          value={values.desc_vehiculo ? values.desc_vehiculo.toUpperCase() : ""}
           isRequired={true}
           onChange={(e) =>
             setFieldValue("desc_vehiculo", e.target.value.toUpperCase())
@@ -269,6 +272,13 @@ const Vehicle_form = ({
           isInvalid={touched.cod_chofer && errors.cod_chofer ? true : false}
           errorMessage={touched.cod_chofer && errors.cod_chofer}
           loadForCod={values.cod_chofer}
+          disabledSelect={
+            values.desc_tipo_vehiculo
+              ? values.desc_tipo_vehiculo === "CARRO"
+                ? true
+                : false
+              : disableSelect
+          }
         />
 
         <div className="w-full sm:w-[12rem]">
@@ -285,6 +295,13 @@ const Vehicle_form = ({
             }
             errorMessage={touched.cod_acoplado && errors.cod_acoplado}
             loadForCod={values.cod_acoplado}
+            disabledSelect={
+              values.desc_tipo_vehiculo
+                ? values.desc_tipo_vehiculo === "CARRO"
+                  ? true
+                  : false
+                : disableSelect
+            }
           />
         </div>
       </div>

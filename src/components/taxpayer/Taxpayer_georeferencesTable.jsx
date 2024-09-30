@@ -1,9 +1,5 @@
 import {
   Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
   Input,
   Pagination,
   Table,
@@ -17,11 +13,16 @@ import { TiDelete } from "react-icons/ti";
 import useTaxpayer from "../../hooks/useTaxpayer";
 import { FaCircleCheck } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import apiPost from "../../api/apiPost";
 
-const Taxpayer_georeferencesTable = ({ dataTaxpayerTable }) => {
-  const { georeference } = useTaxpayer();
-  const { cod_contribuyente, georeferencias } = dataTaxpayerTable;
+const Taxpayer_georeferencesTable = ({
+  dataTaxpayerTable = {},
+  listGeoreferences,
+  setListGeoreferences,
+}) => {
+  const { georeference, updateTaxpayerData, data } = useTaxpayer();
+  const { cod_contribuyente, georeferencias = [] } = dataTaxpayerTable || {};
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
 
@@ -33,8 +34,126 @@ const Taxpayer_georeferencesTable = ({ dataTaxpayerTable }) => {
 
   // Extrae los códigos de georeferencia del data
   const georeferenceCodes = new Set(
-    georeferencias.map((item) => item.cod_georeferencia)
+    georeferencias?.map((item) => item.cod_georeferencia) || []
   );
+
+  // Función para vincular una georeferencia
+  const handleLinkGeoreference = async (cod_georeferencia) => {
+    // actualización de los datos
+    if (setListGeoreferences) {
+      setListGeoreferences((prevCod) => {
+        // si existe el cod, se devuelve el array sin agregarlo
+        if (prevCod.has(cod_georeferencia)) {
+          return prevCod;
+        }
+
+        // si no existe el cod, se devuelve el array con el cod agregado
+        return new Set([...prevCod, cod_georeferencia]);
+      });
+    } else {
+      try {
+        await apiPost({
+          route: "georeferencia_contribuyente",
+          object: { cod_contribuyente, cod_georeferencia },
+        }).then(() => {
+          // obtener la georeferencia a vincular
+          const georeferenceVincule = georeference.filter(
+            (item) => item.cod_georeferencia === cod_georeferencia
+          );
+
+          // obtener nuevo contexto actualizado
+          const updatedTaxpayer = data.map((taxpayer) => {
+            if (taxpayer.cod_contribuyente === cod_contribuyente) {
+              return {
+                ...taxpayer,
+                georeferencias: [
+                  ...taxpayer.georeferencias,
+                  georeferenceVincule[0],
+                ],
+              };
+            }
+            return taxpayer;
+          });
+
+          // actualización del contexto
+          updateTaxpayerData({ data: updatedTaxpayer });
+        });
+      } catch (error) {
+        // ver si agrego un mensaje de error en pop up
+        console.log(error);
+      }
+    }
+  };
+
+  // Función para desvincular una georeferencia
+  const handleUnlinkGeoreference = async (cod_georeferencia) => {
+    // // Filtrar la georeferencia a desvincular
+    // const updateGeoreferences = georeference.filter(
+    //   (item) => item.cod_georeferencia !== cod_georeferencia
+    // );
+
+    // if (setFieldValue) {
+    //   setFieldValue("georeferencias", updateGeoreferences);
+    // } else {
+    //   // actualización delete del vinculo de la georeferencia
+    // }
+
+    // console.log(updateGeoreferences);
+
+    console.log("desvincular georeferencia cod: " + cod_georeferencia);
+  };
+
+  const renderButton = ({ cod_georeferencia }) => {
+    if (setListGeoreferences) {
+      if (listGeoreferences.has(cod_georeferencia)) {
+        return (
+          <Button
+            isIconOnly
+            color="success"
+            aria-label="vinculado"
+            onClick={() => handleUnlinkGeoreference(cod_georeferencia)}
+          >
+            <FaCircleCheck size={18} color="white" />
+          </Button>
+        );
+      } else {
+        return (
+          <Button
+            isIconOnly
+            color="danger"
+            aria-label="desvinculado"
+            onClick={() => handleLinkGeoreference(cod_georeferencia)}
+          >
+            <TiDelete size={25} color="white" />
+          </Button>
+        );
+      }
+    } else {
+      if (georeferenceCodes.has(cod_georeferencia)) {
+        return (
+          <Button
+            isIconOnly
+            color="success"
+            aria-label="vinculado"
+            onClick={() => handleUnlinkGeoreference(cod_georeferencia)}
+          >
+            <FaCircleCheck size={18} color="white" />
+          </Button>
+        );
+      } else {
+        return (
+          <Button
+            isIconOnly
+            color="danger"
+            aria-label="desvinculado"
+            onClick={() => handleLinkGeoreference(cod_georeferencia)}
+          >
+            <TiDelete size={25} color="white" />
+          </Button>
+        );
+      }
+    }
+  };
 
   return (
     <div>
@@ -47,7 +166,8 @@ const Taxpayer_georeferencesTable = ({ dataTaxpayerTable }) => {
           startContent={<IoSearch />}
         />
 
-        <Button color="primary">prueba</Button>
+        {/* habrir modal para creación de georeferencia */}
+        {/* <Button color="primary">prueba</Button> */}
       </div>
 
       <Table
@@ -92,15 +212,7 @@ const Taxpayer_georeferencesTable = ({ dataTaxpayerTable }) => {
                 <TableCell>{latitud}</TableCell>
                 <TableCell>{longitud}</TableCell>
                 <TableCell className="flex justify-center items-center">
-                  {georeferenceCodes.has(cod_georeferencia) ? (
-                    <Button isIconOnly color="success" aria-label="vinculado">
-                      <FaCircleCheck size={18} color="white" />
-                    </Button>
-                  ) : (
-                    <Button isIconOnly color="danger" aria-label="desvinculado">
-                      <TiDelete size={25} color="white" />
-                    </Button>
-                  )}
+                  {renderButton({ cod_georeferencia })}
                 </TableCell>
               </TableRow>
             )
@@ -110,475 +222,5 @@ const Taxpayer_georeferencesTable = ({ dataTaxpayerTable }) => {
     </div>
   );
 };
-
-// const Taxpayer_georeferencesTable = ({ dataTaxpayerTable }) => {
-//   function capitalize(str) {
-//     return str.charAt(0).toUpperCase() + str.slice(1);
-//   }
-
-//   const columns = [
-//     { name: "ID", uid: "id", sortable: true },
-//     { name: "NAME", uid: "name", sortable: true },
-//     { name: "AGE", uid: "age", sortable: true },
-//     { name: "ROLE", uid: "role", sortable: true },
-//     { name: "TEAM", uid: "team" },
-//     { name: "EMAIL", uid: "email" },
-//     { name: "STATUS", uid: "status", sortable: true },
-//     { name: "ACTIONS", uid: "actions" },
-//   ];
-
-//   const users = [
-//     {
-//       id: 1,
-//       name: "Tony Reichert",
-//       role: "CEO",
-//       team: "Management",
-//       status: "active",
-//       age: "29",
-//       avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-//       email: "tony.reichert@example.com",
-//     },
-//     {
-//       id: 2,
-//       name: "Zoey Lang",
-//       role: "Tech Lead",
-//       team: "Development",
-//       status: "paused",
-//       age: "25",
-//       avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-//       email: "zoey.lang@example.com",
-//     },
-//     {
-//       id: 3,
-//       name: "Jane Fisher",
-//       role: "Sr. Dev",
-//       team: "Development",
-//       status: "active",
-//       age: "22",
-//       avatar: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-//       email: "jane.fisher@example.com",
-//     },
-//     {
-//       id: 4,
-//       name: "William Howard",
-//       role: "C.M.",
-//       team: "Marketing",
-//       status: "vacation",
-//       age: "28",
-//       avatar: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-//       email: "william.howard@example.com",
-//     },
-//     {
-//       id: 5,
-//       name: "Kristen Copper",
-//       role: "S. Manager",
-//       team: "Sales",
-//       status: "active",
-//       age: "24",
-//       avatar: "https://i.pravatar.cc/150?u=a092581d4ef9026700d",
-//       email: "kristen.cooper@example.com",
-//     },
-//     {
-//       id: 6,
-//       name: "Brian Kim",
-//       role: "P. Manager",
-//       team: "Management",
-//       age: "29",
-//       avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-//       email: "brian.kim@example.com",
-//       status: "active",
-//     },
-//     {
-//       id: 7,
-//       name: "Michael Hunt",
-//       role: "Designer",
-//       team: "Design",
-//       status: "paused",
-//       age: "27",
-//       avatar: "https://i.pravatar.cc/150?u=a042581f4e29027007d",
-//       email: "michael.hunt@example.com",
-//     },
-//     {
-//       id: 8,
-//       name: "Samantha Brooks",
-//       role: "HR Manager",
-//       team: "HR",
-//       status: "active",
-//       age: "31",
-//       avatar: "https://i.pravatar.cc/150?u=a042581f4e27027008d",
-//       email: "samantha.brooks@example.com",
-//     },
-//     {
-//       id: 9,
-//       name: "Frank Harrison",
-//       role: "F. Manager",
-//       team: "Finance",
-//       status: "vacation",
-//       age: "33",
-//       avatar: "https://i.pravatar.cc/150?img=4",
-//       email: "frank.harrison@example.com",
-//     },
-//     {
-//       id: 10,
-//       name: "Emma Adams",
-//       role: "Ops Manager",
-//       team: "Operations",
-//       status: "active",
-//       age: "35",
-//       avatar: "https://i.pravatar.cc/150?img=5",
-//       email: "emma.adams@example.com",
-//     },
-//     {
-//       id: 11,
-//       name: "Brandon Stevens",
-//       role: "Jr. Dev",
-//       team: "Development",
-//       status: "active",
-//       age: "22",
-//       avatar: "https://i.pravatar.cc/150?img=8",
-//       email: "brandon.stevens@example.com",
-//     },
-//     {
-//       id: 12,
-//       name: "Megan Richards",
-//       role: "P. Manager",
-//       team: "Product",
-//       status: "paused",
-//       age: "28",
-//       avatar: "https://i.pravatar.cc/150?img=10",
-//       email: "megan.richards@example.com",
-//     },
-//     {
-//       id: 13,
-//       name: "Oliver Scott",
-//       role: "S. Manager",
-//       team: "Security",
-//       status: "active",
-//       age: "37",
-//       avatar: "https://i.pravatar.cc/150?img=12",
-//       email: "oliver.scott@example.com",
-//     },
-//     {
-//       id: 14,
-//       name: "Grace Allen",
-//       role: "M. Specialist",
-//       team: "Marketing",
-//       status: "active",
-//       age: "30",
-//       avatar: "https://i.pravatar.cc/150?img=16",
-//       email: "grace.allen@example.com",
-//     },
-//     {
-//       id: 15,
-//       name: "Noah Carter",
-//       role: "IT Specialist",
-//       team: "I. Technology",
-//       status: "paused",
-//       age: "31",
-//       avatar: "https://i.pravatar.cc/150?img=15",
-//       email: "noah.carter@example.com",
-//     },
-//     {
-//       id: 16,
-//       name: "Ava Perez",
-//       role: "Manager",
-//       team: "Sales",
-//       status: "active",
-//       age: "29",
-//       avatar: "https://i.pravatar.cc/150?img=20",
-//       email: "ava.perez@example.com",
-//     },
-//     {
-//       id: 17,
-//       name: "Liam Johnson",
-//       role: "Data Analyst",
-//       team: "Analysis",
-//       status: "active",
-//       age: "28",
-//       avatar: "https://i.pravatar.cc/150?img=33",
-//       email: "liam.johnson@example.com",
-//     },
-//     {
-//       id: 18,
-//       name: "Sophia Taylor",
-//       role: "QA Analyst",
-//       team: "Testing",
-//       status: "active",
-//       age: "27",
-//       avatar: "https://i.pravatar.cc/150?img=29",
-//       email: "sophia.taylor@example.com",
-//     },
-//     {
-//       id: 19,
-//       name: "Lucas Harris",
-//       role: "Administrator",
-//       team: "Information Technology",
-//       status: "paused",
-//       age: "32",
-//       avatar: "https://i.pravatar.cc/150?img=50",
-//       email: "lucas.harris@example.com",
-//     },
-//     {
-//       id: 20,
-//       name: "Mia Robinson",
-//       role: "Coordinator",
-//       team: "Operations",
-//       status: "active",
-//       age: "26",
-//       avatar: "https://i.pravatar.cc/150?img=45",
-//       email: "mia.robinson@example.com",
-//     },
-//   ];
-
-//   const INITIAL_VISIBLE_COLUMNS = ["name", "role", "status", "actions"];
-
-//   const [filterValue, setFilterValue] = useState("");
-//   const [visibleColumns, setVisibleColumns] = useState(
-//     new Set(INITIAL_VISIBLE_COLUMNS)
-//   );
-//   const [statusFilter, setStatusFilter] = useState("all");
-//   const [rowsPerPage, setRowsPerPage] = useState(5);
-//   const [sortDescriptor, setSortDescriptor] = useState({
-//     column: "age",
-//     direction: "ascending",
-//   });
-//   const [page, setPage] = useState(1);
-
-//   const pages = Math.ceil(users.length / rowsPerPage);
-
-//   const hasSearchFilter = Boolean(filterValue);
-
-//   const headerColumns = useMemo(() => {
-//     if (visibleColumns === "all") return columns;
-
-//     return columns.filter((column) =>
-//       Array.from(visibleColumns).includes(column.uid)
-//     );
-//   }, [visibleColumns]);
-
-//   const filteredItems = useMemo(() => {
-//     let filteredUsers = [...users];
-
-//     if (hasSearchFilter) {
-//       filteredUsers = filteredUsers.filter((user) =>
-//         user.name.toLowerCase().includes(filterValue.toLowerCase())
-//       );
-//     }
-//     if (
-//       statusFilter !== "all" &&
-//       Array.from(statusFilter).length !== statusOptions.length
-//     ) {
-//       filteredUsers = filteredUsers.filter((user) =>
-//         Array.from(statusFilter).includes(user.status)
-//       );
-//     }
-
-//     return filteredUsers;
-//   }, [users, filterValue, statusFilter]);
-
-//   const items = useMemo(() => {
-//     const start = (page - 1) * rowsPerPage;
-//     const end = start + rowsPerPage;
-
-//     return filteredItems.slice(start, end);
-//   }, [page, filteredItems, rowsPerPage]);
-
-//   const sortedItems = useMemo(() => {
-//     return [...items].sort((a, b) => {
-//       const first = a[sortDescriptor.column];
-//       const second = b[sortDescriptor.column];
-//       const cmp = first < second ? -1 : first > second ? 1 : 0;
-
-//       return sortDescriptor.direction === "descending" ? -cmp : cmp;
-//     });
-//   }, [sortDescriptor, items]);
-
-//   const renderCell = useCallback((user, columnKey) => {
-//     const cellValue = user[columnKey];
-
-//     switch (columnKey) {
-//       case "name":
-//         return <div>user</div>;
-//       case "role":
-//         return (
-//           <div className="flex flex-col">
-//             <p className="text-bold text-small capitalize">{cellValue}</p>
-//             <p className="text-bold text-tiny capitalize text-default-500">
-//               {user.team}
-//             </p>
-//           </div>
-//         );
-//       case "status":
-//         return <div>chip</div>;
-//       case "actions":
-//         return (
-//           <div className="relative flex justify-end items-center gap-2">
-//             <Dropdown className="bg-background border-1 border-default-200">
-//               <DropdownTrigger>
-//                 <Button isIconOnly radius="full" size="sm" variant="light">
-//                   {/* <VerticalDotsIcon className="text-default-400" /> */}
-//                 </Button>
-//               </DropdownTrigger>
-//               <DropdownMenu>
-//                 <DropdownItem>View</DropdownItem>
-//                 <DropdownItem>Edit</DropdownItem>
-//                 <DropdownItem>Delete</DropdownItem>
-//               </DropdownMenu>
-//             </Dropdown>
-//           </div>
-//         );
-//       default:
-//         return cellValue;
-//     }
-//   }, []);
-
-//   const onRowsPerPageChange = useCallback((e) => {
-//     setRowsPerPage(Number(e.target.value));
-//     setPage(1);
-//   }, []);
-
-//   const onSearchChange = useCallback((value) => {
-//     if (value) {
-//       setFilterValue(value);
-//       setPage(1);
-//     } else {
-//       setFilterValue("");
-//     }
-//   }, []);
-
-//   const topContent = useMemo(() => {
-//     return (
-//       <div className="flex flex-col gap-4">
-//         <div className="flex justify-between gap-3 items-end">
-//           <Input
-//             isClearable
-//             classNames={{
-//               base: "w-full sm:max-w-[44%]",
-//               inputWrapper: "border-1",
-//             }}
-//             placeholder="Search by name..."
-//             size="sm"
-//             // startContent={<SearchIcon className="text-default-300" />}
-//             value={filterValue}
-//             variant="bordered"
-//             onClear={() => setFilterValue("")}
-//             onValueChange={onSearchChange}
-//           />
-//           <div className="flex gap-3">
-//             <Button className="bg-foreground text-background" size="sm">
-//               Add New
-//             </Button>
-//           </div>
-//         </div>
-//         <div className="flex justify-between items-center">
-//           <span className="text-default-400 text-small">
-//             Total {users.length} users
-//           </span>
-//           <label className="flex items-center text-default-400 text-small">
-//             Rows per page:
-//             <select
-//               className="bg-transparent outline-none text-default-400 text-small"
-//               onChange={onRowsPerPageChange}
-//             >
-//               <option value="5">5</option>
-//               <option value="10">10</option>
-//               <option value="15">15</option>
-//             </select>
-//           </label>
-//         </div>
-//       </div>
-//     );
-//   }, [
-//     filterValue,
-//     statusFilter,
-//     visibleColumns,
-//     onSearchChange,
-//     onRowsPerPageChange,
-//     users.length,
-//     hasSearchFilter,
-//   ]);
-
-//   const bottomContent = useMemo(() => {
-//     return (
-//       <div className="py-2 px-2 flex justify-between items-center">
-//         <Pagination
-//           showControls
-//           classNames={{
-//             cursor: "bg-foreground text-background",
-//           }}
-//           color="default"
-//           isDisabled={hasSearchFilter}
-//           page={page}
-//           total={pages}
-//           variant="light"
-//           onChange={setPage}
-//         />
-//       </div>
-//     );
-//   }, [items.length, page, pages, hasSearchFilter]);
-
-//   const classNames = useMemo(
-//     () => ({
-//       wrapper: ["max-h-[382px]", "max-w-3xl"],
-//       th: ["bg-transparent", "text-default-500", "border-b", "border-divider"],
-//       td: [
-//         // changing the rows border radius
-//         // first
-//         "group-data-[first=true]:first:before:rounded-none",
-//         "group-data-[first=true]:last:before:rounded-none",
-//         // middle
-//         "group-data-[middle=true]:before:rounded-none",
-//         // last
-//         "group-data-[last=true]:first:before:rounded-none",
-//         "group-data-[last=true]:last:before:rounded-none",
-//       ],
-//     }),
-//     []
-//   );
-
-//   return (
-//     <Table
-//       isCompact
-//       removeWrapper
-//       aria-label="Example table with custom cells, pagination and sorting"
-//       bottomContent={bottomContent}
-//       bottomContentPlacement="outside"
-//       checkboxesProps={{
-//         classNames: {
-//           wrapper: "after:bg-foreground after:text-background text-background",
-//         },
-//       }}
-//       classNames={classNames}
-//       // selectedKeys={selectedKeys}
-//       // selectionMode="multiple"
-//       sortDescriptor={sortDescriptor}
-//       topContent={topContent}
-//       topContentPlacement="outside"
-//       // onSelectionChange={setSelectedKeys}
-//       onSortChange={setSortDescriptor}
-//     >
-//       <TableHeader columns={headerColumns}>
-//         {(column) => (
-//           <TableColumn
-//             key={column.uid}
-//             align={column.uid === "actions" ? "center" : "start"}
-//             allowsSorting={column.sortable}
-//           >
-//             {column.name}
-//           </TableColumn>
-//         )}
-//       </TableHeader>
-//       <TableBody emptyContent={"No users found"} items={sortedItems}>
-//         {(item) => (
-//           <TableRow key={item.id}>
-//             {(columnKey) => (
-//               <TableCell>{renderCell(item, columnKey)}</TableCell>
-//             )}
-//           </TableRow>
-//         )}
-//       </TableBody>
-//     </Table>
-//   );
-// };
 
 export default Taxpayer_georeferencesTable;

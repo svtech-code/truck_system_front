@@ -77,7 +77,7 @@ const Taxpayer_main = () => {
         isOpen={open}
         onOpenChange={() => setOpen(false)}
         useSubmit_generic={useSubmitTaxpayer({
-          data: data,
+          data,
           updateStateComponent: updateTaxpayerData,
         })}
         initialValues_generic={initialValues_taxpayer}

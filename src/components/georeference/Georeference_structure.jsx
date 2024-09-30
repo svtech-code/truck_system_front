@@ -25,6 +25,7 @@ export const Georeference_structure = ({
       name: "Referencia dirección",
       selector: (row) => row.referencia_direccion,
     },
+
     {
       name: "Acciones",
       center: true,

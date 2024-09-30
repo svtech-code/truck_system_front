@@ -3,6 +3,9 @@ import useTaxpayer from "../../hooks/useTaxpayer";
 import SelectComponent from "../SelectComponent";
 import { formatRut } from "../../utils/functions";
 import { FaUserTie } from "react-icons/fa";
+import Taxpayer_georeferencesTable from "./Taxpayer_georeferencesTable";
+import { useEffect, useState } from "react";
+import ModalBaseTable from "../../templates/ModalBaseTable";
 
 const Taxpayer_form = ({
   values,
@@ -14,6 +17,13 @@ const Taxpayer_form = ({
   inputRef,
 }) => {
   const { commune } = useTaxpayer();
+  const [open, setOpen] = useState(false);
+  const [listGeoreferences, setListGeoreferences] = useState(new Set([]));
+
+  // Asignación de los codigos de vinculación de las georeferencias
+  useEffect(() => {
+    setFieldValue("georeferencias", [...listGeoreferences]);
+  }, [listGeoreferences]);
 
   return (
     <>
@@ -32,7 +42,11 @@ const Taxpayer_form = ({
           label="Rut contribuyente"
           labelPlacement="outside"
           variant="faded"
-          value={values.run_contribuyente}
+          value={
+            values.run_contribuyente
+              ? values.run_contribuyente.toUpperCase()
+              : ""
+          }
           ref={inputRef}
           isRequired={true}
           onChange={(e) =>
@@ -63,7 +77,11 @@ const Taxpayer_form = ({
           label="Nombres contribuyente"
           labelPlacement="outside"
           variant="faded"
-          value={values.nombre_contribuyente}
+          value={
+            values.nombre_contribuyente
+              ? values.nombre_contribuyente.toUpperCase()
+              : ""
+          }
           isRequired={true}
           onChange={(e) =>
             setFieldValue("nombre_contribuyente", e.target.value.toUpperCase())
@@ -91,7 +109,11 @@ const Taxpayer_form = ({
           label="Apellido paterno"
           labelPlacement="outside"
           variant="faded"
-          value={values.apellido_paterno_contribuyente}
+          value={
+            values.apellido_paterno_contribuyente
+              ? values.apellido_paterno_contribuyente.toUpperCase()
+              : ""
+          }
           isRequired={true}
           onChange={(e) =>
             setFieldValue(
@@ -124,7 +146,11 @@ const Taxpayer_form = ({
           label="Apellido materno"
           labelPlacement="outside"
           variant="faded"
-          value={values.apellido_materno_contribuyente}
+          value={
+            values.apellido_materno_contribuyente
+              ? values.apellido_materno_contribuyente.toUpperCase()
+              : ""
+          }
           isRequired={true}
           onChange={(e) =>
             setFieldValue(
@@ -155,7 +181,7 @@ const Taxpayer_form = ({
           label="E-mail contribuyente"
           labelPlacement="outside"
           variant="faded"
-          value={values.email}
+          value={values.email ? values.email.toLowerCase() : ""}
           isRequired={true}
           onChange={(e) => setFieldValue("email", e.target.value.toLowerCase())}
           onBlur={handleBlur}
@@ -176,7 +202,11 @@ const Taxpayer_form = ({
           label="Teléfono 1"
           labelPlacement="outside"
           variant="faded"
-          value={values.telefono1_contribuyente}
+          value={
+            values.telefono1_contribuyente
+              ? values.telefono1_contribuyente.toUpperCase()
+              : ""
+          }
           isRequired={true}
           onChange={(e) =>
             setFieldValue(
@@ -206,7 +236,11 @@ const Taxpayer_form = ({
           label="Teléfono 2"
           labelPlacement="outside"
           variant="faded"
-          value={values.telefono2_contribuyente}
+          value={
+            values.telefono2_contribuyente
+              ? values.telefono2_contribuyente.toUpperCase()
+              : ""
+          }
           isRequired={false}
           onChange={(e) =>
             setFieldValue(
@@ -239,7 +273,11 @@ const Taxpayer_form = ({
           label="Dirección contribuyente"
           labelPlacement="outside"
           variant="faded"
-          value={values.direccion_contribuyente}
+          value={
+            values.direccion_contribuyente
+              ? values.direccion_contribuyente.toUpperCase()
+              : ""
+          }
           isRequired={true}
           onChange={(e) =>
             setFieldValue(
@@ -269,7 +307,9 @@ const Taxpayer_form = ({
           label="Número"
           labelPlacement="outside"
           variant="faded"
-          value={values.direccion_numero}
+          value={
+            values.direccion_numero ? values.direccion_numero.toUpperCase() : ""
+          }
           isRequired={false}
           onChange={(e) =>
             setFieldValue("direccion_numero", e.target.value.toUpperCase())
@@ -307,24 +347,43 @@ const Taxpayer_form = ({
           El contribuyente es transportista?
         </Checkbox>
 
-        <Button className="w-[17rem] text-lg" color="warning" variant="flat">
+        <Button
+          className="w-[17rem] text-lg"
+          color="warning"
+          variant="flat"
+          isDisabled={values.cod_contribuyente !== null ? true : false}
+          onPress={() => setOpen(true)}
+        >
           Asociar georeferencias
         </Button>
-        {/* desplegar modal para seleccionar georeferencias */}
-        {/* 
-          ->  el modal deberá ser una lista con todas las georeferencias y deberá permitir asociar o desasociar una
-          ->  deberá tener un boton para crear una georeferencia y un input para filtrara georeferencias
-        */}
-        {/* que también permita agergar nuevas georeferencias */}
+
+        <ModalBaseTable
+          title={"Georeferencias"}
+          size={"2xl"}
+          isOpen={open}
+          onOpenChange={() => setOpen(false)}
+          table={() =>
+            Taxpayer_georeferencesTable({
+              dataTaxpayerTable: {},
+              setListGeoreferences: setListGeoreferences,
+              listGeoreferences: listGeoreferences,
+            })
+          }
+        />
       </div>
 
       <div className="flex w-full">
         <Textarea
           color="primary"
           variant="faded"
+          name="desc_contribuyente"
           label="Descripción del contribuyente"
           labelPlacement="outside"
-          value={values.desc_contribuyente}
+          value={
+            values.desc_contribuyente
+              ? values.desc_contribuyente.toUpperCase()
+              : ""
+          }
           onChange={(e) =>
             setFieldValue("desc_contribuyente", e.target.value.toUpperCase())
           }

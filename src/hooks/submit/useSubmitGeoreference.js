@@ -3,11 +3,11 @@ import apiPost from "../../api/apiPost";
 import { updateArray } from "../../utils/methodUpdateArray";
 import apiPut from "../../api/apiPut";
 
-const useSubmitTaxpayer = ({ data, updateStateComponent }) => {
+const useSubmitGeoreference = ({ data, updateStateComponent }) => {
   const onSubmit =
     (onClose) =>
     async (values, { setSubmitting }) => {
-      const { cod_contribuyente, ...otherValues } = values;
+      const { cod_georeferencia, ...otherValues } = values;
 
       // para normalizar o transformar los datos según se requiera
       const payload = {
@@ -15,9 +15,9 @@ const useSubmitTaxpayer = ({ data, updateStateComponent }) => {
       };
 
       try {
-        if (cod_contribuyente === null) {
+        if (cod_georeferencia === null) {
           await apiPost({
-            route: "contribuyentes",
+            route: "georeferencias",
             object: payload,
           }).then((response) => {
             Swal.fire({
@@ -25,12 +25,12 @@ const useSubmitTaxpayer = ({ data, updateStateComponent }) => {
               title: "Success",
               text: "Registro almacenado",
             }).then(() => {
-              // actualización del contexto de contribuyentes
+              // actualización del contexto de georeferencias
               updateStateComponent({
                 data: updateArray({
                   arrayData: data,
-                  idData: response?.data?.cod_contribuyente,
-                  idField: "cod_contribuyente",
+                  idData: response?.data?.cod_georeferencia,
+                  idField: "cod_georeferencia",
                   updateFields: response?.data,
                 }),
               });
@@ -38,7 +38,7 @@ const useSubmitTaxpayer = ({ data, updateStateComponent }) => {
           });
         } else {
           await apiPut({
-            route: `contribuyentes/${cod_contribuyente.toString()}`,
+            route: `georeferencias/${cod_georeferencia.toString()}`,
             object: payload,
           }).then((response) => {
             Swal.fire({
@@ -50,8 +50,8 @@ const useSubmitTaxpayer = ({ data, updateStateComponent }) => {
               updateStateComponent({
                 data: updateArray({
                   arrayData: data,
-                  idData: cod_contribuyente,
-                  idField: "cod_contribuyente",
+                  idData: cod_georeferencia,
+                  idField: "cod_georeferencia",
                   updateFields: response?.data,
                 }),
               });
@@ -71,4 +71,4 @@ const useSubmitTaxpayer = ({ data, updateStateComponent }) => {
   return { onSubmit };
 };
 
-export default useSubmitTaxpayer;
+export default useSubmitGeoreference;

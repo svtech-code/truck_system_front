@@ -24,6 +24,7 @@ const SelectComponent = ({
   arrayRowDataTable, // valor de la fila a modificar (opcional, solo para editar datos de una fila)
   routeUpdate, // ruta para actualizar datos (opciona)
   generatePayloadForUpdate, // función para generar datos de actualización (opcional para actualización de estados)
+  disabledSelect = false, // propiedad que permite desabilitar el select en determinadas condiciones
 }) => {
   // variables state del componente
   const [varState, setVarState] = useState({
@@ -181,6 +182,7 @@ const SelectComponent = ({
 
   return (
     <Select
+      isDisabled={disabledSelect}
       aria-label="select data"
       placeholder={
         label ? null : varState.loading ? "Cargando ..." : "Seleccionar"
