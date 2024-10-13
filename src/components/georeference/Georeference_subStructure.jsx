@@ -12,7 +12,7 @@ const Georeference_subStructure = ({ data }) => {
 
   return (
     <Table
-      aria-label="data-vehicle"
+      aria-label="sub tabla datos de georeferencias"
       className="p-2"
       selectionMode="single"
       classNames={{
