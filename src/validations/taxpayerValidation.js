@@ -32,7 +32,9 @@ const taxpayerValidation = () => {
       .trim()
       .required("Teléfono requerido !")
       .matches(REGEX_number, "Formato inválido, revisar !"),
-    telefono2_contribuyente: Yup.string().trim(),
+    telefono2_contribuyente: Yup.string()
+      .trim()
+      .matches(REGEX_number, "Formato inválido, revisar !"),
     direccion_contribuyente: Yup.string()
       .trim()
       .required("La dirección es requerida")

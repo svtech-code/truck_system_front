@@ -22,7 +22,11 @@ export const RoutesObjects = [
     element: <Vehicle />,
     loader: () => getData({ endPoint: "vehiculos" }),
   },
-  { path: "/driver", element: <Driver /> },
+  {
+    path: "/driver",
+    element: <Driver />,
+    loader: () => getData({ endPoint: "choferes" }),
+  },
   { path: "/loadingorder", element: <LoadingOrder /> },
   {
     path: "/taxpayer",
