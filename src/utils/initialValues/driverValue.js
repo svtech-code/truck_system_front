@@ -9,6 +9,8 @@ const defaultInitialValues = {
   telefono2: "",
   email: "",
   desc_usuario: "",
+  username: "",
+  contrasena: "",
   cod_tipo_usuario: 4,
 };
 

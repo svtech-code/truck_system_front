@@ -178,6 +178,47 @@ const Driver_form = ({
         />
       </div>
 
+      {/* nombre de usuario y contraseña */}
+      <div className="flex gap-x-4">
+        {/* user name */}
+        <Input
+          className="w-[20rem]"
+          color={touched.username && errors.username ? "danger" : "primary"}
+          name="username"
+          type="text"
+          label="Nombre de usuario de la cuenta"
+          labelPlacement="outside"
+          variant="faded"
+          value={values.username ? values.username.toUpperCase() : ""}
+          isRequired={true}
+          onChange={(e) =>
+            setFieldValue("username", e.target.value.toUpperCase())
+          }
+          onBlur={handleBlur}
+          isInvalid={touched.username && errors.username}
+          errorMessage={touched.username && errors.username}
+        />
+
+        {/* password */}
+        <Input
+          className="w-[20rem]"
+          color={touched.contrasena && errors.contrasena ? "danger" : "primary"}
+          name="contrasena"
+          type="text"
+          label="Contraseña"
+          labelPlacement="outside"
+          variant="faded"
+          value={values.contrasena ? values.contrasena.toUpperCase() : ""}
+          isRequired={true}
+          onChange={(e) =>
+            setFieldValue("contrasena", e.target.value.toUpperCase())
+          }
+          onBlur={handleBlur}
+          isInvalid={touched.contrasena && errors.contrasena}
+          errorMessage={touched.contrasena && errors.contrasena}
+        />
+      </div>
+
       {/* dirección */}
       <div className="flex gap-x-4">
         {/* dirección */}

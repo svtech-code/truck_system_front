@@ -15,6 +15,8 @@ import { FaCircleCheck } from "react-icons/fa6";
 import { IoSearch } from "react-icons/io5";
 import { useMemo, useState } from "react";
 import apiPost from "../../api/apiPost";
+import apiDelete from "../../api/apiDelete";
+import Swal from "sweetalert2";
 
 const Taxpayer_georeferencesTable = ({
   dataTaxpayerTable = {},
@@ -25,6 +27,18 @@ const Taxpayer_georeferencesTable = ({
   const { cod_contribuyente, georeferencias = [] } = dataTaxpayerTable || {};
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
+
+  // Nuevo estado para almacenar el término de búsqueda
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Filtrado de los datos basado en el término de búsqueda
+  const filteredGeoreferences = useMemo(() => {
+    return georeference.filter(
+      (item) =>
+        item.direccion.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.desc_comuna.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [georeference, searchTerm]);
 
   const pages = useMemo(() => {
     return georeference?.length
@@ -87,20 +101,39 @@ const Taxpayer_georeferencesTable = ({
 
   // Función para desvincular una georeferencia
   const handleUnlinkGeoreference = async (cod_georeferencia) => {
-    // // Filtrar la georeferencia a desvincular
-    // const updateGeoreferences = georeference.filter(
-    //   (item) => item.cod_georeferencia !== cod_georeferencia
-    // );
+    // obtener id de la referencia que debo eliminar para desvincular una georeferencia de un contribuyente
+    const georeferenciasArray = dataTaxpayerTable.georeferencias.filter(
+      (geo) => geo.cod_georeferencia === cod_georeferencia
+    )[0].cod_georeferencia_contribuyente;
 
-    // if (setFieldValue) {
-    //   setFieldValue("georeferencias", updateGeoreferences);
-    // } else {
-    //   // actualización delete del vinculo de la georeferencia
-    // }
+    // array actualizado de georeferencias, luego de desvincular una
+    const newArrayGeoreferences = dataTaxpayerTable.georeferencias.filter(
+      (geo) => geo.cod_georeferencia !== cod_georeferencia
+    );
 
-    // console.log(updateGeoreferences);
+    // obtención del array actualizado luego de la desvinculación de la georeferencia
+    const updateData = data.map((contribuyente) => {
+      if (contribuyente.cod_contribuyente === cod_contribuyente) {
+        return {
+          ...contribuyente,
+          georeferencias: newArrayGeoreferences,
+        };
+      }
 
-    console.log("desvincular georeferencia cod: " + cod_georeferencia);
+      return contribuyente;
+    });
+
+    try {
+      await apiDelete({
+        route: "georeferencia_contribuyente",
+        param: georeferenciasArray,
+      }).then(() => {
+        // actualización del contexto del contribuyente
+        updateTaxpayerData({ data: updateData });
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const renderButton = ({ cod_georeferencia }) => {
@@ -164,6 +197,8 @@ const Taxpayer_georeferencesTable = ({
           labelPlacement="outside"
           className="w-2/5"
           startContent={<IoSearch />}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
 
         {/* habrir modal para creación de georeferencia */}
@@ -198,25 +233,27 @@ const Taxpayer_georeferencesTable = ({
         </TableHeader>
 
         <TableBody emptyContent={"Sin datos asignados"}>
-          {georeference.map(
-            ({
-              cod_georeferencia,
-              direccion,
-              desc_comuna,
-              latitud,
-              longitud,
-            }) => (
-              <TableRow key={cod_georeferencia}>
-                <TableCell>{direccion}</TableCell>
-                <TableCell>{desc_comuna}</TableCell>
-                <TableCell>{latitud}</TableCell>
-                <TableCell>{longitud}</TableCell>
-                <TableCell className="flex justify-center items-center">
-                  {renderButton({ cod_georeferencia })}
-                </TableCell>
-              </TableRow>
-            )
-          )}
+          {filteredGeoreferences
+            .slice((page - 1) * rowsPerPage, page * rowsPerPage)
+            .map(
+              ({
+                cod_georeferencia,
+                direccion,
+                desc_comuna,
+                latitud,
+                longitud,
+              }) => (
+                <TableRow key={cod_georeferencia}>
+                  <TableCell>{direccion}</TableCell>
+                  <TableCell>{desc_comuna}</TableCell>
+                  <TableCell>{latitud}</TableCell>
+                  <TableCell>{longitud}</TableCell>
+                  <TableCell className="flex justify-center items-center">
+                    {renderButton({ cod_georeferencia })}
+                  </TableCell>
+                </TableRow>
+              )
+            )}
         </TableBody>
       </Table>
     </div>
