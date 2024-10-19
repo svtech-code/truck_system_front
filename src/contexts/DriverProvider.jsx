@@ -11,6 +11,10 @@ const calculateDeriveData = (data) => {
   };
 };
 
+// const excludeActiveUser = (data) {
+//   const userId
+// }
+
 export const DriverProvider = ({ children, response }) => {
   // estado de los datos principales
   const [driverData, setDriverData] = useState({
