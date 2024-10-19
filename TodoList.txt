@@ -1,26 +1,53 @@
-# Tareas pendientes por hacer
+#LISTA DE TAREAS POR MANTENEDOR
 
--> [ ] Creación del mantenedor de gestion de choferes
+-> {X} MANTENEDOR VEHÍCULOS
+    -> [X] Trabajar en funcionalidad para desabilitar campos al crear un carro
+
+
+
+-> {X} MANTENDOR DE CHOFERES
     -> [X] Tabla con datos de los choferes
     -> [X] Estructura de la tabla
     -> [X] Valores iniciales
     -> [X] Validación de los datos
     -> [X] Formulario de ingreso / edición
     -> [X] Submit de data choferes
-    -> [ ] Ingreso de un chofer -> revisar back
-        -> [ ] Agregar validación a nombre de usuario y contraseña
-        => [ ] Error al hacer un insert de chofer (usando post de usuario)
+    -> [X] Ingreso de un chofer -> revisar back
+        -> [X] Agregar validación a nombre de usuario y contraseña
+        -> [X] Error al hacer un insert de chofer (usando post de usuario)
     -> [X] Actualizar un chofer -> revisar back
-        => actualiza bien pero modifica la contraseña
-    -> [ ] Eliminar un chofer -> revisar back (probar luego de hacer los insert)
-    
--> [X] Agregar funcionalidad de filtro a modal de georeferencias
--> [X] Agregar desvincular una georeferencia (revisar endpoind)
--> [ ] Trabajar en funcionalidad para desabilitar campos al crear un carro
--> [ ] Revisar y sanear mantenedores
+    -> [X] Eliminar un chofer -> revisar back (probar luego de hacer los insert)
+    -> [X] Agregar funcionalidad de filtro a modal de georeferencias
+    -> [X] Agregar desvincular una georeferencia (revisar endpoind)
 
-NOTAS: 
-=> El endpoind de choferes esta debolvieldo la contraseña
-=> No existe endpoind delete chofer y/o usuario
-=> Algunos datos al crear un chofer, no deberían pedirse al crear un usuario
-    -> ver si es posible o necesario crear un post para chofer
+
+
+-> { } MANTENEDOR ORDEN DE CARGA
+    -> [ ] revisasr enpoind GET
+    -> [ ] armar estructura base (definir diseño del mantenedor)
+    -> [ ] comenzar con las peticiones
+
+
+
+-> {X} MANTENDOR CONTTRIBUYENTES
+
+
+
+-> {X} MANTENEDOR GEOREFERENCIAS
+
+
+
+
+
+
+# TAREAS GENERALES
+-> [ ] Revisar y sanear mantenedores
+-> [ ] Revisar tabla y endpoind de la sección orden de carga
+
+
+
+SOLICITAR
+=> En georeferencia tanto el update como el post me devuelve desc_comuna como null
+=> En choferes tanto el post como el update no me devuelven el id_usuario
+=> Solicitar correo en la respuesta que entrega la autenticación
+=> el put de vehiculo pide el cod chofer obligatorio (revisar para el caso de un carro)
