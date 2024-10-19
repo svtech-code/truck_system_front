@@ -8,7 +8,7 @@ import {
 } from "@nextui-org/react";
 
 const Driver_subStructure = ({ data }) => {
-  const { email, telefono1, telefono2 } = data;
+  const { email, telefono1, telefono2, username } = data;
 
   return (
     <Table
@@ -21,9 +21,10 @@ const Driver_subStructure = ({ data }) => {
       }}
     >
       <TableHeader>
-        <TableColumn className="w-[60%]">Correo electrónico</TableColumn>
+        <TableColumn className="w-[40%]">Correo electrónico</TableColumn>
         <TableColumn className="w-[20%]">Teléfono 1</TableColumn>
         <TableColumn className="w-[20%]">Teléfono 2</TableColumn>
+        <TableColumn className="w-[20%]">Nombre usuario</TableColumn>
       </TableHeader>
 
       <TableBody emptyContent={"Sin datos asignados"}>
@@ -31,6 +32,7 @@ const Driver_subStructure = ({ data }) => {
           <TableCell>{email}</TableCell>
           <TableCell>{telefono1}</TableCell>
           <TableCell>{telefono2}</TableCell>
+          <TableCell>{username}</TableCell>
         </TableRow>
       </TableBody>
     </Table>

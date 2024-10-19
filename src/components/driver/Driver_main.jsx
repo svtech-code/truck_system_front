@@ -15,7 +15,7 @@ import useSubmitDriver from "../../hooks/submit/useSubmitDriver";
 const varString = {
   title: "Choferes",
   titleModal: "Chofer",
-  route: "choferes",
+  route: "usuarios",
   propertyId: "cod_usuario",
   propertyName: "desc_usuario",
   cards: [
@@ -73,7 +73,7 @@ const Driver_main = () => {
         onOpen={() => setOpen(true)}
         structureData={Driver_structure({
           onOpen: () => setOpen(true),
-          router: varString.route,
+          route: varString.route,
           propertyId: varString.propertyId,
           propertyName: varString.propertyName,
         })}

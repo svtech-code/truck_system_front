@@ -5,6 +5,7 @@ import {
   REGEX_numberString,
   REGEX_run,
   REGEX_String,
+  REGEX_userName,
 } from "../utils/regularExpressions";
 
 const driverValidation = () => {
@@ -44,7 +45,15 @@ const driverValidation = () => {
       .trim()
       .required("El email es requerido !")
       .matches(REGEX_email, "El email no es válido !"),
-    // desc_usuario: "",
+    username: Yup.string()
+      .trim()
+      .min(6, "El nombre de usuario debe contener al menos 6 carécteres !")
+      .max(16, "El nombre de usuario no debe contener más de 16 carácteres !")
+      .required("Nombre de usuario requerido !")
+      .matches(
+        REGEX_userName,
+        "El nombre de usuario solo puede contener letras, números y los siguientes carácteres especiales; '@ _'"
+      ),
   });
 };
 

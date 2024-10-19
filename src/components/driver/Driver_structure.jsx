@@ -4,12 +4,12 @@ import ActionButton from "../ActionButton";
 const Driver_structure = ({ onOpen, route, propertyId, propertyName }) => {
   const { data, updateDriverData } = useDriver();
   // función para agregar guion medio al rut no formateado
-  const agregarGuion = (str) => str.slice(0, -1) + "-" + str.slice(-1);
+  // const agregarGuion = (str) => str.slice(0, -1) + "-" + str.slice(-1);
 
   return [
     {
       name: "RUN",
-      selector: (row) => agregarGuion(row.run_usuario),
+      selector: (row) => row.run_usuario,
     },
     {
       name: "Paterno",

@@ -10,7 +10,6 @@ const defaultInitialValues = {
   email: "",
   desc_usuario: "",
   username: "",
-  contrasena: "",
   cod_tipo_usuario: 4,
 };
 

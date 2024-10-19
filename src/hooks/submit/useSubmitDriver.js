@@ -38,29 +38,28 @@ const useSubmitDriver = ({ data, updateStateComponent }) => {
 
       try {
         if (cod_usuario === null) {
-          console.log("insert: ", payload);
-          //   await apiPost({
-          //     route: "usuarios",
-          //     object: payload,
-          //   }).then((response) => {
-          //     Swal.fire({
-          //       icon: "success",
-          //       title: "Success",
-          //       text: "Registro almacenado",
-          //     }).then(() => {
-          //       // actualización del contexto de chofer
-          //       updateStateComponent({
-          //         data: updateArray({
-          //           arrayData: data,
-          //           idData: response?.data?.cod_usuario,
-          //           idField: "cod_usuario",
-          //           updateFields: response?.data,
-          //         }),
-          //       });
-          //     });
-          //   });
+          // console.log("insert: ", payload);
+          await apiPost({
+            route: "usuarios",
+            object: payload,
+          }).then((response) => {
+            Swal.fire({
+              icon: "success",
+              title: "Success",
+              text: "Registro almacenado",
+            }).then(() => {
+              // actualización del contexto de chofer
+              updateStateComponent({
+                data: updateArray({
+                  arrayData: data,
+                  idData: response?.data?.cod_usuario,
+                  idField: "cod_usuario",
+                  updateFields: response?.data,
+                }),
+              });
+            });
+          });
         } else {
-          console.log("update: ", payload);
           await apiPut({
             route: `usuarios/${cod_usuario.toString()}`,
             object: payload,
