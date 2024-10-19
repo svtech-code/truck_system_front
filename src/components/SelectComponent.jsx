@@ -39,34 +39,6 @@ const SelectComponent = ({
 
   // use effect para cargar select en la edición de datos, por codigo y/o descripción
   useEffect(() => {
-    // carga el select por medio del codigo
-    // if (loadForCod) {
-    //   updateVarState({
-    // loading: false,
-    //     selectedValue: new Set([loadForCod.toString()]),
-    //   });
-    //   return;
-    // }
-
-    // // carga del select por medio de la descripción
-    // if (loadForDesc && loadForDesc !== "" && arrayDataForSelect.length > 0) {
-    //   const arrayForDesc = arrayDataForSelect.find(
-    //     (item) => item[nameDescDataInArray] === loadForDesc
-    //   );
-
-    //   // asignación del select
-    //   updateVarState({
-    //     loading: false,
-    //     selectedValue: new Set([arrayForDesc[nameCodDataInArray].toString()]),
-    //   });
-
-    //   // controlar el uso de setFieldValue, solo si esta presente (solo para formularios)
-    //   if (setFieldValue) {
-    //     setFieldValue(name, arrayForDesc[nameCodDataInArray].toString());
-    //   }
-    //   return;
-    // }
-
     const loadSelectedValue = () => {
       if (loadForCod) {
         // carga el select por medio del codigo
