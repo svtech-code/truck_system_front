@@ -23,6 +23,7 @@ const useAuthentication = ({ login }) => {
         const privilege = response?.data?.cod_tipo_usuario.toString();
         const token = response?.data?.access_token;
         const userName = response?.data?.desc_usuario;
+        // const userEmail = response?.data?.email; // para el correo
 
         Swal.fire({
           icon: "success",

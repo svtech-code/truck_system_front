@@ -88,12 +88,15 @@ const Vehicle_main = () => {
 
   // estados para el manejo del modal
   const [open, setOpen] = useState(false);
+
   const handleModalClose = useCallback(() => {
     setOpen(false);
 
-    getData({ endPoint: "modelos" }).then((response) =>
-      updateVehicleData({ modelVehicle: response?.response })
-    );
+    // pensado para actualizar el contexto de los modelos, en caso de creación de un modelo nuevo, pero desde el formulario
+    // probando con deshabilitarlo, probar si da error
+    // getData({ endPoint: "modelos" }).then((response) =>
+    //   updateVehicleData({ modelVehicle: response?.response })
+    // );
   }, []);
 
   const eventClickDownloadData = () => alert("Descargar informacion");

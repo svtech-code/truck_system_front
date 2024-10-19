@@ -29,6 +29,9 @@ const Vehicle_form = ({
     brandVehicle,
     updateVehicleData,
   } = useVehicle();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [dataModel, setDataModel] = useState(null);
+  const [disableSelect, setDisableSelect] = useState(true);
 
   // función manejador de la patente completa
   const myhandleChange = (e) => {
@@ -45,10 +48,6 @@ const Vehicle_form = ({
     setFieldValue("patente_completa", inputValue);
   };
 
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [dataModel, setDataModel] = useState(null);
-  const [disableSelect, setDisableSelect] = useState(true);
-
   // manejador de nuevo modelo
   const handleFieldValue = useCallback((name, value) => {
     if (value === "__new__") {
@@ -58,6 +57,31 @@ const Vehicle_form = ({
       setFieldValue(name, value);
     }
   }, []);
+
+  // const handleTypeVehicle = useCallback(() => {
+  //   console.log("prueba de funcionamiento");
+  //   return disableSelect;
+  // }, []);
+
+  useEffect(() => {
+    if (!isOpen) {
+      if (
+        values.cod_tipo_vehiculo !== "2" &&
+        values.cod_tipo_vehiculo !== null
+      ) {
+        setDisableSelect(false);
+      } else if (
+        values.cod_tipo_vehiculo === "2" &&
+        values.cod_tipo_vehiculo !== null
+      ) {
+        setDisableSelect(true);
+        setFieldValue("cod_chofer", null);
+        setFieldValue("desc_chofer", "");
+        setFieldValue("cod_acoplado", null);
+        setFieldValue("desc_acoplado", "");
+      }
+    }
+  }, [values.cod_tipo_vehiculo]);
 
   return (
     <>
@@ -272,13 +296,7 @@ const Vehicle_form = ({
           isInvalid={touched.cod_chofer && errors.cod_chofer ? true : false}
           errorMessage={touched.cod_chofer && errors.cod_chofer}
           loadForCod={values.cod_chofer}
-          disabledSelect={
-            values.desc_tipo_vehiculo
-              ? values.desc_tipo_vehiculo === "CARRO"
-                ? true
-                : false
-              : disableSelect
-          }
+          disabledSelect={disableSelect}
         />
 
         <div className="w-full sm:w-[12rem]">
@@ -295,13 +313,7 @@ const Vehicle_form = ({
             }
             errorMessage={touched.cod_acoplado && errors.cod_acoplado}
             loadForCod={values.cod_acoplado}
-            disabledSelect={
-              values.desc_tipo_vehiculo
-                ? values.desc_tipo_vehiculo === "CARRO"
-                  ? true
-                  : false
-                : disableSelect
-            }
+            disabledSelect={disableSelect}
           />
         </div>
       </div>
