@@ -23,7 +23,7 @@ const useAuthentication = ({ login }) => {
         const privilege = response?.data?.cod_tipo_usuario.toString();
         const token = response?.data?.access_token;
         const userName = response?.data?.desc_usuario;
-        // const userEmail = response?.data?.email; // para el correo
+        const userEmail = response?.data?.email; // para el correo
 
         Swal.fire({
           icon: "success",
@@ -32,7 +32,7 @@ const useAuthentication = ({ login }) => {
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {
-          login(privilege, token, username, userName);
+          login(privilege, token, userEmail, userName);
         });
       }
     } catch (error) {

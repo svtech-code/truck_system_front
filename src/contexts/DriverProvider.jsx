@@ -1,4 +1,5 @@
 import { createContext, useCallback, useMemo, useState } from "react";
+import { excludeActiveUser } from "../utils/functions";
 
 // inicialización del contexto
 const DriverContext = createContext({});
@@ -11,14 +12,10 @@ const calculateDeriveData = (data) => {
   };
 };
 
-// const excludeActiveUser = (data) {
-//   const userId
-// }
-
 export const DriverProvider = ({ children, response }) => {
   // estado de los datos principales
   const [driverData, setDriverData] = useState({
-    data: response, // objeto con los datos de los choferes
+    data: excludeActiveUser(response), // objeto con los datos de los choferes
     error: null,
     loadDataState: true,
     ...calculateDeriveData(response),

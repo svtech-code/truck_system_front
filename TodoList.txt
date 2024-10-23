@@ -2,7 +2,10 @@
 
 -> {X} MANTENEDOR VEHÍCULOS
     -> [X] Trabajar en funcionalidad para desabilitar campos al crear un carro
-
+    -> [ ] si ya elejí un carro, puedo volver a asignarlo a otro vehículo ???
+    -> [ ] si ya eleji un chofer, puedo volver a asignarlo a otro vehículo ??
+    -> [ ] colocar en patente vehiculo para un carro (No aplica)
+    -> [ ] el usuario activo puede colocarse como chofer ???
 
 
 -> {X} MANTENDOR DE CHOFERES
@@ -19,6 +22,7 @@
     -> [X] Eliminar un chofer -> revisar back (probar luego de hacer los insert)
     -> [X] Agregar funcionalidad de filtro a modal de georeferencias
     -> [X] Agregar desvincular una georeferencia (revisar endpoind)
+    -> [X] filtro para evitar la edición del usuario activo
 
 
 
@@ -30,10 +34,68 @@
 
 
 -> {X} MANTENDOR CONTTRIBUYENTES
+    -> [x] revisar validación de datos
+    -> [X] revisar crear un dato
+    -> [X] revisar update de un dato
+    -> [X] revisar delete de un dato
+    -> [X] revisar información general
+    -> [X] colocar leyenda de vincular y desvinvular con toolpin
+    -> [X] cambiar nombre de la acción de vinculación
+    -> [ ] trabajar mensaje para cuando no se puede eliminar por dependencia de datos
 
 
 
 -> {X} MANTENEDOR GEOREFERENCIAS
+    -> [X] revisar validación de datos
+    -> [X] revisar crear un dato
+    -> [X] revisar update de un dato
+    -> [X] revisar delete de un dato
+    -> [X] revisar información general
+
+
+
+-> {X} TIPOS USUARIO
+    -> [X] revisar validación de datos
+    -> [X] revisar crear un dato
+    -> [X] revisar update de un dato
+    -> [X] revisar delete de un dato
+    -> [X] revisar información general
+
+
+-> {X} TIPOS VEHÍCULO
+    -> [X] revisar validación de datos
+    -> [X] revisar crear un dato
+    -> [X] revisar update de un dato
+    -> [X] revisar delete de un dato
+    -> [X] revisar información general
+
+
+
+-> {X} MARCAS VEHÍCULO
+    -> [X] revisar validación de datos
+    -> [X] revisar crear un dato
+    -> [X] revisar update de un dato
+    -> [X] revisar delete de un dato
+    -> [X] revisar información general
+
+
+
+-> {X} MODELOS VEHÍCULO
+    -> [X] revisar validación de datos
+    -> [X] revisar crear un dato
+    -> [X] revisar update de un dato
+    -> [X] revisar delete de un dato
+    -> [X] revisar información general
+
+
+
+-> {X} ESTADO VEHÍCULO
+    -> [X] revisar validación de datos
+    -> [X] revisar crear un dato
+    -> [X] revisar update de un dato
+    -> [X] revisar delete de un dato
+    -> [X] revisar información general
+
 
 
 
@@ -47,7 +109,8 @@
 
 
 SOLICITAR
-=> En georeferencia tanto el update como el post me devuelve desc_comuna como null
-=> En choferes tanto el post como el update no me devuelven el id_usuario
-=> Solicitar correo en la respuesta que entrega la autenticación
-=> el put de vehiculo pide el cod chofer obligatorio (revisar para el caso de un carro)
+[X] => En georeferencia tanto el update como el post me devuelve desc_comuna como null
+[X] => En choferes tanto el post como el update no me devuelven el id_usuario
+[X] => Solicitar correo en la respuesta que entrega la autenticación
+[X] => el put de vehiculo pide el cod chofer obligatorio (revisar para el caso de un carro)
+[ ] => solicitar que la columna correo de un usuario sea un campo único

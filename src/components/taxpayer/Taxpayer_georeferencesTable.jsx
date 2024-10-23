@@ -8,6 +8,7 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
+  Tooltip,
 } from "@nextui-org/react";
 import { TiDelete } from "react-icons/ti";
 import useTaxpayer from "../../hooks/useTaxpayer";
@@ -140,49 +141,89 @@ const Taxpayer_georeferencesTable = ({
     if (setListGeoreferences) {
       if (listGeoreferences.has(cod_georeferencia)) {
         return (
-          <Button
-            isIconOnly
+          <Tooltip
+            showArrow={true}
+            content="Precione para desvincular"
             color="success"
-            aria-label="vinculado"
-            onClick={() => handleUnlinkGeoreference(cod_georeferencia)}
+            placement="left"
+            classNames={{
+              content: "text-white",
+            }}
           >
-            <FaCircleCheck size={18} color="white" />
-          </Button>
+            <Button
+              isIconOnly
+              color="success"
+              aria-label="vinculado"
+              onClick={() => handleUnlinkGeoreference(cod_georeferencia)}
+            >
+              <FaCircleCheck size={18} color="white" />
+            </Button>
+          </Tooltip>
         );
       } else {
         return (
-          <Button
-            isIconOnly
+          <Tooltip
+            showArrow={true}
+            content="Presione para vincular"
             color="danger"
-            aria-label="desvinculado"
-            onClick={() => handleLinkGeoreference(cod_georeferencia)}
+            placement="left"
+            classNames={{
+              content: "text-white",
+            }}
           >
-            <TiDelete size={25} color="white" />
-          </Button>
+            <Button
+              isIconOnly
+              color="danger"
+              aria-label="desvinculado"
+              onClick={() => handleLinkGeoreference(cod_georeferencia)}
+            >
+              <TiDelete size={25} color="white" />
+            </Button>
+          </Tooltip>
         );
       }
     } else {
       if (georeferenceCodes.has(cod_georeferencia)) {
         return (
-          <Button
-            isIconOnly
+          <Tooltip
+            showArrow={true}
+            content="Precione para desvincular"
             color="success"
-            aria-label="vinculado"
-            onClick={() => handleUnlinkGeoreference(cod_georeferencia)}
+            placement="left"
+            classNames={{
+              content: "text-white",
+            }}
           >
-            <FaCircleCheck size={18} color="white" />
-          </Button>
+            <Button
+              isIconOnly
+              color="success"
+              aria-label="vinculado"
+              onClick={() => handleUnlinkGeoreference(cod_georeferencia)}
+            >
+              <FaCircleCheck size={18} color="white" />
+            </Button>
+          </Tooltip>
         );
       } else {
         return (
-          <Button
-            isIconOnly
+          <Tooltip
+            showArrow={true}
+            content="Presione para vincular"
             color="danger"
-            aria-label="desvinculado"
-            onClick={() => handleLinkGeoreference(cod_georeferencia)}
+            placement="left"
+            classNames={{
+              content: "text-white",
+            }}
           >
-            <TiDelete size={25} color="white" />
-          </Button>
+            <Button
+              isIconOnly
+              color="danger"
+              aria-label="desvinculado"
+              onClick={() => handleLinkGeoreference(cod_georeferencia)}
+            >
+              <TiDelete size={25} color="white" />
+            </Button>
+          </Tooltip>
         );
       }
     }
@@ -229,7 +270,7 @@ const Taxpayer_georeferencesTable = ({
           <TableColumn>Comuna</TableColumn>
           <TableColumn>Latitud</TableColumn>
           <TableColumn>Longitud</TableColumn>
-          <TableColumn>Desvincular</TableColumn>
+          <TableColumn>Acción</TableColumn>
         </TableHeader>
 
         <TableBody emptyContent={"Sin datos asignados"}>

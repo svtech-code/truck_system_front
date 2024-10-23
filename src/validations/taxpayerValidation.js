@@ -19,10 +19,12 @@ const taxpayerValidation = () => {
       .matches(REGEX_String, "Solo se admiten letras y espacios !"),
     apellido_paterno_contribuyente: Yup.string()
       .trim()
-      .required("Apellido paterno requerido !"),
+      .required("Apellido paterno requerido !")
+      .matches(REGEX_String, "Solo se admiten letras y espacios !"),
     apellido_materno_contribuyente: Yup.string()
       .trim()
-      .required("Apellido materno requerido !"),
+      .required("Apellido materno requerido !")
+      .matches(REGEX_String, "Solo se admiten letras y espacios !"),
     email: Yup.string()
       .email("El email no es válido !")
       .trim()

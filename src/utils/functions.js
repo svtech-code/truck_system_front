@@ -19,3 +19,10 @@ export const formatRut = (value, setFieldValue, nameInput) => {
   // asignación del valor formateado
   setFieldValue(nameInput, inputValue);
 };
+
+// función para expluir del array de usuario, el usuario activo
+export const excludeActiveUser = (data) => {
+  const emailUser = sessionStorage.getItem("authEmail");
+
+  return data.filter((item) => item.email !== emailUser);
+};

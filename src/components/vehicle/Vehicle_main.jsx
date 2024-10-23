@@ -13,6 +13,7 @@ import Vehicle_form from "./Vehicle_form";
 import usePostVehicle from "../../hooks/usePostVehicle";
 import { useCallback, useEffect, useState } from "react";
 import { getData } from "../../api/apiGet";
+import { excludeActiveUser } from "../../utils/functions";
 
 const varString = {
   title: "Registro de vehículos",
