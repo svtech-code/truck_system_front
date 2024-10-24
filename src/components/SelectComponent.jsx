@@ -2,6 +2,7 @@ import { Select, SelectItem } from "@nextui-org/react";
 import { useCallback, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import apiPut from "../api/apiPut";
+import { span } from "framer-motion/client";
 
 const SelectComponent = ({
   arrayDataForSelect, // Array con objeto de tados para listar
@@ -24,7 +25,10 @@ const SelectComponent = ({
   arrayRowDataTable, // valor de la fila a modificar (opcional, solo para editar datos de una fila)
   routeUpdate, // ruta para actualizar datos (opciona)
   generatePayloadForUpdate, // función para generar datos de actualización (opcional para actualización de estados)
-  disabledSelect = false, // propiedad que permite desabilitar el select en determinadas condiciones
+  disabledSelect = false, // propiedad que permite deshabilitar el select en determinadas condiciones
+  description = false, // propiedad que permite proporcionar una descripción al item
+  customDescriptionProps, // función para mostrar una descripción del select, si description es true
+  disableKeysItems, // lista de elementos que aparecerán deshabilitados
 }) => {
   // variables state del componente
   const [varState, setVarState] = useState({
@@ -167,13 +171,30 @@ const SelectComponent = ({
       isRequired={isRequired}
       isLoading={label ? false : varState.loading}
       selectedKeys={varState.selectedValue}
-      onSelectionChange={(key) => handleSelectedValue(key.currentKey)}
+      // onSelectionChange={(key) => handleSelectedValue(key.currentKey)}
+      onSelectionChange={(key) => {
+        if (key.currentKey !== undefined) {
+          if (disableKeysItems) {
+            // saber si el valor nuevo esta habilitado o deshabilitado
+            const isDisablesItem = disableKeysItems.includes(key.currentKey);
+            if (isDisablesItem) return;
+          }
+        }
+        handleSelectedValue(key.currentKey);
+      }}
       isInvalid={isInvalid}
       errorMessage={errorMessage}
+      // disabledKeys={disableKeysItems}
     >
       {arrayDataForSelect.map((item) => (
-        <SelectItem key={item[nameCodDataInArray]}>
-          {item[nameDescDataInArray]}
+        <SelectItem
+          key={item[nameCodDataInArray]}
+          textValue={item[nameDescDataInArray]}
+        >
+          <div className="flex justify-between items-center">
+            {item[nameDescDataInArray]}
+            {description && customDescriptionProps(item)}
+          </div>
         </SelectItem>
       ))}
     </Select>

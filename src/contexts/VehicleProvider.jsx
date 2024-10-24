@@ -14,6 +14,10 @@ const filterByData = (array) => {
 
 // función para calcular valores con base en el array de datos
 const calculateDeriveData = (data) => {
+  const acoplados = data?.filter(
+    (acoplado) => acoplado.desc_tipo_vehiculo === "CARRO"
+  );
+
   return {
     numberExpiredDocument: filterByData(data).length, // cantidad de vehiculos con documentos de revisión vencidos
 
@@ -25,9 +29,19 @@ const calculateDeriveData = (data) => {
       (item) => item?.desc_estado_vehiculo === "MANTENIMIENTO"
     ).length, // cantidad de vehiculos en mantenimiento
 
-    mainAcopladoData: data // ver como se trabajarán los acoplados
-      ?.filter((item) => item.desc_tipo_vehiculo === "CARRO")
-      ?.filter((item) => item.desc_estado_vehiculo === "DISPONIBLE"),
+    // mainAcopladoData: data // ver como se trabajarán los acoplados
+    //   ?.filter((item) => item.desc_tipo_vehiculo === "CARRO"),
+    // // ?.filter((item) => item.desc_estado_vehiculo === "DISPONIBLE"),
+    mainAcopladoData: acoplados.map((acop) => {
+      const stateAcoplado = data.some(
+        (item) => item.cod_acoplado === acop.cod_vehiculo
+      );
+
+      return {
+        ...acop,
+        estado: stateAcoplado,
+      };
+    }),
   };
 };
 

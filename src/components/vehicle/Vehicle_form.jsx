@@ -1,4 +1,4 @@
-import { Input, useDisclosure, useTable } from "@nextui-org/react";
+import { Chip, Input, useDisclosure, useTable } from "@nextui-org/react";
 import Select_Component_load from "../Select_Component_load";
 import useVehicle from "../../hooks/useVehicle";
 import { useCallback, useEffect, useState } from "react";
@@ -21,6 +21,7 @@ const Vehicle_form = ({
   inputRef,
 }) => {
   const {
+    data,
     modelVehicle,
     typeVehicle,
     drivers,
@@ -58,10 +59,20 @@ const Vehicle_form = ({
     }
   }, []);
 
-  // const handleTypeVehicle = useCallback(() => {
-  //   console.log("prueba de funcionamiento");
-  //   return disableSelect;
-  // }, []);
+  // filtro de los carros en uso
+  const carsInUse = useCallback((data) => {
+    const stateCar = data?.estado ? "En uso" : "Disponible";
+    return (
+      <Chip size="sm" isDisabled={data?.estado} color="primary">
+        {stateCar}
+      </Chip>
+    );
+  }, []);
+
+  // variable que obtiene los carros en uso para pasarlos como array al select y que aparescan deshabilitados
+  const disableCarsInUse = mainAcopladoData
+    .filter((acoplado) => acoplado.estado === true)
+    .map((acoplado) => acoplado.cod_vehiculo.toString());
 
   useEffect(() => {
     if (!isOpen) {
@@ -299,7 +310,7 @@ const Vehicle_form = ({
           disabledSelect={disableSelect}
         />
 
-        <div className="w-full sm:w-[12rem]">
+        <div className="w-full sm:w-[20rem]">
           <SelectComponent
             arrayDataForSelect={mainAcopladoData}
             nameCodDataInArray={"cod_vehiculo"}
@@ -314,6 +325,9 @@ const Vehicle_form = ({
             errorMessage={touched.cod_acoplado && errors.cod_acoplado}
             loadForCod={values.cod_acoplado}
             disabledSelect={disableSelect}
+            description={true}
+            customDescriptionProps={carsInUse}
+            disableKeysItems={disableCarsInUse}
           />
         </div>
       </div>

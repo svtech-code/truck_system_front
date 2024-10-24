@@ -1,8 +1,7 @@
-import apiPut from "../../api/apiPut";
+import { Chip } from "@nextui-org/react";
 import useVehicle from "../../hooks/useVehicle";
 import ActionButton from "../ActionButton";
 import SelectComponent from "../SelectComponent";
-import Vehicle_SelectComponent from "./Vehicle_SelectComponent";
 
 const formatPatente = (patente) => {
   return patente.replace(/(.{4})(.{2})/, "$1-$2");
@@ -97,7 +96,14 @@ export const Vehicle_structure = ({
     },
     {
       name: "Chofer",
-      selector: (row) => row.desc_chofer,
+      selector: (row) =>
+        row.desc_chofer ? (
+          row.desc_chofer
+        ) : (
+          <Chip size="sm" variant="faded">
+            CARRO NO REQUIERE CHOFER
+          </Chip>
+        ),
       hide: "md",
       minWidth: "20rem",
     },
