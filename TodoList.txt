@@ -1,11 +1,12 @@
 #LISTA DE TAREAS POR MANTENEDOR
 
+NOTAS: pendientes por revisar
+
 -> {X} MANTENEDOR VEHÍCULOS
     -> [X] Trabajar en funcionalidad para desabilitar campos al crear un carro
-    -> [ ] si ya elejí un carro, puedo volver a asignarlo a otro vehículo ???
-    -> [ ] si ya eleji un chofer, puedo volver a asignarlo a otro vehículo ??
     -> [ ] colocar en patente vehiculo para un carro (No aplica)
-    -> [ ] el usuario activo puede colocarse como chofer ???
+    -> [X] Deshabilitar y colocar leyenda de en uso o deshuso
+    -> [X] el usuario activo puede colocarse como chofer ??? -> no por que no tendra acceso al modulo
 
 
 -> {X} MANTENDOR DE CHOFERES
