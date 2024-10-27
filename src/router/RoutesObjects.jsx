@@ -27,7 +27,11 @@ export const RoutesObjects = [
     element: <Driver />,
     loader: () => getData({ endPoint: "choferes" }),
   },
-  { path: "/loadingorder", element: <LoadingOrder /> },
+  {
+    path: "/loadingorder",
+    element: <LoadingOrder />,
+    loader: () => getData({ endPoint: "orden_carga" }),
+  },
   {
     path: "/taxpayer",
     element: <Taxpayer />,

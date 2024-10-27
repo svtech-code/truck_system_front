@@ -1,67 +1,78 @@
-import { Select, SelectItem } from "@nextui-org/react";
-
 const LoadingOrder_subStructure = ({ data }) => {
-  // componente para las filas
-  const renderDataRow = (label, value) => (
-    <tr key={label}>
-      <th className="bg-gray-200 px-4 text-left">{label}</th>
-      <td className="px-4">{value}</td>
-    </tr>
-  );
+  const {
+    desc_transportista,
+    desc_vehiculo,
+    desc_acoplado,
+    detalles_orden_carga,
+  } = data;
 
   return (
-    // <div className="border rounded-md border-gray-300 overflow-hidden w-1/3">
-    //   <table className="w-full">
-    //     {data.detalleOrder.map((item, index) => (
-    //       <tbody key={index}>
-    //         {renderDataRow("Cliente", item.cliente)}
-    //         {renderDataRow("Origen", item.origen)}
-    //       </tbody>
-    //     ))}
-    //   </table>
-    // </div>
+    <div className="border p-2 mt-1 mb-2 rounded-lg overflow-hidden flex flex-col gap-y-4">
+      {/* tabla con encabezado detalle de la orde de carga */}
+      <table className="w-full text-[.8rem]">
+        <tbody>
+          <tr>
+            <td className="w-32 font-semibold">Transportista:</td>
+            <td>{desc_transportista}</td>
+          </tr>
 
-    <div className="flex flex-col gap-2 text-sm mb-6">
-      <span className="text-[1rem] font-bold block -mb-2 mt-2 ml-2">
-        Detalle de la orden de carga:
-      </span>
-      <div className="border rounded-md border-gray-300 overflow-hidden">
-        <table className=" w-full">
-          <thead className="bg-gray-200 text-left">
+          <tr>
+            <td className="w-32 font-semibold">Vehículo:</td>
+            <td>{desc_vehiculo}</td>
+          </tr>
+
+          <tr>
+            <td className="w-32 font-semibold">Acoplado:</td>
+            <td>{desc_acoplado}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      {/* tabla con los viajes de la orden de carga */}
+      <div className="w-full bg-gray-100 rounded-lg p-2">
+        <table className="w-full text-[.8rem]">
+          <thead className="text-left bg-gray-300">
             <tr>
-              <th className="py-1 px-2">Cliente</th>
-              <th className="py-1 px-2">Origen</th>
-              <th className="py-1 px-2">Destino</th>
-              <th className="py-1 px-2">Estado</th>
+              <th scope="col" className="rounded-l-lg p-2">
+                Contribuyente
+              </th>
+              <th scope="col" className="p-2">
+                Detalle viaje
+              </th>
+              <th scope="col" className="p-2">
+                Origen viaje
+              </th>
+              <th scope="col" className="p-2">
+                Destino viaje
+              </th>
+              <th scope="col" className="rounded-r-lg p-2">
+                Fecha acuse
+              </th>
             </tr>
           </thead>
-
-          <tbody className="text-left">
-            {data.detalleOrder.map((item, index) => (
-              <tr key={index}>
-                <td className="py-1 px-2">{item.cliente}</td>
-                <td className="py-1 px-2">{item.origen}</td>
-                <td className="py-1 px-2">{item.destino}</td>
-                <td className="py-1 px-2">
-                  <Select
-                    variant="flat"
-                    aria-label="estado"
-                    size="sm"
-                    className="max-w-[10rem]"
-                  >
-                    <SelectItem key="pendiente" value="pendiente">
-                      Pendiente
-                    </SelectItem>
-                    <SelectItem key="iniciado" value="iniciado">
-                      Iniciado
-                    </SelectItem>
-                    <SelectItem key="terminado" value="terminado">
-                      Terminado
-                    </SelectItem>
-                  </Select>
-                </td>
-              </tr>
-            ))}
+          <tbody>
+            {detalles_orden_carga.map(
+              (
+                {
+                  desc_contribuyente,
+                  desc_origen,
+                  desc_destino,
+                  fecha_acuse,
+                  desc_detalle_orden_carga,
+                },
+                index
+              ) => (
+                <tr className="hover:bg-gray-200" key={index}>
+                  <td className="px-2 py-1 rounded-l-md">
+                    {desc_contribuyente}
+                  </td>
+                  <td className="px-2 py-1">{desc_detalle_orden_carga}</td>
+                  <td className="px-2 py-1">{desc_origen}</td>
+                  <td className="px-2 py-1">{desc_destino}</td>
+                  <td className="px-2 py-1 rounded-r-md">{fecha_acuse}</td>
+                </tr>
+              )
+            )}
           </tbody>
         </table>
       </div>
