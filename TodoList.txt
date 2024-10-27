@@ -1,12 +1,12 @@
 #LISTA DE TAREAS POR MANTENEDOR
 
-NOTAS: pendientes por revisar
-
 -> {X} MANTENEDOR VEHÍCULOS
     -> [X] Trabajar en funcionalidad para desabilitar campos al crear un carro
     -> [ ] colocar en patente vehiculo para un carro (No aplica)
     -> [X] Deshabilitar y colocar leyenda de en uso o deshuso
     -> [X] el usuario activo puede colocarse como chofer ??? -> no por que no tendra acceso al modulo
+    -> [ ] trabajar mensaje para cuando no se puede eliminar un dato por dependencias en otras tablas
+    -> [ ] adjuastar padding y rounded del chip de choferes para cuando son carros
 
 
 -> {X} MANTENDOR DE CHOFERES
@@ -24,13 +24,16 @@ NOTAS: pendientes por revisar
     -> [X] Agregar funcionalidad de filtro a modal de georeferencias
     -> [X] Agregar desvincular una georeferencia (revisar endpoind)
     -> [X] filtro para evitar la edición del usuario activo
-
+    -> [ ] trabajar mensaje para cuando no se puede eliminar un dato por dependencias en otras tablas
 
 
 -> { } MANTENEDOR ORDEN DE CARGA
-    -> [ ] revisasr enpoind GET
-    -> [ ] armar estructura base (definir diseño del mantenedor)
-    -> [ ] comenzar con las peticiones
+    -> [X] revisasr enpoind GET
+    -> [X] armar estructura base (definir diseño del mantenedor)
+    -> [ ] diseño del modal para mostrar datos del chofer
+    -> [ ] diseño del modal de ingreso de ordenes de carga
+    -> [ ] trabajar mensaje para cuando no se puede eliminar un dato por dependencias en otras tablas
+    -> question ¿La orden de carga tendra un estado o no es necesario?
 
 
 
@@ -42,8 +45,7 @@ NOTAS: pendientes por revisar
     -> [X] revisar información general
     -> [X] colocar leyenda de vincular y desvinvular con toolpin
     -> [X] cambiar nombre de la acción de vinculación
-    -> [ ] trabajar mensaje para cuando no se puede eliminar por dependencia de datos
-
+    -> [ ] trabajar mensaje para cuando no se puede eliminar un dato por dependencias en otras tablas
 
 
 -> {X} MANTENEDOR GEOREFERENCIAS
@@ -52,7 +54,7 @@ NOTAS: pendientes por revisar
     -> [X] revisar update de un dato
     -> [X] revisar delete de un dato
     -> [X] revisar información general
-
+    -> [ ] trabajar mensaje para cuando no se puede eliminar un dato por dependencias en otras tablas
 
 
 -> {X} TIPOS USUARIO
@@ -61,6 +63,7 @@ NOTAS: pendientes por revisar
     -> [X] revisar update de un dato
     -> [X] revisar delete de un dato
     -> [X] revisar información general
+    -> [ ] trabajar mensaje para cuando no se puede eliminar un dato por dependencias en otras tablas
 
 
 -> {X} TIPOS VEHÍCULO
@@ -69,7 +72,7 @@ NOTAS: pendientes por revisar
     -> [X] revisar update de un dato
     -> [X] revisar delete de un dato
     -> [X] revisar información general
-
+    -> [ ] trabajar mensaje para cuando no se puede eliminar un dato por dependencias en otras tablas
 
 
 -> {X} MARCAS VEHÍCULO
@@ -78,7 +81,7 @@ NOTAS: pendientes por revisar
     -> [X] revisar update de un dato
     -> [X] revisar delete de un dato
     -> [X] revisar información general
-
+    -> [ ] trabajar mensaje para cuando no se puede eliminar un dato por dependencias en otras tablas
 
 
 -> {X} MODELOS VEHÍCULO
@@ -89,13 +92,13 @@ NOTAS: pendientes por revisar
     -> [X] revisar información general
 
 
-
 -> {X} ESTADO VEHÍCULO
     -> [X] revisar validación de datos
     -> [X] revisar crear un dato
     -> [X] revisar update de un dato
     -> [X] revisar delete de un dato
     -> [X] revisar información general
+    -> [ ] trabajar mensaje para cuando no se puede eliminar un dato por dependencias en otras tablas
 
 
 
@@ -104,8 +107,6 @@ NOTAS: pendientes por revisar
 
 
 # TAREAS GENERALES
--> [ ] Revisar y sanear mantenedores
--> [ ] Revisar tabla y endpoind de la sección orden de carga
 
 
 
