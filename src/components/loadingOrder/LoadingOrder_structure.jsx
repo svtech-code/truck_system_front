@@ -1,8 +1,8 @@
 import { Button } from "@nextui-org/react";
 import useLoadingOrder from "../../hooks/useLoadingOrder";
 import ActionButton from "../ActionButton";
-import { FaUserAstronaut } from "react-icons/fa";
 import { getData } from "../../api/apiGet";
+import { BsInfoLg } from "react-icons/bs";
 
 export const LoadingOrder_structure = ({
   onOpen,
@@ -38,34 +38,28 @@ export const LoadingOrder_structure = ({
       grow: 2,
       minWidth: "24rem",
       cell: (row) => (
-        <div className="flex items-center justify-start gap-2">
+        <div className="flex items-center justify-start gap-2 group">
           <Button
             isIconOnly
+            size="sm"
             color="primary"
             aria-label="Datos chofer"
             onPress={() => getDataChofer({ idChofer: row.cod_chofer })}
           >
-            <FaUserAstronaut />
+            <BsInfoLg
+              size={20}
+              className="group-hover:scale-125 transition-all duration-300 will-change-transform"
+            />
           </Button>
           <span>{row.desc_chofer}</span>
         </div>
       ),
     },
     {
-      name: "Descripción",
-      grow: 1,
-      selector: (row) => row.desc_orden_carga,
-    },
-    {
       name: "Detalle 1er viaje",
       grow: 1,
       selector: (row) => row.detalles_orden_carga[0].desc_detalle_orden_carga,
     },
-    // {
-    //   name: "Estado",
-    //   grow: 1,
-    //   cell: (row) => <span>INICIADO</span>,
-    // },
     {
       name: "Acciones",
       center: true,

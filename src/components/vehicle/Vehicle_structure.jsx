@@ -100,7 +100,15 @@ export const Vehicle_structure = ({
         row.desc_chofer ? (
           row.desc_chofer
         ) : (
-          <Chip size="sm" variant="faded">
+          <Chip
+            size="lg"
+            color="warning"
+            radius="md"
+            variant="faded"
+            classNames={{
+              content: "text-[.9rem]",
+            }}
+          >
             CARRO NO REQUIERE CHOFER
           </Chip>
         ),
