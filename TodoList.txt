@@ -6,7 +6,7 @@
     -> [X] Deshabilitar y colocar leyenda de en uso o deshuso
     -> [X] el usuario activo puede colocarse como chofer ??? -> no por que no tendra acceso al modulo
     -> [ ] trabajar mensaje para cuando no se puede eliminar un dato por dependencias en otras tablas
-    -> [ ] adjuastar padding y rounded del chip de choferes para cuando son carros
+    -> [X] adjuastar padding y rounded del chip de choferes para cuando son carros
 
 
 -> {X} MANTENDOR DE CHOFERES
