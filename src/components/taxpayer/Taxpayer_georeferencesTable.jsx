@@ -17,7 +17,6 @@ import { IoSearch } from "react-icons/io5";
 import { useMemo, useState } from "react";
 import apiPost from "../../api/apiPost";
 import apiDelete from "../../api/apiDelete";
-import Swal from "sweetalert2";
 
 const Taxpayer_georeferencesTable = ({
   dataTaxpayerTable = {},
@@ -27,7 +26,7 @@ const Taxpayer_georeferencesTable = ({
   const { georeference, updateTaxpayerData, data } = useTaxpayer();
   const { cod_contribuyente, georeferencias = [] } = dataTaxpayerTable || {};
   const [page, setPage] = useState(1);
-  const rowsPerPage = 10;
+  const rowsPerPage = 6;
 
   // Nuevo estado para almacenar el término de búsqueda
   const [searchTerm, setSearchTerm] = useState("");
