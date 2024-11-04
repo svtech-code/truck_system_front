@@ -7,6 +7,12 @@ import DataTableComponent from "../DataTable_Component";
 import { LoadingOrder_structure } from "./LoadingOrder_structure";
 import LoadingOrder_subStructure from "./LoadingOrder_subStructure";
 import ModalDataChofer from "../../templates/ModalDataChofer";
+import ModalBaseForm from "../../templates/ModalBaseForm";
+import useSubmitLoadingOrder from "../../hooks/submit/useSubmitLoadingOrder";
+import initialValues_LoadingOrder from "../../utils/initialValues/loadingOrderValue";
+import loadingOrderValidation from "../../validations/loadingOrderValidation";
+import LoadingOrder_form from "./LoadingOrder_form";
+import { getData } from "../../api/apiGet";
 
 const varString = {
   title: "Ordenes de carga",
@@ -29,6 +35,18 @@ const LoadingOrder_main = () => {
   const counterCard = { numLoadingOrder };
 
   // usar un useEffect para peticiones adicionales
+  useEffect(() => {
+    const getDataLoadingOrder = async () => {
+      const [vehicle] = await Promise.all([getData({ endPoint: "vehiculos" })]);
+      const cars = vehicle?.response.filter(
+        (car) => car.desc_tipo_vehiculo !== "CARRO"
+      );
+
+      updateLoadingOrder({ dataCars: cars });
+    };
+
+    getDataLoadingOrder();
+  }, []);
 
   // estados para el manejo del modal
   const [open, setOpen] = useState(false);
@@ -63,6 +81,22 @@ const LoadingOrder_main = () => {
       />
 
       {/* modale generico */}
+      <ModalBaseForm
+        propertyId={varString.propertyId}
+        stateComponent={useLoadingOrder()}
+        updateStateComponent={updateLoadingOrder}
+        title={varString.titleModal}
+        size={"2xl"}
+        isOpen={open}
+        onOpenChange={() => setOpen(false)}
+        useSubmit_generic={useSubmitLoadingOrder({
+          data,
+          updateStateComponent: updateLoadingOrder,
+        })}
+        initialValues_generic={initialValues_LoadingOrder}
+        validationSchema_generic={loadingOrderValidation}
+        Form_generic={(props) => <LoadingOrder_form {...props} />}
+      />
 
       {/* tabla del mantenedor */}
       <DataTableComponent
