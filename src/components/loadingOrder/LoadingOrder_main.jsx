@@ -37,12 +37,26 @@ const LoadingOrder_main = () => {
   // usar un useEffect para peticiones adicionales
   useEffect(() => {
     const getDataLoadingOrder = async () => {
-      const [vehicle] = await Promise.all([getData({ endPoint: "vehiculos" })]);
+      const [vehicle, driver] = await Promise.all([
+        getData({ endPoint: "vehiculos" }),
+        getData({ endPoint: "choferes" }),
+      ]);
+
+      // obtención de los vehiculos
       const cars = vehicle?.response.filter(
         (car) => car.desc_tipo_vehiculo !== "CARRO"
       );
 
-      updateLoadingOrder({ dataCars: cars });
+      // obtención de los acoplados
+      const Coupleds = vehicle?.response.filter(
+        (coupled) => coupled.desc_tipo_vehiculo === "CARRO"
+      );
+
+      updateLoadingOrder({
+        dataCars: cars,
+        dataCoupled: Coupleds,
+        dataDriver: driver?.response,
+      });
     };
 
     getDataLoadingOrder();
@@ -86,7 +100,7 @@ const LoadingOrder_main = () => {
         stateComponent={useLoadingOrder()}
         updateStateComponent={updateLoadingOrder}
         title={varString.titleModal}
-        size={"2xl"}
+        size={"3xl"}
         isOpen={open}
         onOpenChange={() => setOpen(false)}
         useSubmit_generic={useSubmitLoadingOrder({

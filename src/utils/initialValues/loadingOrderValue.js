@@ -1,8 +1,10 @@
+const today = new Date().toISOString().split("T")[0];
+
 const defaultInitialValues = {
   cod_orden_carga: null,
   desc_orden_carga: "",
   num_orden_carga: null,
-  fecha_orden_carga: "",
+  fecha_orden_carga: today,
   cod_vehiculo: null,
   desc_vehiculo: "",
   cod_chofer: null,

@@ -2,7 +2,6 @@ import { Select, SelectItem } from "@nextui-org/react";
 import { useCallback, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import apiPut from "../api/apiPut";
-import { span } from "framer-motion/client";
 
 const SelectComponent = ({
   arrayDataForSelect, // Array con objeto de tados para listar
@@ -20,7 +19,7 @@ const SelectComponent = ({
   errorMessage = false, // mensaje de error (opcional, uso en formularios)
   name, // nombre del campo formik (opcional, uso en formularios)
   setFieldValue, // función para actualizar el valor en formik (opcional, uso en formularios)
-  loadForDesc, // para vargar valor del select por medio de la descripción (opcional, uso en formularisos)
+  loadForDesc, // para cargar valor del select por medio de la descripción (opcional, uso en formularisos)
   loadForCod, // para cargar valor del select por medio del código (opcional, uso en formularios)
   arrayRowDataTable, // valor de la fila a modificar (opcional, solo para editar datos de una fila)
   routeUpdate, // ruta para actualizar datos (opciona)
@@ -68,11 +67,16 @@ const SelectComponent = ({
             setFieldValue(name, arrayForDesc[nameCodDataInArray].toString());
           }
         }
+      } else {
+        updateVarState({
+          loading: false,
+          selectedValue: new Set([]),
+        });
       }
     };
 
     loadSelectedValue();
-  }, [arrayDataForSelect]);
+  }, [arrayDataForSelect, loadForDesc, loadForCod, setFieldValue]);
 
   // creación de estilos para alerta sweetAlert
   const swalWithBootstrapButtons = Swal.mixin({
@@ -171,7 +175,6 @@ const SelectComponent = ({
       isRequired={isRequired}
       isLoading={label ? false : varState.loading}
       selectedKeys={varState.selectedValue}
-      // onSelectionChange={(key) => handleSelectedValue(key.currentKey)}
       onSelectionChange={(key) => {
         if (key.currentKey !== undefined) {
           if (disableKeysItems) {
@@ -184,7 +187,6 @@ const SelectComponent = ({
       }}
       isInvalid={isInvalid}
       errorMessage={errorMessage}
-      // disabledKeys={disableKeysItems}
     >
       {arrayDataForSelect.map((item) => (
         <SelectItem
