@@ -1,4 +1,5 @@
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -6,12 +7,31 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react";
+import { useState } from "react";
+import { IoMdAdd } from "react-icons/io";
 
 const LoadingOrder_detailTable = ({ dataDetail }) => {
+  // estado para abrir el modal
+  const [isOpenModalDetail, setIsOpenModalDetail] = useState(false);
+
+  // ver como trabajar con nuevo subModal o si es posible utilizar el mismo
+  // crear un nuevo data inicial
+  // trabajarlo con formik
+  // crear nuevas validaciones
+  // trabajar el submit o función de agregar a detalle
+
+  console.log(dataDetail.length);
+
   return (
     <div>
-      <div className="pb-4 relative flex justify-between items-center">
-        {/* agregar boton para nuevo elemento */}
+      <div className="pb-4 relative flex justify-start items-center">
+        <Button
+          color="primary"
+          startContent={<IoMdAdd size={25} />}
+          onPress={() => console.log("hola")}
+        >
+          Agregar Detalle
+        </Button>
       </div>
 
       <Table aria-label="tabla detalle orden de carga" selectionMode="single">
@@ -21,9 +41,7 @@ const LoadingOrder_detailTable = ({ dataDetail }) => {
           <TableColumn>Destino</TableColumn>
           <TableColumn>Acciones</TableColumn>
         </TableHeader>
-        <TableBody emptyContent={"Sin datos asignados"}>{[]}</TableBody>
-
-        {/* <TableBody emptyContent={"Sin datos asignados"}>
+        <TableBody emptyContent={"Sin datos asignados"}>
           {dataDetail.length > 0 &&
             dataDetail.map(
               (
@@ -38,7 +56,7 @@ const LoadingOrder_detailTable = ({ dataDetail }) => {
                 </TableRow>
               )
             )}
-        </TableBody> */}
+        </TableBody>
       </Table>
     </div>
   );

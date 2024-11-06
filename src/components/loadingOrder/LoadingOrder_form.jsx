@@ -153,9 +153,8 @@ const LoadingOrder_form = ({
         />
       </div>
 
-      {/* agregar tabla con el o los detalles de la orden de carga */}
-      {/* agregar tabla manual */}
-      <LoadingOrder_detailTable dataDetail={[{}]} />
+      {/* detalles de la carga */}
+      <LoadingOrder_detailTable dataDetail={values.detalles_orden_carga} />
     </>
   );
 };
