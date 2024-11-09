@@ -54,7 +54,7 @@ const LoadingOrder_subStructure = ({ data }) => {
             {detalles_orden_carga.map(
               (
                 {
-                  desc_contribuyente,
+                  desc_cliente,
                   desc_origen,
                   desc_destino,
                   fecha_acuse,
@@ -63,9 +63,7 @@ const LoadingOrder_subStructure = ({ data }) => {
                 index
               ) => (
                 <tr className="hover:bg-gray-200" key={index}>
-                  <td className="px-2 py-1 rounded-l-md">
-                    {desc_contribuyente}
-                  </td>
+                  <td className="px-2 py-1 rounded-l-md">{desc_cliente}</td>
                   <td className="px-2 py-1">{desc_detalle_orden_carga}</td>
                   <td className="px-2 py-1">{desc_origen}</td>
                   <td className="px-2 py-1">{desc_destino}</td>

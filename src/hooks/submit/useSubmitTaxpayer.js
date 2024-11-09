@@ -26,7 +26,6 @@ const useSubmitTaxpayer = ({ data, updateStateComponent }) => {
               text: "Registro almacenado",
             }).then(() => {
               // actualización del contexto de contribuyentes
-              console.log(response);
               updateStateComponent({
                 data: updateArray({
                   arrayData: data,

@@ -24,22 +24,24 @@ const varString = {
     {
       titleCard: "Ordenes de carga",
       iconCard: <IoDocuments size={35} />,
-      countCard: "numLoadingOrder",
+      countCard: "numberOrders",
     },
   ],
 };
 
 const LoadingOrder_main = () => {
-  const { data, dataChofer, numLoadingOrder, updateLoadingOrder } =
+  const { data, dataChofer, numberOrders, updateLoadingOrder } =
     useLoadingOrder();
-  const counterCard = { numLoadingOrder };
+  const counterCard = { numberOrders };
 
   // usar un useEffect para peticiones adicionales
   useEffect(() => {
     const getDataLoadingOrder = async () => {
-      const [vehicle, driver] = await Promise.all([
+      const [vehicle, driver, taxpyer, georeferences] = await Promise.all([
         getData({ endPoint: "vehiculos" }),
         getData({ endPoint: "choferes" }),
+        getData({ endPoint: "contribuyentes" }),
+        getData({ endPoint: "georeferencias" }),
       ]);
 
       // obtención de los vehiculos
@@ -56,6 +58,8 @@ const LoadingOrder_main = () => {
         dataCars: cars,
         dataCoupled: Coupleds,
         dataDriver: driver?.response,
+        dataTaxpayers: taxpyer?.response,
+        georeferences: georeferences?.response,
       });
     };
 
@@ -94,7 +98,7 @@ const LoadingOrder_main = () => {
         data={dataChofer}
       />
 
-      {/* modale generico */}
+      {/* modal generico */}
       <ModalBaseForm
         propertyId={varString.propertyId}
         stateComponent={useLoadingOrder()}

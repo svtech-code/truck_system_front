@@ -2,7 +2,7 @@ import { Input } from "@nextui-org/react";
 import SelectComponent from "../SelectComponent";
 import useLoadingOrder from "../../hooks/useLoadingOrder";
 import { useEffect } from "react";
-import LoadingOrder_detailTable from "./LoadingOrder_detailTable";
+import DetailLoadingOrder_main from "../detailLoadingOrder/DetailLoadingOrder_main";
 
 const LoadingOrder_form = ({
   values,
@@ -13,7 +13,8 @@ const LoadingOrder_form = ({
   errors,
   inputRef,
 }) => {
-  const { data, dataCars, dataCoupled, dataDriver } = useLoadingOrder();
+  const { dataCars, dataCoupled, dataDriver, dataTaxpayers, georeferences } =
+    useLoadingOrder();
 
   // useEffect para precargar datos de acoplado y chofer desde vehiculo
   useEffect(() => {
@@ -154,7 +155,13 @@ const LoadingOrder_form = ({
       </div>
 
       {/* detalles de la carga */}
-      <LoadingOrder_detailTable dataDetail={values.detalles_orden_carga} />
+      <DetailLoadingOrder_main
+        dataDetail={values.detalles_orden_carga}
+        setFieldValue={setFieldValue}
+        values={values}
+        dataTaxpayers={dataTaxpayers}
+        georeferences={georeferences}
+      />
     </>
   );
 };

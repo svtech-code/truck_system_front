@@ -15,6 +15,8 @@ export const LoadingOrderProvider = ({ children, response }) => {
   const [loadingOrderData, setLoadingOrderData] = useState({
     data: response, // objeto con los datos de ordenes de carga
     dataCars: [], // objeto con la información de los vehículos
+    dataTaxpayers: [], // objeto con la información de los contribuyente
+    georeferences: [], // objeto con la información de las georeferencias
     dataCoupled: [], // objeto con la iformación de los acoplados
     dataDriver: [], // objeto con la información de 1 chofer
     ...calculateDeriveData(response),
