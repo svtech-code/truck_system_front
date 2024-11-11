@@ -1,5 +1,6 @@
 import apiPost from "../../api/apiPost";
 import Swal from "sweetalert2";
+import apiPut from "../../api/apiPut";
 
 const useSubmitLoadingOrder = ({ data, updateStateComponent }) => {
   const onSubmit =
@@ -35,7 +36,26 @@ const useSubmitLoadingOrder = ({ data, updateStateComponent }) => {
             });
           });
         } else {
-          console.log("update: ", payload);
+          await apiPut({
+            route: `orden_carga/${cod_orden_carga}`,
+            object: payload,
+          }).then((response) => {
+            Swal.fire({
+              icon: "success",
+              title: "Success",
+              text: "Registro actualizado",
+            }).then(() => {
+              // actualización del contexto de loadingOrders
+              updateStateComponent({
+                data: updateArray({
+                  arrayData: data,
+                  idData: response?.data?.cod_orden_carga,
+                  idField: "cod_orden_carga",
+                  updateFields: response?.data,
+                }),
+              });
+            });
+          });
         }
 
         // cerrar modal

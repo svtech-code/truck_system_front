@@ -12,7 +12,7 @@ import {
 const listDescription = [
   "Fecha acuce",
   "Tipo cobro",
-  "desc_origen",
+  "Origen viaje",
   "Destino viaje",
   "Cliente",
 ];
@@ -20,7 +20,7 @@ const listDescription = [
 const listdetailDescription = [
   "fecha_acuce",
   "desc_tipo_cobro",
-  "Origen viaje",
+  "desc_origen",
   "desc_destino",
   "desc_cliente",
 ];

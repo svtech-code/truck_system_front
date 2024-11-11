@@ -18,8 +18,7 @@ const defaultInitialValues = {
 
 const initialValues_LoadingOrder = ({ data } = {}) => {
   return Object.keys(defaultInitialValues).reduce((acc, key) => {
-    acc[key] =
-      data && data[key] !== undefined ? data[key] : defaultInitialValues[key];
+    acc[key] = data?.[key] ?? defaultInitialValues[key];
     return acc;
   }, {});
 };
