@@ -15,7 +15,7 @@ const filterByData = (array) => {
 // función para calcular valores con base en el array de datos
 const calculateDeriveData = (data) => {
   const acoplados = data?.filter(
-    (acoplado) => acoplado.desc_tipo_vehiculo === "CARRO"
+    (acoplado) => acoplado.permite_acoplado === false
   );
 
   return {

@@ -2,6 +2,9 @@ const defaultInitialValues = {
   cod_vehiculo: null,
   anio: "",
   cantidad_kilos: "",
+  requiere_chofer: null,
+  requiere_pioneta: null,
+  permite_acoplado: null,
   cod_acoplado: null,
   cod_chofer: null,
   cod_transportista: null, // trabajar de manera interna

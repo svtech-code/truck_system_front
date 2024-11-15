@@ -76,15 +76,26 @@ const Vehicle_form = ({
 
   useEffect(() => {
     if (!isOpen) {
-      if (
-        values.cod_tipo_vehiculo !== "2" &&
-        values.cod_tipo_vehiculo !== null
-      ) {
-        setDisableSelect(false);
-      } else if (
-        values.cod_tipo_vehiculo === "2" &&
-        values.cod_tipo_vehiculo !== null
-      ) {
+      // detección de asignación de cod_tipo_vehiculo
+      if (values.cod_tipo_vehiculo !== null) {
+        const getTypeVehicle = typeVehicle.filter(
+          (item) =>
+            item.cod_tipo_vehiculo.toString() === values.cod_tipo_vehiculo
+        );
+
+        // asignación de permite_acoplado según el tipo seleccionado
+        setFieldValue("permite_acoplado", getTypeVehicle[0].permite_acoplado);
+
+        if (getTypeVehicle[0].permite_acoplado === true) {
+          setDisableSelect(false);
+        } else if (getTypeVehicle[0].permite_acoplado === false) {
+          setDisableSelect(true);
+          setFieldValue("cod_chofer", null);
+          setFieldValue("desc_chofer", "");
+          setFieldValue("cod_acoplado", null);
+          setFieldValue("desc_acoplado", "");
+        }
+      } else if (values.cod_tipo_vehiculo === null) {
         setDisableSelect(true);
         setFieldValue("cod_chofer", null);
         setFieldValue("desc_chofer", "");
@@ -92,7 +103,7 @@ const Vehicle_form = ({
         setFieldValue("desc_acoplado", "");
       }
     }
-  }, [values.cod_tipo_vehiculo]);
+  }, [values.cod_tipo_vehiculo, values.permite_acoplado]);
 
   return (
     <>
