@@ -7,8 +7,7 @@ const DriverContext = createContext({});
 // función para calcular los valores coxn base en el array de datos
 const calculateDeriveData = (data) => {
   return {
-    numberDrivers: data.length, // cantidad de choferes
-    // agregar mas datos de cantidades
+    numberDrivers: data.length,
   };
 };
 

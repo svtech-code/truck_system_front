@@ -15,6 +15,7 @@ const defaultInitialValues = {
   desc_contribuyente: "",
   desc_comuna: "",
   georeferencias: [],
+  isCompany: false,
 };
 
 const initialValues_taxpayer = ({ data } = {}) => {

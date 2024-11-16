@@ -29,33 +29,43 @@ const Taxpayer_form = ({
     <>
       {/* rut del controbuyente */}
       <div className="flex gap-x-4 justify-between">
-        {/* rut */}
-        <Input
-          className="w-1/3"
-          color={
-            touched.run_contribuyente && errors.run_contribuyente
-              ? "danger"
-              : "primary"
-          }
-          name="run_contribuyente"
-          type="text"
-          label="Rut contribuyente"
-          labelPlacement="outside"
-          variant="faded"
-          value={
-            values.run_contribuyente
-              ? values.run_contribuyente.toUpperCase()
-              : ""
-          }
-          ref={inputRef}
-          isRequired={true}
-          onChange={(e) =>
-            formatRut(e.target.value, setFieldValue, "run_contribuyente")
-          }
-          onBlur={handleBlur}
-          isInvalid={touched.run_contribuyente && errors.run_contribuyente}
-          errorMessage={touched.run_contribuyente && errors.run_contribuyente}
-        />
+        <div className="w-full flex flex-col gap-2">
+          {/* rut */}
+          <Input
+            className="w-1/3"
+            color={
+              touched.run_contribuyente && errors.run_contribuyente
+                ? "danger"
+                : "primary"
+            }
+            name="run_contribuyente"
+            type="text"
+            label="Rut contribuyente"
+            labelPlacement="outside"
+            variant="faded"
+            value={
+              values.run_contribuyente
+                ? values.run_contribuyente.toUpperCase()
+                : ""
+            }
+            ref={inputRef}
+            isRequired={true}
+            onChange={(e) =>
+              formatRut(e.target.value, setFieldValue, "run_contribuyente")
+            }
+            onBlur={handleBlur}
+            isInvalid={touched.run_contribuyente && errors.run_contribuyente}
+            errorMessage={touched.run_contribuyente && errors.run_contribuyente}
+          />
+
+          <Checkbox
+            name="isCompany"
+            isSelected={values.isCompany}
+            onChange={() => setFieldValue("isCompany", !values.isCompany)}
+          >
+            El contribuyente es emrpesa
+          </Checkbox>
+        </div>
 
         <div className="flex justify-center items-center pr-10">
           <FaUserTie size={80} />

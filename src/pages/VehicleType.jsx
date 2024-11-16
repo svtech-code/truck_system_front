@@ -6,13 +6,9 @@ const VehicleType = () => {
   const { response, error } = useLoaderData();
 
   return (
-    <>
-      {!error ? (
-        <VehicleType_main vehicleType_data={response} />
-      ) : (
-        <GetError getError={error?.message} />
-      )}
-    </>
+    <VehicleTypeProvider response={response || []}>
+      {!error ? <VehicleType_main /> : <GetError getError={error?.message} />}
+    </VehicleTypeProvider>
   );
 };
 

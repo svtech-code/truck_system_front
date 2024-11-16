@@ -1,38 +1,40 @@
 import { FaCar } from "react-icons/fa";
+import useVehicleType from "../../hooks/useVehicleType";
 import HeaderComponent from "../Header_Component";
 import DataTableComponent from "../DataTable_Component";
 import HeaderCardComponent from "../HeaderCard_Component";
 import { useCallback, useState } from "react";
-import { useDisclosure } from "@nextui-org/react";
-import ModalNewData from "../../templates/ModalNewData";
-import Structure_Component from "../structure/Structure_Component";
+import ModalBaseForm from "../../templates/ModalBaseForm";
+import initialValues_vehicleType from "../../utils/initialValues/vehicleType";
+import vehicleTypeValidation from "../../validations/vehicleTypeValidation";
+import VehicleType_form from "./VehicleType_form";
+import useSubmitVehicleType from "../../hooks/submit/useSubmitVehicleType";
 
-const VehicleType_main = ({ vehicleType_data }) => {
-  // estados generales del componente
-  const [stateComponent, setStateComponent] = useState({
-    data: vehicleType_data,
-    edit: false,
-    idEdit: null,
-    descriptionEdit: null,
-    error: null,
-  });
+const varString = {
+  title: "Tipos de vehículos",
+  titleModal: "Tipo de Vehículo",
+  route: "tipo_vehiculos",
+  propertyId: "cod_tipo_vehiculo",
+  propertyName: "desc_tipo_vehiculo",
+  cards: [
+    {
+      titleCard: "Tipos de vehículos",
+      iconCard: <FaCar size={35} />,
+      countCard: "numberVehicleType",
+    },
+  ],
+};
 
-  // constante con los string utilizados como parámetros
-  const varString = {
-    title: "Tipos de vehículos",
-    titleModal: "Tipo de Vehículo",
-    route: "tipo_vehiculos",
-    propertyId: "cod_tipo_vehiculo",
-    propertyName: "desc_tipo_vehiculo",
-  };
+const VehicleType_main = () => {
+  const { data, numberVehicleType, updateVehicleTypeData } = useVehicleType();
+  const counterCard = { numberVehicleType };
 
   // actualizador de los estados del componente
   const updateStateComponent = useCallback((newState) => {
     setStateComponent((prev) => ({ ...prev, ...newState }));
   }, []);
 
-  // estados para el manejo del modal
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [open, setOpen] = useState(false);
 
   const eventClickDownloadData = () => alert("Descargar informacion");
 
@@ -40,39 +42,38 @@ const VehicleType_main = ({ vehicleType_data }) => {
     <>
       {/* cabecera del mantenedor */}
       <HeaderComponent maintainer={varString.title}>
-        {/* tarjeta del mantenedor */}
-        <HeaderCardComponent
-          title={varString.title}
-          icon={<FaCar size={35} />}
-          count={stateComponent?.data?.length}
-        />
+        {varString.cards.map((card, index) => (
+          <HeaderCardComponent
+            key={index}
+            title={card.titleCard}
+            icon={card.iconCard}
+            count={counterCard[card.countCard]}
+          />
+        ))}
       </HeaderComponent>
 
-      {/* modal del mantenedor */}
-      <ModalNewData
-        stateComponent={stateComponent}
-        updateStateComponent={updateStateComponent}
-        title={varString.titleModal}
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        route={varString.route}
+      <ModalBaseForm
         propertyId={varString.propertyId}
-        propertyName={varString.propertyName}
+        stateComponent={useVehicleType()}
+        updateStateComponent={updateVehicleTypeData}
+        title={varString.titleModal}
+        size={"2xl"}
+        isOpen={open}
+        onOpenChange={() => setOpen(false)}
+        useSubmit_generic={useSubmitVehicleType({
+          data,
+          updateStateComponent: updateVehicleTypeData,
+        })}
+        initialValues_generic={initialValues_vehicleType}
+        validationSchema_generic={vehicleTypeValidation}
+        Form_generic={(props) => <VehicleType_form {...props} />}
       />
 
       {/* tabla de datos del mantenedor */}
       <DataTableComponent
-        data={stateComponent.data} // datos de la tabla
-        structureData={Structure_Component({
-          data: stateComponent.data, // Array con los datos del mantenedor
-          titleColum: varString.title, // titulo de la columna
-          onOpen, // función para abrir modal
-          route: varString.route, // ruta para trabajar peticions axios
-          propertyId: varString.propertyId, // propiedad del id
-          propertyName: varString.propertyName, // propiedad de la descripción
-          updateStateComponent, // actualizador del objeto estados del componente
-        })}
-        onOpen={onOpen}
+        data={data}
+        onOpen={() => setOpen(true)}
+        // structureData={}
         downloadData={eventClickDownloadData}
       />
     </>
