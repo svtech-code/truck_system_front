@@ -55,7 +55,6 @@ const Taxpayer_main = () => {
 
   return (
     <>
-      {/* header del mantenedor */}
       <HeaderComponent maintainer={varString.title}>
         {varString.cards.map((card, index) => (
           <HeaderCardComponent
@@ -67,7 +66,6 @@ const Taxpayer_main = () => {
         ))}
       </HeaderComponent>
 
-      {/* modal generico */}
       <ModalBaseForm
         propertyId={varString.propertyId}
         stateComponent={useTaxpayer()}
@@ -85,7 +83,6 @@ const Taxpayer_main = () => {
         Form_generic={(props) => <Taxpayer_form {...props} />}
       />
 
-      {/* tabla del mantenedor */}
       <DataTableComponent
         data={data}
         onOpen={() => setOpen(true)}

@@ -104,12 +104,12 @@ export const Vehicle_structure = ({
             size="lg"
             color="warning"
             radius="md"
-            variant="faded"
+            variant="dot"
             classNames={{
-              content: "text-[.9rem]",
+              content: "text-[.8rem] font-semibold",
             }}
           >
-            CARRO NO REQUIERE CHOFER
+            VEHÍCULO NO REQUIERE CHOFER
           </Chip>
         ),
       hide: "md",

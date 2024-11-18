@@ -1,6 +1,6 @@
 // expresión regurlar usada para validar compos input generales
 // permite letras mayusculas y minusculas, tildes, ñ, números, espacios y guión medio
-export const REGEX_numberString = /^[A-ZÁÉÍÓÚÑ0-9 ,.\-]+$/;
+export const REGEX_numberString = /^[A-ZÁÉÍÓÚÑ0-9 ,.\-/#]+$/;
 
 // expresión regurlar usada para validar compos input generales
 // permite letras mayusculas y minusculas, tildes, ñ, espacios y guión medio
@@ -22,7 +22,7 @@ export const REGEX_run = /^[a-zA-Z0-9\-]{7,11}$/;
 
 // expresión regular usada para validar en un string solo números
 // permite solo digitos
-export const REGEX_number = /^\d{8}$/;
+export const REGEX_number = /^\d{8,11}$/;
 
 // expresión regular usada para validar un email
 // permite formato de mail

@@ -2,7 +2,7 @@ const defaultInitialValues = {
   cod_tipo_vehiculo: null,
   desc_tipo_vehiculo: "",
   requiere_chofer: true,
-  requiere_pioneta: true,
+  requiere_pioneta: false,
   permite_acoplado: true,
 };
 

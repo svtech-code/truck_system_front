@@ -24,7 +24,8 @@ const LoadingOrder_subStructure = ({ data }) => {
     detalles_orden_carga,
   } = data;
 
-  const { dataTaxpayers, georeferences, updateLoadingOrder } = useLoadingOrder();
+  const { dataTaxpayers, georeferences, updateLoadingOrder } =
+    useLoadingOrder();
   const [isOpenModalDetail, setIsOpenModalDetail] = useState(false);
   const [stateDetail, setStateDetail] = useState({
     data: detalles_orden_carga,
@@ -122,8 +123,7 @@ const LoadingOrder_subStructure = ({ data }) => {
                 index
               ) => (
                 <tr className="hover:bg-gray-200" key={index}>
-                  <td className="px-2 py-1 rounded-l-md">{desc_cliente}</td>
-                  <td className="px-2 py-1">
+                  <td className="px-2 py-1 rounded-l-md">
                     <div className="flex gap-2 justify-start items-center">
                       <Button
                         isIconOnly
@@ -141,9 +141,10 @@ const LoadingOrder_subStructure = ({ data }) => {
                           className="group-hover:scale-110 transition-all duration-300 will-change-transform"
                         />
                       </Button>
-                      {desc_detalle_orden_carga}
+                      {desc_cliente}
                     </div>
                   </td>
+                  <td className="px-2 py-1">{desc_detalle_orden_carga}</td>
                   <td className="px-2 py-1">{desc_origen}</td>
                   <td className="px-2 py-1">{desc_destino}</td>
                   <td className="px-2 py-1 rounded-r-md">{fecha_acuse}</td>

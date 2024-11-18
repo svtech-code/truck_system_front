@@ -4,8 +4,9 @@ import HeaderComponent from "../Header_Component";
 import DataTableComponent from "../DataTable_Component";
 import HeaderCardComponent from "../HeaderCard_Component";
 import { useCallback, useState } from "react";
+import VehicleType_structure from "./VehicleType_structure";
 import ModalBaseForm from "../../templates/ModalBaseForm";
-import initialValues_vehicleType from "../../utils/initialValues/vehicleType";
+import initialValues_vehicleType from "../../utils/initialValues/vehicleTypeValues";
 import vehicleTypeValidation from "../../validations/vehicleTypeValidation";
 import VehicleType_form from "./VehicleType_form";
 import useSubmitVehicleType from "../../hooks/submit/useSubmitVehicleType";
@@ -40,7 +41,6 @@ const VehicleType_main = () => {
 
   return (
     <>
-      {/* cabecera del mantenedor */}
       <HeaderComponent maintainer={varString.title}>
         {varString.cards.map((card, index) => (
           <HeaderCardComponent
@@ -69,11 +69,15 @@ const VehicleType_main = () => {
         Form_generic={(props) => <VehicleType_form {...props} />}
       />
 
-      {/* tabla de datos del mantenedor */}
       <DataTableComponent
         data={data}
         onOpen={() => setOpen(true)}
-        // structureData={}
+        structureData={VehicleType_structure({
+          onOpen: () => setOpen(true),
+          route: varString.route,
+          propertyId: varString.propertyId,
+          propertyName: varString.propertyName,
+        })}
         downloadData={eventClickDownloadData}
       />
     </>

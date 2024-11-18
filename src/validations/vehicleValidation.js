@@ -23,6 +23,7 @@ const vehicleValidation = () => {
     cantidad_kilos: Yup.number()
       .positive()
       .integer()
+      .min(1000, "El tonelaje debe ser mayor a 1000")
       .required("Tonelaje requerido !"),
     // desc_tipo_vehiculo: Yup.string().required("Seleccionar tipo !"),
     // desc_modelo: Yup.string().required("Seleccionar modelo !"),

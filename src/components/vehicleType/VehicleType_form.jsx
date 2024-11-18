@@ -1,4 +1,4 @@
-import { Input } from "@nextui-org/react";
+import { Checkbox, Input } from "@nextui-org/react";
 
 const VehicleType_form = ({
   values,
@@ -11,9 +11,8 @@ const VehicleType_form = ({
 }) => {
   return (
     <>
-      <div>
+      <div className="w-full">
         <Input
-          className="w-1/3"
           color={
             touched.desc_tipo_vehiculo && errors.desc_tipo_vehiculo
               ? "danger"
@@ -38,6 +37,38 @@ const VehicleType_form = ({
           isInvalid={touched.desc_tipo_vehiculo && errors.desc_tipo_vehiculo}
           errorMessage={touched.desc_tipo_vehiculo && errors.desc_tipo_vehiculo}
         />
+      </div>
+
+      <div className="w-full flex justify-around items-center flex-wrap gap-3">
+        <Checkbox
+          name="requiere_chofer"
+          isSelected={values.requiere_chofer}
+          onChange={() =>
+            setFieldValue("requiere_chofer", !values.requiere_chofer)
+          }
+        >
+          Requiere chofer
+        </Checkbox>
+
+        <Checkbox
+          name="requiere_pioneta"
+          isSelected={values.requiere_pioneta}
+          onChange={() =>
+            setFieldValue("requiere_pioneta", !values.requiere_pioneta)
+          }
+        >
+          Requiere pioneta
+        </Checkbox>
+
+        <Checkbox
+          name="permite_acoplado"
+          isSelected={values.permite_acoplado}
+          onChange={() =>
+            setFieldValue("permite_acoplado", !values.permite_acoplado)
+          }
+        >
+          Permite acoplado
+        </Checkbox>
       </div>
     </>
   );
