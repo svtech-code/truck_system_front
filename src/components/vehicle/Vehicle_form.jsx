@@ -1,7 +1,7 @@
 import { Chip, Input, useDisclosure, useTable } from "@nextui-org/react";
 import Select_Component_load from "../Select_Component_load";
 import useVehicle from "../../hooks/useVehicle";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import VehicleModel_form from "../vehicleModel/VehicleModel_form";
 import usePostModel from "../../hooks/usePostModel";
@@ -33,6 +33,17 @@ const Vehicle_form = ({
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [dataModel, setDataModel] = useState(null);
   const [disableSelect, setDisableSelect] = useState(true);
+
+  const [backupData, setBackupData] = useState({
+    dataCodChofer: null,
+    dataCodAcoplado: null,
+    dataDescChofer: "",
+    dataDescAcoplado: "",
+  });
+
+  const backupCodChofer = useMemo(() => {
+    return backupData.dataCodChofer;
+  }, [backupData.dataCodChofer]);
 
   // función manejador de la patente completa
   const myhandleChange = (e) => {
@@ -74,36 +85,59 @@ const Vehicle_form = ({
     .filter((acoplado) => acoplado.estado === true)
     .map((acoplado) => acoplado.cod_vehiculo.toString());
 
+  // obtención de los tipos de vehículos
+  const getTypeVehicle =
+    typeVehicle.filter(
+      (item) => item.cod_tipo_vehiculo.toString() === values?.cod_tipo_vehiculo
+    ) || [];
+
+  const clearData = () => {
+    // limpieza de los campos
+    setFieldValue("cod_chofer", null);
+    setFieldValue("cod_acoplado", null);
+    setFieldValue("desc_chofer", "");
+    setFieldValue("desc_acoplado", "");
+  };
+
+  const backupDataProperties = () => {
+    // respaldo de los datos
+    setBackupData({
+      dataCodChofer: values.cod_chofer,
+      dataCodAcoplado: values.cod_acoplado,
+      dataDescChofer: values.desc_chofer,
+      dataDescAcoplado: values.desc_acoplado,
+    });
+  };
+
+  const restoreData = () => {
+    // restauración de los datos
+    setFieldValue("cod_chofer", backupData.dataCodChofer);
+    setFieldValue("cod_acoplado", backupData.dataCodAcoplado);
+    setFieldValue("desc_chofer", backupData.dataDescChofer);
+    setFieldValue("desc_acoplado", backupData.dataDescAcoplado);
+  };
+
   useEffect(() => {
-    if (!isOpen) {
-      // detección de asignación de cod_tipo_vehiculo
-      if (values.cod_tipo_vehiculo !== null) {
-        const getTypeVehicle = typeVehicle.filter(
-          (item) =>
-            item.cod_tipo_vehiculo.toString() === values.cod_tipo_vehiculo
-        );
-
-        // asignación de permite_acoplado según el tipo seleccionado
-        setFieldValue("permite_acoplado", getTypeVehicle[0].permite_acoplado);
-
-        if (getTypeVehicle[0].permite_acoplado === true) {
-          setDisableSelect(false);
-        } else if (getTypeVehicle[0].permite_acoplado === false) {
-          setDisableSelect(true);
-          setFieldValue("cod_chofer", null);
-          setFieldValue("desc_chofer", "");
-          setFieldValue("cod_acoplado", null);
-          setFieldValue("desc_acoplado", "");
-        }
-      } else if (values.cod_tipo_vehiculo === null) {
+    if (values.cod_vehiculo === null) {
+      if (getTypeVehicle[0]?.permite_acoplado) {
+        setDisableSelect(false);
+      } else {
         setDisableSelect(true);
-        setFieldValue("cod_chofer", null);
-        setFieldValue("desc_chofer", "");
-        setFieldValue("cod_acoplado", null);
-        setFieldValue("desc_acoplado", "");
+        clearData();
       }
     }
-  }, [values.cod_tipo_vehiculo, values.permite_acoplado]);
+
+    if (values.cod_vehiculo !== null) {
+      if (getTypeVehicle[0]?.permite_acoplado) {
+        setDisableSelect(false);
+        restoreData();
+      } else {
+        setDisableSelect(true);
+        backupDataProperties();
+        clearData();
+      }
+    }
+  }, [values, backupCodChofer]);
 
   return (
     <>
@@ -317,8 +351,8 @@ const Vehicle_form = ({
           isRequired={true}
           isInvalid={touched.cod_chofer && errors.cod_chofer ? true : false}
           errorMessage={touched.cod_chofer && errors.cod_chofer}
-          loadForCod={values.cod_chofer}
           disabledSelect={disableSelect}
+          loadForCod={values.cod_chofer}
         />
 
         <div className="w-full sm:w-[20rem]">

@@ -16,7 +16,7 @@ import { getData } from "../../api/apiGet";
 
 const varString = {
   title: "Ordenes de carga",
-  titleModal: "Order de carga",
+  titleModal: "Orden de carga",
   route: "orden_carga",
   propertyId: "cod_orden_carga",
   propertyName: "desc_orden_carga",

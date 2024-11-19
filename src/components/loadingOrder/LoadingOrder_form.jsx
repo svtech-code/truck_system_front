@@ -46,6 +46,15 @@ const LoadingOrder_form = ({
     }
   }, [values.cod_vehiculo]);
 
+  // useEffect para aplicar filtro al momento de cambiar el transportista
+  useEffect(() => {
+    if (values.cod_transportista !== null) {
+      console.log("Se cambia el transportista");
+    } else {
+      console.log("Se limpian los datos");
+    }
+  }, [values.cod_transportista]);
+
   return (
     <>
       {/* numero de order y fecha de emisión */}
@@ -83,6 +92,25 @@ const LoadingOrder_form = ({
         />
 
         {/* agregar el ícono */}
+      </div>
+
+      {/* transportista */}
+      <div className="flex gap-4">
+        <SelectComponent
+          arrayDataForSelect={dataTaxpayers}
+          nameCodDataInArray={"cod_contribuyente"}
+          nameDescDataInArray={"desc_contribuyente"}
+          nameCodDataInContext={"cod_transportista"}
+          name={"cod_transportista"}
+          setFieldValue={setFieldValue}
+          label={"Transportista"}
+          isRequired={true}
+          isInvalid={
+            touched.cod_transportista && errors.cod_transportista ? true : false
+          }
+          errorMessage={touched.cod_transportista && errors.cod_transportista}
+          loadForCod={values.cod_transportista}
+        />
       </div>
 
       {/* patente, acoplado y chofer */}
@@ -136,22 +164,6 @@ const LoadingOrder_form = ({
             loadForCod={values.cod_chofer}
           />
         </div>
-      </div>
-
-      {/* transportista */}
-      <div className="flex gap-4">
-        <Input
-          disabled={true}
-          name="desc_transportista"
-          type="text"
-          label="Transportista"
-          labelPlacement="outside"
-          variant="faded"
-          value={values.desc_transportista ? values.desc_transportista : ""}
-          isRequired={true}
-          isInvalid={touched.desc_transportista && errors.desc_transportista}
-          errorMessage={touched.desc_transportista && errors.desc_transportista}
-        />
       </div>
 
       {/* detalles de la carga */}

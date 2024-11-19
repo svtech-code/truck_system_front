@@ -10,7 +10,7 @@ import {
 } from "@nextui-org/react";
 
 const listDescription = [
-  "Fecha acuce",
+  "Fecha acuse",
   "Tipo cobro",
   "Origen viaje",
   "Destino viaje",
@@ -18,7 +18,7 @@ const listDescription = [
 ];
 
 const listdetailDescription = [
-  "fecha_acuce",
+  "fecha_acuse",
   "desc_tipo_cobro",
   "desc_origen",
   "desc_destino",
