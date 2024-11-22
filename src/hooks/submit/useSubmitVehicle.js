@@ -1,9 +1,9 @@
 import Swal from "sweetalert2";
-import apiPost from "../api/apiPost";
-import { updateArray } from "../utils/methodUpdateArray";
-import apiPut from "../api/apiPut";
+import apiPost from "../../api/apiPost";
+import { updateArray } from "../../utils/methodUpdateArray";
+import apiPut from "../../api/apiPut";
 
-const usePostVehicle = ({ data, updateStateComponent }) => {
+const useSubmitVehicle = ({ data, updateStateComponent }) => {
   const onSubmit =
     (onClose) =>
     async (values, { setSubmitting }) => {
@@ -73,4 +73,4 @@ const usePostVehicle = ({ data, updateStateComponent }) => {
   return { onSubmit };
 };
 
-export default usePostVehicle;
+export default useSubmitVehicle;

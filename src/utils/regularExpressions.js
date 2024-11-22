@@ -6,6 +6,9 @@ export const REGEX_numberString = /^[A-ZÁÉÍÓÚÑ0-9 ,.\-/#]+$/;
 // permite letras mayusculas y minusculas, tildes, ñ, espacios y guión medio
 export const REGEX_String = /^[A-ZÁÉÍÓÚÑ -]+$/;
 
+// expresion regular para manejar campos que se deshabilitan según una opción externa
+export const REGEX_StringDisabled = /^[A-ZÁÉÍÓÚÑ -]+|--$/;
+
 // expresión regular usada para validar nombre de usuario
 //permite letras mayusculas y minusculas, números, caracteres especiales [@ _] y logitud de entre 6 y 12
 export const REGEX_userName = /^[a-zA-Z0-9@_]{6,12}$/;

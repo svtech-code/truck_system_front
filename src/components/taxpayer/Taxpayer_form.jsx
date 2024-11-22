@@ -23,7 +23,11 @@ const Taxpayer_form = ({
   // Asignación de los codigos de vinculación de las georeferencias
   useEffect(() => {
     setFieldValue("georeferencias", [...listGeoreferences]);
-  }, [listGeoreferences]);
+    if (values.isCompany) {
+      setFieldValue("apellido_paterno_contribuyente", "");
+      setFieldValue("apellido_materno_contribuyente", "");
+    }
+  }, [listGeoreferences, values.isCompany]);
 
   return (
     <>
@@ -119,12 +123,13 @@ const Taxpayer_form = ({
           label="Apellido paterno"
           labelPlacement="outside"
           variant="faded"
+          isDisabled={values.isCompany}
+          isRequired={!values.isCompany}
           value={
             values.apellido_paterno_contribuyente
               ? values.apellido_paterno_contribuyente.toUpperCase()
               : ""
           }
-          isRequired={true}
           onChange={(e) =>
             setFieldValue(
               "apellido_paterno_contribuyente",
@@ -156,12 +161,13 @@ const Taxpayer_form = ({
           label="Apellido materno"
           labelPlacement="outside"
           variant="faded"
+          isDisabled={values.isCompany}
+          isRequired={!values.isCompany}
           value={
             values.apellido_materno_contribuyente
               ? values.apellido_materno_contribuyente.toUpperCase()
               : ""
           }
-          isRequired={true}
           onChange={(e) =>
             setFieldValue(
               "apellido_materno_contribuyente",

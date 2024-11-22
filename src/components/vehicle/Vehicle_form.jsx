@@ -137,7 +137,7 @@ const Vehicle_form = ({
         clearData();
       }
     }
-  }, [values, backupCodChofer]);
+  }, [values.cod_tipo_vehiculo, backupCodChofer]);
 
   return (
     <>
@@ -348,7 +348,7 @@ const Vehicle_form = ({
           name={"cod_chofer"}
           setFieldValue={setFieldValue}
           label={"Chofer"}
-          isRequired={true}
+          isRequired={!disableSelect}
           isInvalid={touched.cod_chofer && errors.cod_chofer ? true : false}
           errorMessage={touched.cod_chofer && errors.cod_chofer}
           disabledSelect={disableSelect}

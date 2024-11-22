@@ -17,14 +17,26 @@ const taxpayerValidation = () => {
       .trim()
       .required("Nombre requerido !")
       .matches(REGEX_String, "Solo se admiten letras y espacios !"),
+    isCompany: Yup.boolean(),
+
     apellido_paterno_contribuyente: Yup.string()
       .trim()
-      .required("Apellido paterno requerido !")
-      .matches(REGEX_String, "Solo se admiten letras y espacios !"),
+      .matches(REGEX_String, "Solo se admiten letras y espacios !")
+      .when("isCompany", (isCompany, schema) => {
+        if (!isCompany[0])
+          return schema.required("Apellido paterno requerido !");
+        return schema;
+      }),
+
     apellido_materno_contribuyente: Yup.string()
       .trim()
-      .required("Apellido materno requerido !")
-      .matches(REGEX_String, "Solo se admiten letras y espacios !"),
+      .matches(REGEX_String, "Solo se admiten letras y espacios !")
+      .when("isCompany", (isCompany, schema) => {
+        if (!isCompany[0])
+          return schema.required("Apellido materno requerido !");
+        return schema;
+      }),
+
     email: Yup.string()
       .email("El email no es válido !")
       .trim()

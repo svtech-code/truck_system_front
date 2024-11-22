@@ -1,7 +1,7 @@
 import { Input } from "@nextui-org/react";
 import SelectComponent from "../SelectComponent";
 import useLoadingOrder from "../../hooks/useLoadingOrder";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import DetailLoadingOrder_main from "../detailLoadingOrder/DetailLoadingOrder_main";
 
 const LoadingOrder_form = ({
@@ -15,6 +15,28 @@ const LoadingOrder_form = ({
 }) => {
   const { dataCars, dataCoupled, dataDriver, dataTaxpayers, georeferences } =
     useLoadingOrder();
+
+  // // filtro de los carros en uso
+  // const carsInUse = useCallback((data) => {
+  //   const stateCar = data?.estado ? "En uso" : "Disponible";
+  //   return (
+  //     <Chip size="sm" isDisabled={data?.estado} color="primary">
+  //       {stateCar}
+  //     </Chip>
+  //   );
+  // }, []);
+
+  useEffect(() => {
+    console.log(dataCars);
+  }, []);
+
+  // filtro para obtener los vehículos
+  const descriptionCars = useCallback((data) => {
+    const description = data?.cod_vehiculo ? data?.desc_marca : "";
+    // const description = `${data?.desc_marca} ${data?.desc_modelo}`;
+    // return `${data?.desc_marca} ${data?.desc_modelo}`;
+    return description;
+  }, []);
 
   // useEffect para precargar datos de acoplado y chofer desde vehiculo
   useEffect(() => {
@@ -130,6 +152,7 @@ const LoadingOrder_form = ({
             }
             errorMessage={touched.cod_vehiculo && errors.cod_vehiculo}
             loadForCod={values.cod_vehiculo}
+            customDescriptionProps={descriptionCars}
           />
         </div>
 

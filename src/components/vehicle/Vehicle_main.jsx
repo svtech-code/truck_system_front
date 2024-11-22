@@ -10,10 +10,9 @@ import ModalBaseForm from "../../templates/ModalBaseForm";
 import initialValues_vehicle from "../../utils/initialValues/vehicleValues";
 import vehicleValidation from "../../validations/vehicleValidation";
 import Vehicle_form from "./Vehicle_form";
-import usePostVehicle from "../../hooks/usePostVehicle";
 import { useCallback, useEffect, useState } from "react";
 import { getData } from "../../api/apiGet";
-import { excludeActiveUser } from "../../utils/functions";
+import useSubmitVehicle from "../../hooks/submit/useSubmitVehicle";
 
 const varString = {
   title: "Registro de vehículos",
@@ -129,7 +128,7 @@ const Vehicle_main = () => {
         size={"2xl"}
         isOpen={open}
         onOpenChange={() => handleModalClose()}
-        useSubmit_generic={usePostVehicle({
+        useSubmit_generic={useSubmitVehicle({
           data: data,
           updateStateComponent: updateVehicleData,
         })}
