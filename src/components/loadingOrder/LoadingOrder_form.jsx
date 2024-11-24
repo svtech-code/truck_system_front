@@ -1,8 +1,9 @@
-import { Input } from "@nextui-org/react";
+import { Chip, Input } from "@nextui-org/react";
 import SelectComponent from "../SelectComponent";
 import useLoadingOrder from "../../hooks/useLoadingOrder";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import DetailLoadingOrder_main from "../detailLoadingOrder/DetailLoadingOrder_main";
+import { pre } from "framer-motion/client";
 
 const LoadingOrder_form = ({
   values,
@@ -26,54 +27,104 @@ const LoadingOrder_form = ({
   //   );
   // }, []);
 
-  useEffect(() => {
-    console.log(dataCars);
+  // // filtro para obtener los vehículos
+  // const descriptionCars = useCallback((data) => {
+  //   const description = data?.cod_vehiculo ? data?.desc_marca : "";
+  //   // const description = `${data?.desc_marca} ${data?.desc_modelo}`;
+  //   // return `${data?.desc_marca} ${data?.desc_modelo}`;
+  //   return description;
+  // }, []);
+
+  // // useEffect para precargar datos de acoplado y chofer desde vehiculo
+  // useEffect(() => {
+  //   // if (values.cod_vehiculo !== null) {
+  //   //   // obtención del array de vehiculo seleccionado
+  //   //   const arrayCard =
+  //   //     dataCars.find(
+  //   //       (item) =>
+  //   //         item.cod_vehiculo.toString() === values.cod_vehiculo.toString()
+  //   //     ) || {};
+  //   //   // obatención del array de acopaldo
+  //   //   const arrayCouple =
+  //   //     dataCoupled.find(
+  //   //       (item) =>
+  //   //         item?.cod_vehiculo?.toString() ===
+  //   //         arrayCard?.cod_acoplado?.toString()
+  //   //     ) || {};
+  //   //   setFieldValue("cod_acoplado", arrayCouple.cod_vehiculo);
+  //   //   setFieldValue("cod_chofer", arrayCard.cod_chofer);
+  //   //   setFieldValue("cod_transportista", arrayCard.cod_transportista);
+  //   //   setFieldValue("desc_transportista", arrayCard.desc_transportista);
+  //   // } else {
+  //   //   // console.log("Se limpian los datos");
+  //   //   setFieldValue("cod_acoplado", null);
+  //   //   setFieldValue("cod_chofer", null);
+  //   //   setFieldValue("cod_transportista", null);
+  //   // }
+  // }, [values.cod_vehiculo]);
+
+  // // useEffect para aplicar filtro al momento de cambiar el transportista
+  // useEffect(() => {
+  //   // if (values.cod_transportista !== null) {
+  //   //   console.log("Se cambia el transportista");
+  //   // } else {
+  //   //   console.log("Se limpian los datos");
+  //   // }
+  // }, [values.cod_transportista]);
+
+  // PAUTA DE TRABAJO
+  // 1. SELECCIÓN DE TRANSPORTISTA
+  //  - FILTRAR TODOS LOS VEHICULOS Y ACOPLADOS POR TRANSPORTISTA
+  //  - NECESARIO; CREAR UN STATE PARA VEHICULOS Y ACOPLADOS
+
+  const [filterData, setFilterData] = useState({
+    cars: dataCars || [],
+    coupled: dataCoupled || [],
+  });
+
+  const updateFilterData = useCallback((newData) => {
+    setFilterData((prevData) => ({ ...prevData, ...newData }));
   }, []);
 
-  // filtro para obtener los vehículos
-  const descriptionCars = useCallback((data) => {
-    const description = data?.cod_vehiculo ? data?.desc_marca : "";
-    // const description = `${data?.desc_marca} ${data?.desc_modelo}`;
-    // return `${data?.desc_marca} ${data?.desc_modelo}`;
-    return description;
+  // función para obtener patentes filtradas
+  const getFilterData = useCallback((array, values) => {
+    return (
+      array.filter(
+        (item) =>
+          item.cod_transportista?.toString() ===
+          values.cod_transportista?.toString()
+      ) || []
+    );
   }, []);
 
-  // useEffect para precargar datos de acoplado y chofer desde vehiculo
-  useEffect(() => {
-    if (values.cod_vehiculo !== null) {
-      // obtención del array de vehiculo seleccionado
-      const arrayCard =
-        dataCars.find(
-          (item) =>
-            item.cod_vehiculo.toString() === values.cod_vehiculo.toString()
-        ) || {};
+  const cleanData = () => {
+    setFieldValue("cod_vehiculo", null);
+    setFieldValue("desc_vehiculo", "");
+    setFieldValue("cod_acoplado", null);
+    setFieldValue("desc_acoplado", "");
+  };
 
-      // obatención del array de acopaldo
-      const arrayCouple =
-        dataCoupled.find(
-          (item) =>
-            item?.cod_vehiculo?.toString() ===
-            arrayCard?.cod_acoplado?.toString()
-        ) || {};
+  // detalle de las patentes de cada vehículo
+  const getDetailCard = useCallback((data) => {
+    const marca = data?.desc_marca || "";
+    const modelo = data?.desc_modelo || "";
+    const tipo = data?.desc_tipo_vehiculo || "";
+    const detail = `${tipo} ${marca} ${modelo}`;
 
-      setFieldValue("cod_acoplado", arrayCouple.cod_vehiculo);
-      setFieldValue("cod_chofer", arrayCard.cod_chofer);
-      setFieldValue("cod_transportista", arrayCard.cod_transportista);
-      setFieldValue("desc_transportista", arrayCard.desc_transportista);
-    } else {
-      // console.log("Se limpian los datos");
-      setFieldValue("cod_acoplado", null);
-      setFieldValue("cod_chofer", null);
-      setFieldValue("cod_transportista", null);
-    }
-  }, [values.cod_vehiculo]);
+    return (
+      <Chip size="sm" color="primary" variant="dot">
+        {detail}
+      </Chip>
+    );
+  }, []);
 
-  // useEffect para aplicar filtro al momento de cambiar el transportista
   useEffect(() => {
     if (values.cod_transportista !== null) {
-      console.log("Se cambia el transportista");
-    } else {
-      console.log("Se limpian los datos");
+      cleanData();
+      updateFilterData({
+        cars: getFilterData(dataCars, values),
+        coupled: getFilterData(dataCoupled, values),
+      });
     }
   }, [values.cod_transportista]);
 
@@ -136,10 +187,11 @@ const LoadingOrder_form = ({
       </div>
 
       {/* patente, acoplado y chofer */}
-      <div className="flex gap-4 flex-wrap">
-        <div className="w-[8rem]">
+      <div className="flex gap-4">
+        {/* patente */}
+        <div className="w-1/2">
           <SelectComponent
-            arrayDataForSelect={dataCars}
+            arrayDataForSelect={filterData.cars}
             nameCodDataInArray={"cod_vehiculo"}
             nameDescDataInArray={"patente"}
             nameCodDataInContext={"cod_vehiculo"}
@@ -152,13 +204,15 @@ const LoadingOrder_form = ({
             }
             errorMessage={touched.cod_vehiculo && errors.cod_vehiculo}
             loadForCod={values.cod_vehiculo}
-            customDescriptionProps={descriptionCars}
+            description={true}
+            customDescriptionProps={getDetailCard}
           />
         </div>
 
-        <div className="w-[8rem]">
+        {/* acoplado */}
+        <div className="w-1/2">
           <SelectComponent
-            arrayDataForSelect={dataCoupled}
+            arrayDataForSelect={filterData.coupled}
             nameCodDataInArray={"cod_vehiculo"}
             nameDescDataInArray={"patente"}
             nameCodDataInContext={"cod_vehiculo"}
@@ -170,23 +224,25 @@ const LoadingOrder_form = ({
             }
             errorMessage={touched.cod_acoplado && errors.cod_acoplado}
             loadForCod={values.cod_acoplado}
+            description={true}
+            customDescriptionProps={getDetailCard}
           />
         </div>
-
-        <div className="grow min-w-[20rem]">
-          <SelectComponent
-            arrayDataForSelect={dataDriver}
-            nameCodDataInArray={"cod_usuario"}
-            nameDescDataInArray={"desc_usuario"}
-            nameCodDataInContext={"cod_chofer"}
-            setFieldValue={setFieldValue}
-            label={"Chofer"}
-            isRequired={true}
-            isInvalid={touched.cod_chofer && errors.cod_chofer ? true : false}
-            errorMessage={touched.cod_chofer && errors.cod_chofer}
-            loadForCod={values.cod_chofer}
-          />
-        </div>
+      </div>
+      {/* chofer */}
+      <div className="w-full">
+        <SelectComponent
+          arrayDataForSelect={dataDriver}
+          nameCodDataInArray={"cod_usuario"}
+          nameDescDataInArray={"desc_usuario"}
+          nameCodDataInContext={"cod_chofer"}
+          setFieldValue={setFieldValue}
+          label={"Chofer"}
+          isRequired={true}
+          isInvalid={touched.cod_chofer && errors.cod_chofer ? true : false}
+          errorMessage={touched.cod_chofer && errors.cod_chofer}
+          loadForCod={values.cod_chofer}
+        />
       </div>
 
       {/* detalles de la carga */}

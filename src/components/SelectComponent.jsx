@@ -187,18 +187,43 @@ const SelectComponent = ({
       }}
       isInvalid={isInvalid}
       errorMessage={errorMessage}
+      renderValue={() => {
+        // Busca el elemento seleccionado y renderiza su detalle
+        const selectedItem = arrayDataForSelect.find(
+          (item) =>
+            item[nameCodDataInArray].toString() ===
+            [...varState.selectedValue][0]?.toString()
+        );
+
+        if (selectedItem) {
+          return (
+            <div className="flex justify-between items-center">
+              <span>{selectedItem[nameDescDataInArray]}</span>
+              {description && customDescriptionProps(selectedItem)}
+            </div>
+          );
+        }
+      }}
     >
-      {arrayDataForSelect.map((item) => (
-        <SelectItem
-          key={item[nameCodDataInArray]}
-          textValue={item[nameDescDataInArray]}
-        >
-          <div className="flex justify-between items-center">
-            {item[nameDescDataInArray]}
-            {description && customDescriptionProps(item)}
+      {arrayDataForSelect.length > 0 ? (
+        arrayDataForSelect.map((item) => (
+          <SelectItem
+            key={item[nameCodDataInArray]}
+            textValue={item[nameDescDataInArray]}
+          >
+            <div className="flex justify-between items-center">
+              {item[nameDescDataInArray]}
+              {description && customDescriptionProps(item)}
+            </div>
+          </SelectItem>
+        ))
+      ) : (
+        <SelectItem key="no-data" textValue="Sin datos">
+          <div className="flex justify-center items-center text-gray-500">
+            Sin datos
           </div>
         </SelectItem>
-      ))}
+      )}
     </Select>
   );
 };
