@@ -1,6 +1,7 @@
 import apiPost from "../../api/apiPost";
 import Swal from "sweetalert2";
 import apiPut from "../../api/apiPut";
+import { updateArray } from "../../utils/methodUpdateArray";
 
 const useSubmitLoadingOrder = ({ data, updateStateComponent }) => {
   const onSubmit =
@@ -36,6 +37,8 @@ const useSubmitLoadingOrder = ({ data, updateStateComponent }) => {
             });
           });
         } else {
+          console.log(payload);
+
           await apiPut({
             route: `orden_carga/${cod_orden_carga}`,
             object: payload,

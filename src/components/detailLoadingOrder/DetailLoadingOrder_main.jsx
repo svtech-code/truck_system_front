@@ -17,6 +17,10 @@ import SubModalBase from "../../templates/SubModalBase";
 import { HiMiniInformationCircle } from "react-icons/hi2";
 import { MdDeleteForever } from "react-icons/md";
 import ModalLoadingOrderDetail from "../../templates/ModalLoadingOrderDetail";
+import { swalWithBootstrapButtons, Toast } from "../../utils/styleComponents";
+import apiDelete from "../../api/apiDelete";
+import useLoadingOrder from "../../hooks/useLoadingOrder";
+import { updateArray } from "../../utils/methodUpdateArray";
 
 const varString = {
   titleModal: "Detalle de orden de carga",
@@ -32,6 +36,8 @@ const DetailLoadingOrder_main = ({
   dataTaxpayers,
   georeferences,
 }) => {
+  const { data, updateLoadingOrder } = useLoadingOrder();
+
   // estado para abrir el modal
   const [isOpenModalDetail, setIsOpenModalDetail] = useState(false);
   const [detailToShow, setDetailToShow] = useState(null);
@@ -50,7 +56,55 @@ const DetailLoadingOrder_main = ({
     const updatedDetails = dataDetail.filter(
       (_, index) => index !== indexToRemove
     );
-    setFieldValue("detalles_orden_carga", updatedDetails); // Actualiza el campo en el formulario
+
+    if (!values.cod_orden_carga) {
+      setFieldValue("detalles_orden_carga", updatedDetails); // Actualiza el campo en el formulario
+      return;
+    }
+
+    const payload = {
+      ...values,
+      detalles_orden_carga: updatedDetails,
+    };
+
+    // colocar popup que indique que esto hará que se elimine de la orden de carga
+
+    swalWithBootstrapButtons
+      .fire({
+        title: "Confirmar eliminación",
+        text: "El detalle se eliminará de manera permanente, ¿desea continuar?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Aceptar",
+        cancelButtonText: "Cancelar",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          apiDelete({
+            route: `detalle_orden_carga/${dataDetail[indexToRemove].cod_detalle_orden_carga}`,
+          }).then(() => {
+            Toast.fire({
+              icon: "success",
+              title: "Se ha eliminado el detalle !!",
+            });
+          });
+
+          // actualización del contexto de loadingOrders
+          updateLoadingOrder({
+            data: updateArray({
+              arrayData: data,
+              idData: values.cod_orden_carga,
+              idField: "cod_orden_carga",
+              updateFields: payload,
+            }),
+          });
+          setFieldValue("detalles_orden_carga", updatedDetails);
+
+          // console.log(values);
+          // console.log(payload);
+        }
+      });
   };
 
   return (

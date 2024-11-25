@@ -58,7 +58,8 @@ export const LoadingOrder_structure = ({
     {
       name: "Detalle 1er viaje",
       grow: 1,
-      selector: (row) => row.detalles_orden_carga[0].desc_detalle_orden_carga,
+      selector: (row) =>
+        row?.detalles_orden_carga[0]?.desc_detalle_orden_carga || "Sin datos",
     },
     {
       name: "Acciones",

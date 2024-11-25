@@ -3,7 +3,6 @@ import SelectComponent from "../SelectComponent";
 import useLoadingOrder from "../../hooks/useLoadingOrder";
 import { useCallback, useEffect, useState } from "react";
 import DetailLoadingOrder_main from "../detailLoadingOrder/DetailLoadingOrder_main";
-import { pre } from "framer-motion/client";
 
 const LoadingOrder_form = ({
   values,
@@ -17,92 +16,76 @@ const LoadingOrder_form = ({
   const { dataCars, dataCoupled, dataDriver, dataTaxpayers, georeferences } =
     useLoadingOrder();
 
-  // // filtro de los carros en uso
-  // const carsInUse = useCallback((data) => {
-  //   const stateCar = data?.estado ? "En uso" : "Disponible";
-  //   return (
-  //     <Chip size="sm" isDisabled={data?.estado} color="primary">
-  //       {stateCar}
-  //     </Chip>
-  //   );
-  // }, []);
-
-  // // filtro para obtener los vehículos
-  // const descriptionCars = useCallback((data) => {
-  //   const description = data?.cod_vehiculo ? data?.desc_marca : "";
-  //   // const description = `${data?.desc_marca} ${data?.desc_modelo}`;
-  //   // return `${data?.desc_marca} ${data?.desc_modelo}`;
-  //   return description;
-  // }, []);
-
-  // // useEffect para precargar datos de acoplado y chofer desde vehiculo
-  // useEffect(() => {
-  //   // if (values.cod_vehiculo !== null) {
-  //   //   // obtención del array de vehiculo seleccionado
-  //   //   const arrayCard =
-  //   //     dataCars.find(
-  //   //       (item) =>
-  //   //         item.cod_vehiculo.toString() === values.cod_vehiculo.toString()
-  //   //     ) || {};
-  //   //   // obatención del array de acopaldo
-  //   //   const arrayCouple =
-  //   //     dataCoupled.find(
-  //   //       (item) =>
-  //   //         item?.cod_vehiculo?.toString() ===
-  //   //         arrayCard?.cod_acoplado?.toString()
-  //   //     ) || {};
-  //   //   setFieldValue("cod_acoplado", arrayCouple.cod_vehiculo);
-  //   //   setFieldValue("cod_chofer", arrayCard.cod_chofer);
-  //   //   setFieldValue("cod_transportista", arrayCard.cod_transportista);
-  //   //   setFieldValue("desc_transportista", arrayCard.desc_transportista);
-  //   // } else {
-  //   //   // console.log("Se limpian los datos");
-  //   //   setFieldValue("cod_acoplado", null);
-  //   //   setFieldValue("cod_chofer", null);
-  //   //   setFieldValue("cod_transportista", null);
-  //   // }
-  // }, [values.cod_vehiculo]);
-
-  // // useEffect para aplicar filtro al momento de cambiar el transportista
-  // useEffect(() => {
-  //   // if (values.cod_transportista !== null) {
-  //   //   console.log("Se cambia el transportista");
-  //   // } else {
-  //   //   console.log("Se limpian los datos");
-  //   // }
-  // }, [values.cod_transportista]);
-
-  // PAUTA DE TRABAJO
-  // 1. SELECCIÓN DE TRANSPORTISTA
-  //  - FILTRAR TODOS LOS VEHICULOS Y ACOPLADOS POR TRANSPORTISTA
-  //  - NECESARIO; CREAR UN STATE PARA VEHICULOS Y ACOPLADOS
-
   const [filterData, setFilterData] = useState({
     cars: dataCars || [],
     coupled: dataCoupled || [],
+    controlLimpieza: false,
   });
 
-  const updateFilterData = useCallback((newData) => {
-    setFilterData((prevData) => ({ ...prevData, ...newData }));
-  }, []);
-
-  // función para obtener patentes filtradas
-  const getFilterData = useCallback((array, values) => {
-    return (
-      array.filter(
-        (item) =>
-          item.cod_transportista?.toString() ===
-          values.cod_transportista?.toString()
-      ) || []
-    );
-  }, []);
-
-  const cleanData = () => {
-    setFieldValue("cod_vehiculo", null);
-    setFieldValue("desc_vehiculo", "");
-    setFieldValue("cod_acoplado", null);
-    setFieldValue("desc_acoplado", "");
+  // función para limpieza de datos dependientes
+  const cleanDependentField = (fields) => {
+    fields.forEach((field) => setFieldValue(field, null));
   };
+
+  // filtro de datos, según transportista seleccionado
+  const applyFilter = useCallback(() => {
+    if (values.cod_transportista) {
+      // datos de los vehiculos
+      const filteredCars = dataCars.filter(
+        (car) =>
+          car.cod_transportista?.toString() ===
+          values.cod_transportista?.toString()
+      );
+
+      // datos de los acoplados
+      const filteredCoupled = dataCoupled.filter(
+        (coupled) =>
+          coupled.cod_transportista?.toString() ===
+          values.cod_transportista?.toString()
+      );
+
+      setFilterData({ cars: filteredCars, coupled: filteredCoupled });
+    } else {
+      setFilterData({ cars: dataCars, coupled: dataCoupled });
+    }
+
+    if (filterData.controlLimpieza)
+      cleanDependentField(["cod_vehiculo", "cod_acoplado", "cod_chofer"]);
+  }, [values.cod_transportista, dataCars, dataCoupled]);
+
+  useEffect(() => {
+    if (values.cod_transportista) {
+      setFilterData({ ...filterData, controlLimpieza: true });
+    }
+
+    if (
+      filterData.controlLimpieza ||
+      filterData.controlLimpieza === undefined
+    ) {
+      cleanDependentField(["cod_vehiculo", "cod_acoplado", "cod_chofer"]);
+      setFilterData({ ...filterData, controlLimpieza: false });
+      if (values.cod_transportista) applyFilter();
+    }
+
+    if (values.cod_transportista) applyFilter();
+  }, [values.cod_transportista]);
+
+  useEffect(() => {
+    if (values.cod_vehiculo) {
+      const selectedCar = dataCars.find(
+        (car) =>
+          car.cod_vehiculo?.toString() === values.cod_vehiculo?.toString()
+      );
+      if (selectedCar) {
+        setFieldValue("cod_acoplado", selectedCar.cod_acoplado);
+        setFieldValue("cod_chofer", selectedCar.cod_chofer);
+        if (!values.cod_transportista)
+          setFieldValue("cod_transportista", selectedCar.cod_transportista);
+      }
+    } else {
+      cleanDependentField(["cod_acoplado", "cod_chofer"]);
+    }
+  }, [values.cod_vehiculo]);
 
   // detalle de las patentes de cada vehículo
   const getDetailCard = useCallback((data) => {
@@ -117,16 +100,6 @@ const LoadingOrder_form = ({
       </Chip>
     );
   }, []);
-
-  useEffect(() => {
-    if (values.cod_transportista !== null) {
-      cleanData();
-      updateFilterData({
-        cars: getFilterData(dataCars, values),
-        coupled: getFilterData(dataCoupled, values),
-      });
-    }
-  }, [values.cod_transportista]);
 
   return (
     <>
@@ -253,6 +226,14 @@ const LoadingOrder_form = ({
         dataTaxpayers={dataTaxpayers}
         georeferences={georeferences}
       />
+
+      {touched.detalles_orden_carga && errors.detalles_orden_carga && (
+        <div className="w-full flex justify-center items-center">
+          <span className="text-red-600 bg-red-200 p-2 rounded-md">
+            errors.detalles_orden_carga
+          </span>
+        </div>
+      )}
     </>
   );
 };

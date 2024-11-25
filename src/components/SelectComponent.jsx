@@ -2,6 +2,7 @@ import { Select, SelectItem } from "@nextui-org/react";
 import { useCallback, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import apiPut from "../api/apiPut";
+import { swalWithBootstrapButtons, Toast } from "../utils/styleComponents";
 
 const SelectComponent = ({
   arrayDataForSelect, // Array con objeto de tados para listar
@@ -77,29 +78,6 @@ const SelectComponent = ({
 
     loadSelectedValue();
   }, [arrayDataForSelect, loadForDesc, loadForCod, setFieldValue]);
-
-  // creación de estilos para alerta sweetAlert
-  const swalWithBootstrapButtons = Swal.mixin({
-    customClass: {
-      confirmButton: "bg-blue-500 rounded-lg px-3 py-2 text-white mx-2",
-      cancelButton: "bg-red-500 rounded-lg px-3 py-2 text-white mx-2",
-    },
-    buttonsStyling: false,
-  });
-
-  // creación de la alerta personalizada
-  const Toast = Swal.mixin({
-    toast: true,
-    position: "top-end",
-    showConfirmButton: false,
-    showCancelButton: false,
-    timer: 1500,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.onmouseenter = Swal.stopTimer;
-      toast.onmouseleave = Swal.resumeTimer;
-    },
-  });
 
   // función para asignar valor al seleccionar un dato
   const handleSelectedValue = (newValue) => {
