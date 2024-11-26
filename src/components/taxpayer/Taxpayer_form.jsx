@@ -23,11 +23,11 @@ const Taxpayer_form = ({
   // Asignación de los codigos de vinculación de las georeferencias
   useEffect(() => {
     setFieldValue("georeferencias", [...listGeoreferences]);
-    if (values.isCompany) {
+    if (values.es_empresa) {
       setFieldValue("apellido_paterno_contribuyente", "");
       setFieldValue("apellido_materno_contribuyente", "");
     }
-  }, [listGeoreferences, values.isCompany]);
+  }, [listGeoreferences, values.es_empresa]);
 
   return (
     <>
@@ -63,11 +63,11 @@ const Taxpayer_form = ({
           />
 
           <Checkbox
-            name="isCompany"
-            isSelected={values.isCompany}
-            onChange={() => setFieldValue("isCompany", !values.isCompany)}
+            name="es_empresa"
+            isSelected={values.es_empresa}
+            onChange={() => setFieldValue("es_empresa", !values.es_empresa)}
           >
-            El contribuyente es emrpesa
+            El contribuyente es empresa
           </Checkbox>
         </div>
 
@@ -123,8 +123,8 @@ const Taxpayer_form = ({
           label="Apellido paterno"
           labelPlacement="outside"
           variant="faded"
-          isDisabled={values.isCompany}
-          isRequired={!values.isCompany}
+          isDisabled={values.es_empresa}
+          isRequired={!values.es_empresa}
           value={
             values.apellido_paterno_contribuyente
               ? values.apellido_paterno_contribuyente.toUpperCase()
@@ -161,8 +161,8 @@ const Taxpayer_form = ({
           label="Apellido materno"
           labelPlacement="outside"
           variant="faded"
-          isDisabled={values.isCompany}
-          isRequired={!values.isCompany}
+          isDisabled={values.es_empresa}
+          isRequired={!values.es_empresa}
           value={
             values.apellido_materno_contribuyente
               ? values.apellido_materno_contribuyente.toUpperCase()

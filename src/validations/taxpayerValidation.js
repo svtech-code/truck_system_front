@@ -17,13 +17,13 @@ const taxpayerValidation = () => {
       .trim()
       .required("Nombre requerido !")
       .matches(REGEX_String, "Solo se admiten letras y espacios !"),
-    isCompany: Yup.boolean(),
+    es_empresa: Yup.boolean(),
 
     apellido_paterno_contribuyente: Yup.string()
       .trim()
       .matches(REGEX_String, "Solo se admiten letras y espacios !")
-      .when("isCompany", (isCompany, schema) => {
-        if (!isCompany[0])
+      .when("es_empresa", (es_empresa, schema) => {
+        if (!es_empresa[0])
           return schema.required("Apellido paterno requerido !");
         return schema;
       }),
@@ -31,8 +31,8 @@ const taxpayerValidation = () => {
     apellido_materno_contribuyente: Yup.string()
       .trim()
       .matches(REGEX_String, "Solo se admiten letras y espacios !")
-      .when("isCompany", (isCompany, schema) => {
-        if (!isCompany[0])
+      .when("es_empresa", (es_empresa, schema) => {
+        if (!es_empresa[0])
           return schema.required("Apellido materno requerido !");
         return schema;
       }),
