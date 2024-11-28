@@ -58,7 +58,7 @@ const Vehicle_main = () => {
 
   useEffect(() => {
     const getDataVehicle = async () => {
-      const [state, brand, model, type, driver, taxpayer] = await Promise.all([
+      const [state, brand, model, type, driver, carrier] = await Promise.all([
         getData({ endPoint: "estado_vehiculos" }),
         getData({ endPoint: "marcas" }),
         getData({ endPoint: "modelos" }),
@@ -73,7 +73,7 @@ const Vehicle_main = () => {
         modelVehicle: model?.response,
         typeVehicle: type?.response,
         drivers: driver?.response,
-        taxpayers: taxpayer?.response,
+        carriers: carrier?.response,
       });
     };
 

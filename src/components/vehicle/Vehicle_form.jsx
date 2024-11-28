@@ -25,7 +25,7 @@ const Vehicle_form = ({
     modelVehicle,
     typeVehicle,
     drivers,
-    taxpayers,
+    carriers,
     mainAcopladoData,
     brandVehicle,
     updateVehicleData,
@@ -322,7 +322,7 @@ const Vehicle_form = ({
       {/* select contribuyente */}
       <div className="flex w-full">
         <SelectComponent
-          arrayDataForSelect={taxpayers}
+          arrayDataForSelect={carriers}
           nameCodDataInArray={"cod_contribuyente"}
           nameDescDataInArray={"desc_contribuyente"}
           nameCodDataInContext={"cod_transportista"}

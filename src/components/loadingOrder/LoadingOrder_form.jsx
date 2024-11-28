@@ -13,8 +13,14 @@ const LoadingOrder_form = ({
   errors,
   inputRef,
 }) => {
-  const { dataCars, dataCoupled, dataDriver, dataTaxpayers, georeferences } =
-    useLoadingOrder();
+  const {
+    dataCars,
+    dataCoupled,
+    dataDriver,
+    dataTaxpayers,
+    dataCarriers,
+    georeferences,
+  } = useLoadingOrder();
 
   const [filterData, setFilterData] = useState({
     cars: dataCars || [],
@@ -143,7 +149,7 @@ const LoadingOrder_form = ({
       {/* transportista */}
       <div className="flex gap-4">
         <SelectComponent
-          arrayDataForSelect={dataTaxpayers}
+          arrayDataForSelect={dataCarriers}
           nameCodDataInArray={"cod_contribuyente"}
           nameDescDataInArray={"desc_contribuyente"}
           nameCodDataInContext={"cod_transportista"}
@@ -202,6 +208,7 @@ const LoadingOrder_form = ({
           />
         </div>
       </div>
+
       {/* chofer */}
       <div className="w-full">
         <SelectComponent

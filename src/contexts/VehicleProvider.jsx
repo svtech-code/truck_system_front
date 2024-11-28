@@ -54,7 +54,8 @@ export const VehiculoProvider = ({ children, response }) => {
     modelVehicle: [], // modelos de vehículo
     typeVehicle: [], // tipos de vehículos
     drivers: [], // lista de choferes
-    taxpayers: [], // lista de transportistas (contribuyentes)
+    // taxpayers: [], // lista de transportistas (contribuyentes)
+    carriers: [], // lista de transportistas (contribuyentes)
     edit: false, // estado para edición de datos
     idEdit: null, // id del valor a ser editado
     descriptionEdit: null, // descripción del valor a ser editado

@@ -59,7 +59,12 @@ const LoadingOrder_main = () => {
         dataCars: cars,
         dataCoupled: Coupleds,
         dataDriver: driver?.response,
-        dataTaxpayers: taxpyer?.response,
+        dataTaxpayers: taxpyer?.response.filter(
+          (taxpayer) => !taxpayer.transportista
+        ),
+        dataCarriers: taxpyer?.response.filter(
+          (carrier) => carrier.transportista
+        ),
         georeferences: georeferences?.response,
       });
     };

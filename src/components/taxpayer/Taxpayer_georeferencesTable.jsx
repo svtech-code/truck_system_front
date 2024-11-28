@@ -17,6 +17,12 @@ import { IoSearch } from "react-icons/io5";
 import { useMemo, useState } from "react";
 import apiPost from "../../api/apiPost";
 import apiDelete from "../../api/apiDelete";
+import { MdOpenInNew } from "react-icons/md";
+// import ModalBaseForm from "../../templates/ModalBaseForm";
+// import useSubmitGeoreference from "../../hooks/submit/useSubmitGeoreference";
+// import Georeference_form from "../georeference/Georeference_form";
+// import georeferenceValidation from "../../validations/georeferenceValidation";
+// import initialValues_georeference from "../../utils/initialValues/georeferenceValue";
 
 const Taxpayer_georeferencesTable = ({
   dataTaxpayerTable = {},
@@ -26,6 +32,7 @@ const Taxpayer_georeferencesTable = ({
   const { georeference, updateTaxpayerData, data } = useTaxpayer();
   const { cod_contribuyente, georeferencias = [] } = dataTaxpayerTable || {};
   const [page, setPage] = useState(1);
+  const [openModalGeoreferences, setOpenModalGeoreferences] = useState(false);
   const rowsPerPage = 6;
 
   // Nuevo estado para almacenar el término de búsqueda
@@ -229,7 +236,7 @@ const Taxpayer_georeferencesTable = ({
   };
 
   return (
-    <div>
+    <>
       <div className="py-5 relative flex justify-between items-center">
         <Input
           type="text"
@@ -242,8 +249,35 @@ const Taxpayer_georeferencesTable = ({
         />
 
         {/* habrir modal para creación de georeferencia */}
-        {/* <Button color="primary">prueba</Button> */}
+        <Button
+          color="primary"
+          variant="ghost"
+          startContent={<MdOpenInNew size={25} />}
+          onPress={() => console.log("habrir el modal")}
+        >
+          Nuevo registro
+        </Button>
       </div>
+
+      {/* trabajar en generar un modal especial solo para este factor
+      el cual considera un modal, del modal del modal capa 3 de modal */}
+
+      {/* <ModalBaseForm
+        propertyId={"cod_georeferencia"}
+        stateComponent={useTaxpayer()}
+        updateStateComponent={updateTaxpayerData}
+        title={"Georeferencia"}
+        size={"xl"}
+        isOpen={openModalGeoreferences}
+        onOpenChange={() => setOpenModalGeoreferences(false)}
+        useSubmit_generic={useSubmitGeoreference({
+          data,
+          updateStateComponent: updateTaxpayerData,
+        })}
+        initialValues_generic={initialValues_georeference}
+        validationSchema_generic={georeferenceValidation}
+        // Form_generic={(props) => <Georeference_form {...props} />}
+      /> */}
 
       <Table
         aria-label="data-taxpayer"
@@ -296,7 +330,7 @@ const Taxpayer_georeferencesTable = ({
             )}
         </TableBody>
       </Table>
-    </div>
+    </>
   );
 };
 

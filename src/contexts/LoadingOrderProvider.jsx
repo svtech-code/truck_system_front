@@ -16,6 +16,7 @@ export const LoadingOrderProvider = ({ children, response }) => {
     data: response, // objeto con los datos de ordenes de carga
     dataCars: [], // objeto con la información de los vehículos
     dataTaxpayers: [], // objeto con la información de los contribuyente
+    dataCarriers: [], // objeto con la información de los transportistas
     georeferences: [], // objeto con la información de las georeferencias
     dataCoupled: [], // objeto con la iformación de los acoplados
     dataDriver: [], // objeto con la información de 1 chofer
