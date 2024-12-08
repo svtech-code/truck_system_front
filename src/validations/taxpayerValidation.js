@@ -59,7 +59,9 @@ const taxpayerValidation = () => {
     direccion_numero: Yup.string()
       .trim()
       .matches(REGEX_numberString, "No se admiten caracteres especiales !"),
-    cod_comuna: Yup.string().required("La comuna es requerida !"),
+    cod_comuna: Yup.string()
+      .trim()
+      .required("La comuna es requerida !"),
     transportista: Yup.boolean(),
     desc_contribuyente: Yup.string()
       .trim()
@@ -67,8 +69,6 @@ const taxpayerValidation = () => {
         REGEX_numberString,
         "El texto no debe tener caracteres especiales !"
       ),
-    // estado_contribuyente: Yup.number,
-    // georeferencias: Yup.array(Yup.number()),
   });
 };
 

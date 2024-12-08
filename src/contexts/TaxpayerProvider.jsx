@@ -19,6 +19,7 @@ export const TaxpayerProvider = ({ children, response }) => {
     georeference: [], // objeto los datos de georeferencias
     error: null,
     loadDataState: true,
+    firstModalState: false,
     ...calculateDeriveData(response),
   });
 

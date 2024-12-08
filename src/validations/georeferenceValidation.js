@@ -5,14 +5,14 @@ const georeferenceValidation = () => {
   return Yup.object().shape({
     direccion: Yup.string()
       .trim()
-      .required("Descripción requerida")
+      .required("Dirección requerida")
       .matches(
         REGEX_numberString,
         "Solo se admiten letras, números y espacios !"
       ),
     referencia_direccion: Yup.string()
       .trim()
-      .required("Descripción requerida")
+      .required("Referencia requerida")
       .matches(
         REGEX_numberString,
         "Solo se admiten letras, números y espacios !"
@@ -29,7 +29,7 @@ const georeferenceValidation = () => {
     cod_comuna: Yup.string().trim().required("Comuna requerida"),
     numero: Yup.string()
       .trim()
-      .required("Descripción requerida")
+      .required("Número requerido")
       .matches(REGEX_numberString, "No se admiten caracteres especiales"),
   });
 };

@@ -1,10 +1,10 @@
 // expresión regurlar usada para validar compos input generales
 // permite letras mayusculas y minusculas, tildes, ñ, números, espacios y guión medio
-export const REGEX_numberString = /^[A-ZÁÉÍÓÚÑ0-9 ,.\-/#]+$/;
+export const REGEX_numberString = /^[A-ZÁÉÍÓÚÑ0-9 `,.\-/#]+$/;
 
 // expresión regurlar usada para validar compos input generales
 // permite letras mayusculas y minusculas, tildes, ñ, espacios y guión medio
-export const REGEX_String = /^[A-ZÁÉÍÓÚÑ -]+$/;
+export const REGEX_String = /^[A-ZÁÉÍÓÚÑ `-]+$/;
 
 // expresion regular para manejar campos que se deshabilitan según una opción externa
 export const REGEX_StringDisabled = /^[A-ZÁÉÍÓÚÑ -]+|--$/;

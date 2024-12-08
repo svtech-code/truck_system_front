@@ -29,7 +29,8 @@ const varString = {
 };
 
 const Taxpayer_main = () => {
-  const { data, numberTaxpayers, updateTaxpayerData } = useTaxpayer();
+  const { data, numberTaxpayers, firstModalState, updateTaxpayerData } =
+    useTaxpayer();
   const counterCard = { numberTaxpayers };
 
   useEffect(() => {
@@ -48,8 +49,11 @@ const Taxpayer_main = () => {
     getDataTaxpayer();
   }, []);
 
-  // estados para el manejo del modal
-  const [open, setOpen] = useState(false);
+  // // estados para el manejo del modal
+  // const [open, setOpen] = useState(false);
+
+  // estado para el modal secundario
+  const [secondModalState, setSecondModalState] = useState(false);
 
   const eventClickDownloadData = () => alert("Descargar informacion");
 
@@ -72,22 +76,28 @@ const Taxpayer_main = () => {
         updateStateComponent={updateTaxpayerData}
         title={varString.titleModal}
         size={"2xl"}
-        isOpen={open}
-        onOpenChange={() => setOpen(false)}
+        isOpen={firstModalState}
+        onOpenChange={() => updateTaxpayerData({ firstModalState: false })}
         useSubmit_generic={useSubmitTaxpayer({
           data,
           updateStateComponent: updateTaxpayerData,
         })}
         initialValues_generic={initialValues_taxpayer}
         validationSchema_generic={taxpayerValidation}
-        Form_generic={(props) => <Taxpayer_form {...props} />}
+        Form_generic={(props) => (
+          <Taxpayer_form
+            {...props}
+            secondModalState={secondModalState}
+            setSecondModalState={setSecondModalState}
+          />
+        )}
       />
 
       <DataTableComponent
         data={data}
-        onOpen={() => setOpen(true)}
+        onOpen={() => updateTaxpayerData({ firstModalState: true })}
         structureData={Taxpayer_structure({
-          onOpen: () => setOpen(true),
+          onOpen: () => updateTaxpayerData({ firstModalState: true }),
           route: varString.route,
           propertyId: varString.propertyId,
           propertyName: varString.propertyName,

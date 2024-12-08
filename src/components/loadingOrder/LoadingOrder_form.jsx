@@ -218,6 +218,7 @@ const LoadingOrder_form = ({
           nameCodDataInContext={"cod_chofer"}
           setFieldValue={setFieldValue}
           label={"Chofer"}
+          name={"cod_chofer"}
           isRequired={true}
           isInvalid={touched.cod_chofer && errors.cod_chofer ? true : false}
           errorMessage={touched.cod_chofer && errors.cod_chofer}

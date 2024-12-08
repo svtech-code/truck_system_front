@@ -1,8 +1,8 @@
 import { Input, Textarea } from "@nextui-org/react";
 import SelectComponent from "../SelectComponent";
-import useGeoreference from "../../hooks/useGeoreference";
+import useTaxpayer from "../../hooks/useTaxpayer";
 
-const Georeference_form = ({
+const TaxpayerGeoreference_form = ({
   values,
   setFieldValue,
   handlerBlur,
@@ -11,7 +11,7 @@ const Georeference_form = ({
   errors,
   inputRef,
 }) => {
-  const { commune } = useGeoreference();
+  const { commune } = useTaxpayer();
 
   return (
     <>
@@ -154,7 +154,6 @@ const Georeference_form = ({
               : "primary"
           }
           variant="faded"
-          isRequired={true}
           name="desc_georeferencia"
           label="Descripción de la georeferencia"
           labelPlacement="outside"
@@ -175,4 +174,4 @@ const Georeference_form = ({
   );
 };
 
-export default Georeference_form;
+export default TaxpayerGeoreference_form;

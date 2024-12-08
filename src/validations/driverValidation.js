@@ -36,10 +36,10 @@ const driverValidation = () => {
     telefono1: Yup.string()
       .trim()
       .required("Teléfono requerido !")
-      .matches(REGEX_number, "No superar los 11 digitos !"),
+      .matches(REGEX_number, "Número válido entre 6 y 11 dígitos !"),
     telefono2: Yup.string()
       .trim()
-      .matches(REGEX_number, "No superar los 11 digitos !"),
+      .matches(REGEX_number, "Número válido entre 6 y 11 dígitos !"),
     email: Yup.string()
       .email("El email no es válido !")
       .trim()

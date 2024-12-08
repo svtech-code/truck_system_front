@@ -18,22 +18,21 @@ import { useMemo, useState } from "react";
 import apiPost from "../../api/apiPost";
 import apiDelete from "../../api/apiDelete";
 import { MdOpenInNew } from "react-icons/md";
-// import ModalBaseForm from "../../templates/ModalBaseForm";
-// import useSubmitGeoreference from "../../hooks/submit/useSubmitGeoreference";
-// import Georeference_form from "../georeference/Georeference_form";
-// import georeferenceValidation from "../../validations/georeferenceValidation";
-// import initialValues_georeference from "../../utils/initialValues/georeferenceValue";
+import ModalNewGeoreferenceInTaxpayer from "../../templates/ModalNewGeoreferenceInTaxpayer";
+import TaxpayerGeoreference_form from "./TaxpayerGeoreference_form";
 
 const Taxpayer_georeferencesTable = ({
   dataTaxpayerTable = {},
   listGeoreferences,
   setListGeoreferences,
 }) => {
-  const { georeference, updateTaxpayerData, data } = useTaxpayer();
+  const { data, georeference, updateTaxpayerData } = useTaxpayer();
+
+  // estado del modal para creación de nueva georeferencia
+  const [isOpenModalNewGeoreference, setIsOpenModalNewGeoreference] = useState(false);
   const { cod_contribuyente, georeferencias = [] } = dataTaxpayerTable || {};
   const [page, setPage] = useState(1);
-  const [openModalGeoreferences, setOpenModalGeoreferences] = useState(false);
-  const rowsPerPage = 6;
+  const rowsPerPage = 8;
 
   // Nuevo estado para almacenar el término de búsqueda
   const [searchTerm, setSearchTerm] = useState("");
@@ -60,6 +59,7 @@ const Taxpayer_georeferencesTable = ({
 
   // Función para vincular una georeferencia
   const handleLinkGeoreference = async (cod_georeferencia) => {
+
     // actualización de los datos
     if (setListGeoreferences) {
       setListGeoreferences((prevCod) => {
@@ -76,11 +76,21 @@ const Taxpayer_georeferencesTable = ({
         await apiPost({
           route: "georeferencia_contribuyente",
           object: { cod_contribuyente, cod_georeferencia },
-        }).then(() => {
+        }).then((response) => {
           // obtener la georeferencia a vincular
           const georeferenceVincule = georeference.filter(
             (item) => item.cod_georeferencia === cod_georeferencia
           );
+
+          const payload = {
+            cod_comuna: georeferenceVincule[0].cod_comuna,
+            cod_georeferencia: georeferenceVincule[0].cod_georeferencia,
+            cod_georeferencia_contribuyente: response?.data?.cod_georeferencia_contribuyente,
+            desc_georeferencia: georeferenceVincule[0].desc_georeferencia,
+            direccion: georeferenceVincule[0].direccion,
+            latitud: georeferenceVincule[0].latitud,
+            longitud: georeferenceVincule[0].longitud,
+          }
 
           // obtener nuevo contexto actualizado
           const updatedTaxpayer = data.map((taxpayer) => {
@@ -89,7 +99,7 @@ const Taxpayer_georeferencesTable = ({
                 ...taxpayer,
                 georeferencias: [
                   ...taxpayer.georeferencias,
-                  georeferenceVincule[0],
+                  payload,
                 ],
               };
             }
@@ -108,10 +118,12 @@ const Taxpayer_georeferencesTable = ({
 
   // Función para desvincular una georeferencia
   const handleUnlinkGeoreference = async (cod_georeferencia) => {
+
     // obtener id de la referencia que debo eliminar para desvincular una georeferencia de un contribuyente
     const georeferenciasArray = dataTaxpayerTable.georeferencias.filter(
       (geo) => geo.cod_georeferencia === cod_georeferencia
     )[0].cod_georeferencia_contribuyente;
+
 
     // array actualizado de georeferencias, luego de desvincular una
     const newArrayGeoreferences = dataTaxpayerTable.georeferencias.filter(
@@ -143,6 +155,7 @@ const Taxpayer_georeferencesTable = ({
     }
   };
 
+  // función para renderizar botón, según el estado de vinculaión
   const renderButton = ({ cod_georeferencia }) => {
     if (setListGeoreferences) {
       if (listGeoreferences.has(cod_georeferencia)) {
@@ -253,31 +266,17 @@ const Taxpayer_georeferencesTable = ({
           color="primary"
           variant="ghost"
           startContent={<MdOpenInNew size={25} />}
-          onPress={() => console.log("habrir el modal")}
+          onPress={() => setIsOpenModalNewGeoreference(true)}
         >
           Nuevo registro
         </Button>
       </div>
 
-      {/* trabajar en generar un modal especial solo para este factor
-      el cual considera un modal, del modal del modal capa 3 de modal */}
-
-      {/* <ModalBaseForm
-        propertyId={"cod_georeferencia"}
-        stateComponent={useTaxpayer()}
-        updateStateComponent={updateTaxpayerData}
-        title={"Georeferencia"}
-        size={"xl"}
-        isOpen={openModalGeoreferences}
-        onOpenChange={() => setOpenModalGeoreferences(false)}
-        useSubmit_generic={useSubmitGeoreference({
-          data,
-          updateStateComponent: updateTaxpayerData,
-        })}
-        initialValues_generic={initialValues_georeference}
-        validationSchema_generic={georeferenceValidation}
-        // Form_generic={(props) => <Georeference_form {...props} />}
-      /> */}
+      <ModalNewGeoreferenceInTaxpayer
+        isOpen={isOpenModalNewGeoreference}
+        onOpenChange={() => setIsOpenModalNewGeoreference(false)}
+        Form_generic={(props) => <TaxpayerGeoreference_form {...props} />}
+      />
 
       <Table
         aria-label="data-taxpayer"

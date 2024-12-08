@@ -13,4 +13,7 @@ const vehicleTypeValidation = () => {
   });
 };
 
+
+// ver si agrego validaciones para los check de is required (acoplado, pioneta, chofer)
+
 export default vehicleTypeValidation;

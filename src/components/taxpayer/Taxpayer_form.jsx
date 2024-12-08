@@ -1,4 +1,4 @@
-import { Button, Checkbox, Input, Textarea } from "@nextui-org/react";
+import { Button, Checkbox, Input, modal, Textarea } from "@nextui-org/react";
 import useTaxpayer from "../../hooks/useTaxpayer";
 import SelectComponent from "../SelectComponent";
 import { formatRut } from "../../utils/functions";
@@ -6,18 +6,19 @@ import { FaUserTie } from "react-icons/fa";
 import Taxpayer_georeferencesTable from "./Taxpayer_georeferencesTable";
 import { useEffect, useState } from "react";
 import ModalBaseTable from "../../templates/ModalBaseTable";
+import { use } from "react";
 
 const Taxpayer_form = ({
   values,
   setFieldValue,
   handleBlur,
-  handleChange,
   touched,
   errors,
   inputRef,
+  secondModalState,
+  setSecondModalState,
 }) => {
   const { commune } = useTaxpayer();
-  const [open, setOpen] = useState(false);
   const [listGeoreferences, setListGeoreferences] = useState(new Set([]));
 
   // Asignación de los codigos de vinculación de las georeferencias
@@ -368,24 +369,10 @@ const Taxpayer_form = ({
           color="warning"
           variant="flat"
           isDisabled={values.cod_contribuyente !== null ? true : false}
-          onPress={() => setOpen(true)}
+          onPress={() => setSecondModalState(true)}
         >
           Asociar georeferencias
         </Button>
-
-        <ModalBaseTable
-          title={"Georeferencias"}
-          size={"2xl"}
-          isOpen={open}
-          onOpenChange={() => setOpen(false)}
-          table={() =>
-            Taxpayer_georeferencesTable({
-              dataTaxpayerTable: {},
-              setListGeoreferences: setListGeoreferences,
-              listGeoreferences: listGeoreferences,
-            })
-          }
-        />
       </div>
 
       <div className="flex w-full">
@@ -408,6 +395,20 @@ const Taxpayer_form = ({
           errorMessage={touched.desc_contribuyente && errors.desc_contribuyente}
         />
       </div>
+
+      <ModalBaseTable
+        title={"Georeferencias"}
+        size={"2xl"}
+        isOpen={secondModalState}
+        onOpenChange={() => setSecondModalState(false)}
+        table={() => (
+          <Taxpayer_georeferencesTable
+            dataTaxpayerTable={{}}
+            setListGeoreferences={setListGeoreferences}
+            listGeoreferences={listGeoreferences}
+          />
+        )}
+      />
     </>
   );
 };

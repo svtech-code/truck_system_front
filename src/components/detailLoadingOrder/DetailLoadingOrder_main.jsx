@@ -100,9 +100,6 @@ const DetailLoadingOrder_main = ({
             }),
           });
           setFieldValue("detalles_orden_carga", updatedDetails);
-
-          // console.log(values);
-          // console.log(payload);
         }
       });
   };

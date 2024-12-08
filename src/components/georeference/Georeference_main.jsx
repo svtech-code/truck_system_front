@@ -18,7 +18,7 @@ const varString = {
   titleModal: "Georeferencia",
   route: "georeferencias",
   propertyId: "cod_georeferencia",
-  propertyName: "",
+  propertyName: "desc_georeferencia",
   cards: [
     {
       titleCard: "Mis georeferencias",
@@ -76,6 +76,7 @@ const Georeference_main = () => {
         useSubmit_generic={useSubmitGeoreference({
           data,
           updateStateComponent: updateGeoreferenceData,
+          dataContext: "data"
         })}
         initialValues_generic={initialValues_georeference}
         validationSchema_generic={georeferenceValidation}
