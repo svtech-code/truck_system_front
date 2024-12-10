@@ -51,7 +51,7 @@ const DetailLoadingOrder_main = ({
     setIsOpenModalLoadingOrderDetail(true);
   };
 
-  // funcion para eliminar un detalle
+  // funcion para eliminar un detalle (petición delete solo en editar, en insert, trabaja con un array local)
   const handleDeleteDetail = (indexToRemove) => {
     const updatedDetails = dataDetail.filter(
       (_, index) => index !== indexToRemove

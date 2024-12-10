@@ -14,9 +14,20 @@ const loadingOrderValidation = () => {
     cod_chofer: Yup.string()
       .trim()
       .required("El chofer es requerido !"),
+    cod_orden_carga: Yup.string()
+      .nullable(),
     detalles_orden_carga: Yup.array()
-      .min(1, "Ingresar al menos un detalle !")
-      .required("Ingresar detalle !"),
+      .when("cod_orden_carga", (cod_orden_carga, schema) => {
+        if (cod_orden_carga[0] === null)
+          return schema
+            .min(1, "Ingresar al menos un detalle !")
+            .required("Ingresar detalle !");
+        return schema;
+
+      }),
+    // detalles_orden_carga: Yup.array()
+    //   .min(1, "Ingresar al menos un detalle !")
+    //   .required("Ingresar detalle !"),
   });
 };
 
