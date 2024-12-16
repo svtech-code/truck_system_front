@@ -1,4 +1,4 @@
-import { Button } from "@nextui-org/react";
+import { Button, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
 import { FaEdit } from "react-icons/fa";
 import { useCallback, useState } from "react";
 import useSubmitDetailLoadingOrder from "../../hooks/submit/useSubmitDetailLoadingOrder";
@@ -7,7 +7,7 @@ import detailLoadingOrderValidation from "../../validations/detailLoadingOrderVa
 import initialValues_DetailLoadingOrder from "../../utils/initialValues/detailLoadingOrderValue";
 import ModalBaseForm from "../../templates/ModalBaseForm";
 import useLoadingOrder from "../../hooks/useLoadingOrder";
-import { desc } from "framer-motion/client";
+import { HiMiniClipboardDocumentList } from "react-icons/hi2";
 
 const varString = {
   titleModal: "Detalle de orden de carga",
@@ -46,8 +46,7 @@ const LoadingOrder_subStructure = ({ data }) => {
   };
 
   return (
-    <div className="border p-2 mt-1 mb-2 rounded-lg overflow-hidden flex flex-col gap-y-4">
-      {/* modal generico */}
+    <div className="border-gray-300 border-2 p-1 mt-1 mb-2 rounded-2xl overflow-hidden flex flex-col gap-y-1">
       <ModalBaseForm
         propertyId={varString.propertyId}
         stateComponent={stateDetail}
@@ -67,93 +66,91 @@ const LoadingOrder_subStructure = ({ data }) => {
         Form_generic={(props) => <DetailLoadingOrder_form {...props} />}
       />
 
-      {/* tabla con encabezado detalle de la orde de carga */}
-      <table className="w-full text-[.8rem]">
+
+      <table className="w-full text-[.8rem] bg-gray-300 rounded-lg">
         <tbody>
           <tr>
-            <td className="w-32 font-semibold">Transportista:</td>
-            <td>{desc_transportista}</td>
+            <td className="w-36 font-semibold pl-4 pt-2 uppercase">Transportista:</td>
+            <td className="pt-2">{desc_transportista}</td>
           </tr>
 
           <tr>
-            <td className="w-32 font-semibold">Vehículo:</td>
+            <td className="w-36 font-semibold pl-4 uppercase">Vehículo:</td>
             <td>{desc_vehiculo}</td>
           </tr>
 
           <tr>
-            <td className="w-32 font-semibold">Acoplado:</td>
-            <td>{desc_acoplado}</td>
+            <td className="w-36 font-semibold pl-4 pb-2 uppercase">Acoplado:</td>
+            <td className="pb-2">{desc_acoplado}</td>
           </tr>
         </tbody>
       </table>
 
-      {/* tabla con los viajes de la orden de carga */}
-      <div className="w-full bg-gray-100 rounded-lg p-2">
-        <table className="w-full text-[.8rem]">
-          <thead className="text-left bg-gray-300">
-            <tr>
-              <th scope="col" className="rounded-l-lg p-2">
-                Contribuyente
-              </th>
-              <th scope="col" className="p-2">
-                Detalle viaje
-              </th>
-              <th scope="col" className="p-2">
-                Origen viaje
-              </th>
-              <th scope="col" className="p-2">
-                Destino viaje
-              </th>
-              <th scope="col" className="rounded-r-lg p-2">
-                Fecha acuse
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {detalles_orden_carga.map(
-              (
-                {
-                  cod_detalle_orden_carga,
-                  desc_cliente,
-                  desc_origen,
-                  desc_destino,
-                  fecha_acuse,
-                  desc_detalle_orden_carga,
-                },
-                index
-              ) => (
-                <tr className="hover:bg-gray-200" key={index}>
-                  <td className="px-2 py-1 rounded-l-md">
-                    <div className="flex gap-2 justify-start items-center">
-                      <Button
-                        isIconOnly
-                        size="sm"
-                        color="primary"
-                        onPress={() =>
-                          handleEditDetail({
-                            codDetail: cod_detalle_orden_carga,
-                            descDetail: desc_detalle_orden_carga,
-                          })
-                        }
-                      >
-                        <FaEdit
-                          size={20}
-                          className="group-hover:scale-110 transition-all duration-300 will-change-transform"
-                        />
-                      </Button>
-                      {desc_cliente}
-                    </div>
-                  </td>
-                  <td className="px-2 py-1">{desc_detalle_orden_carga}</td>
-                  <td className="px-2 py-1">{desc_origen}</td>
-                  <td className="px-2 py-1">{desc_destino}</td>
-                  <td className="px-2 py-1 rounded-r-md">{fecha_acuse}</td>
-                </tr>
-              )
-            )}
-          </tbody>
-        </table>
-      </div>
+      <Table
+        aria-label="sub tabla datos detalle orden carga"
+        selectionMode="single"
+        classNames={{
+          wrapper: "bg-gray-300 p-2",
+          th: "font-bold text-[.8rem] bg-gray-100",
+          td: "text-[.8rem]",
+        }}
+      >
+        <TableHeader>
+          <TableColumn className="uppercase grow">Contribuyente</TableColumn>
+          <TableColumn className="uppercase">Detalle viaje</TableColumn>
+          <TableColumn className="uppercase">Origen viaje</TableColumn>
+          <TableColumn className="uppercase">Destino viaje</TableColumn>
+          <TableColumn className="uppercase w-32">Fecha acuse</TableColumn>
+          <TableColumn className="uppercase w-32 text-center">Acciones</TableColumn>
+        </TableHeader>
+
+        <TableBody emptyContent={"Sin datos asignados"}>
+          {
+            detalles_orden_carga.map(({
+              cod_detalle_orden_carga,
+              desc_cliente,
+              desc_origen,
+              desc_destino,
+              fecha_acuse,
+              desc_detalle_orden_carga,
+            }, index) => (
+              <TableRow key={index}>
+                <TableCell className="grow">{desc_cliente}</TableCell>
+                <TableCell>{desc_detalle_orden_carga}</TableCell>
+                <TableCell>{desc_origen}</TableCell>
+                <TableCell>{desc_destino}</TableCell>
+                <TableCell className="w-32">{fecha_acuse}</TableCell>
+                <TableCell className="flex items-center gap-2 justify-center w-32">
+                  <Button
+                    isIconOnly
+                    size="sm"
+                    color="primary"
+                    className="hover:scale-105 transition-all duration-300 will-change-transform"
+                    onPress={() =>
+                      handleEditDetail({
+                        codDetail: cod_detalle_orden_carga,
+                        descDetail: desc_detalle_orden_carga,
+                      })
+                    }
+                  >
+                    <FaEdit size={20} />
+                  </Button>
+
+                  <Button
+                    isIconOnly
+                    size="sm"
+                    color="warning"
+                    className="hover:scale-105 transition-all duration-300 will-change-transform"
+                    onPress={() => console.log("mostrar sub detalles")}
+                  >
+                    <HiMiniClipboardDocumentList size={20} />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))
+          }
+        </TableBody>
+      </Table>
     </div>
   );
 };
