@@ -19,10 +19,15 @@ const varString = {
 const LoadingOrder_subStructure = ({ data }) => {
   const {
     desc_transportista,
-    desc_vehiculo,
+    // desc_vehiculo,
+    patente,
+    desc_marca,
+    desc_modelo,
     desc_acoplado,
     detalles_orden_carga,
   } = data;
+
+  const carLoadingOrder = `(${patente}) / ${desc_marca} ${desc_modelo}`;
 
   const { dataTaxpayers, georeferences, updateLoadingOrder } =
     useLoadingOrder();
@@ -76,7 +81,8 @@ const LoadingOrder_subStructure = ({ data }) => {
 
           <tr>
             <td className="w-36 font-semibold pl-4 uppercase">Vehículo:</td>
-            <td>{desc_vehiculo}</td>
+            {/* <td>{desc_vehiculo}</td> */}
+            <td>{carLoadingOrder}</td>
           </tr>
 
           <tr>
