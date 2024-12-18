@@ -8,6 +8,7 @@ import initialValues_DetailLoadingOrder from "../../utils/initialValues/detailLo
 import ModalBaseForm from "../../templates/ModalBaseForm";
 import useLoadingOrder from "../../hooks/useLoadingOrder";
 import { HiMiniClipboardDocumentList } from "react-icons/hi2";
+import ModalBaseFull from "../../templates/ModalBaseFull";
 
 const varString = {
   titleModal: "Detalle de orden de carga",
@@ -25,16 +26,15 @@ const LoadingOrder_subStructure = ({ data }) => {
     desc_modelo,
     desc_acoplado,
     detalles_orden_carga,
+    num_orden_carga,
   } = data;
 
   const carLoadingOrder = `(${patente}) / ${desc_marca} ${desc_modelo}`;
 
-  const { dataTaxpayers, georeferences, updateLoadingOrder } =
-    useLoadingOrder();
+  const { dataTaxpayers, georeferences, updateLoadingOrder } = useLoadingOrder();
   const [isOpenModalDetail, setIsOpenModalDetail] = useState(false);
-  const [stateDetail, setStateDetail] = useState({
-    data: detalles_orden_carga,
-  });
+  const [isOpenModalFull, setIsOpenModalFull] = useState(false);
+  const [stateDetail, setStateDetail] = useState({ data: detalles_orden_carga });
 
   const updateStateDetail = useCallback((newData) => {
     setStateDetail((prevState) => ({ ...prevState, ...newData }));
@@ -69,6 +69,12 @@ const LoadingOrder_subStructure = ({ data }) => {
         initialValues_generic={initialValues_DetailLoadingOrder}
         validationSchema_generic={detailLoadingOrderValidation}
         Form_generic={(props) => <DetailLoadingOrder_form {...props} />}
+      />
+
+      <ModalBaseFull
+        isOpen={isOpenModalFull}
+        onOpenChange={() => setIsOpenModalFull(false)}
+        numberLoadingOrder={num_orden_carga}
       />
 
 
@@ -131,6 +137,7 @@ const LoadingOrder_subStructure = ({ data }) => {
                     isIconOnly
                     size="sm"
                     color="primary"
+                    aria-label="Boton para abrir modal para editar un detalle de orden de carga"
                     className="hover:scale-105 transition-all duration-300 will-change-transform"
                     onPress={() =>
                       handleEditDetail({
@@ -146,8 +153,9 @@ const LoadingOrder_subStructure = ({ data }) => {
                     isIconOnly
                     size="sm"
                     color="warning"
+                    aria-label="Botton para abrir modal que hace de mantenedor"
                     className="hover:scale-105 transition-all duration-300 will-change-transform"
-                    onPress={() => console.log("mostrar sub detalles")}
+                    onPress={() => setIsOpenModalFull(true)}
                   >
                     <HiMiniClipboardDocumentList size={20} />
                   </Button>

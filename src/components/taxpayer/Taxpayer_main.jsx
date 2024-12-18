@@ -33,6 +33,7 @@ const Taxpayer_main = () => {
     useTaxpayer();
   const counterCard = { numberTaxpayers };
 
+
   useEffect(() => {
     const getDataTaxpayer = async () => {
       const [communes, georeferences] = await Promise.all([
@@ -48,9 +49,6 @@ const Taxpayer_main = () => {
 
     getDataTaxpayer();
   }, []);
-
-  // // estados para el manejo del modal
-  // const [open, setOpen] = useState(false);
 
   // estado para el modal secundario
   const [secondModalState, setSecondModalState] = useState(false);
