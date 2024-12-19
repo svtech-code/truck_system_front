@@ -1,10 +1,15 @@
 import Swal from "sweetalert2";
 import apiPut from "../../api/apiPut";
+import useLoadingOrder from "../useLoadingOrder";
 
 const useSubmitDetailLoadingOrder = ({
-  data,
+  dataDetail,
   setFieldValue = () => { },
   stateValues = {},
+  codStateValue,
+  useData = {
+    data: []
+  },
   dataTaxpayers,
   georeferences,
   updateLoadingOrder,
@@ -13,6 +18,7 @@ const useSubmitDetailLoadingOrder = ({
     (onClose) =>
       async (values, { setSubmitting }) => {
         const { cod_detalle_orden_carga, ...otherValues } = values;
+        const { data } = useData;
 
         // obtener las descripciones al crear un detalle
         const getDescription = ({
@@ -54,6 +60,7 @@ const useSubmitDetailLoadingOrder = ({
           if (cod_detalle_orden_carga === null) {
             const currentDetails = stateValues.detalles_orden_carga || [];
             setFieldValue("detalles_orden_carga", [...currentDetails, payload]);
+
           } else {
             await apiPut({
               route: `detalle_orden_carga/${cod_detalle_orden_carga}`,
@@ -64,18 +71,38 @@ const useSubmitDetailLoadingOrder = ({
                 title: "Success",
                 text: "Registro actualizado",
               }).then(() => {
-                console.log("actualización de datos");
+                // const updatedDetail = response.data; // respuesta de la actualización -> puede ser el pyload tambien
 
-                // IDEA Y PROPUESTA PARA ACTUALIZAR EL CONTEXTO CON LOS NUEVOS DATOS
-                // const updatedDetail = response.data; // supondremos que la respuesta contiene el detalle actualizado
+                // const updatedDetail = data.map(
+                //   (detail) =>
+                //     detail.cod_detalle_orden_carga === cod_detalle_orden_carga
+                //       ? { ...detail, ...payload }
+                //       : detail
+                // );
+                //
+
+
+                // filtro para obtener primero la order de carga
+                const updatedDetail = data.filter(
+                  detail => detail.cod_orden_carga === codStateValue
+                ) || [];
+
+                // actualizar el el detalle de la orden de carga
+                const updatedDetailLoadingOrder = updatedDetail.map(
+                  detail => detail.cod_detalle_orden_carga === cod_detalle_orden_carga
+                    ? { ...detail, ...payload }
+                    : detail
+                )
 
                 // // Encontrar el índice del detalle que se va a actualizar
-                // const updatedDetails = stateValues.detalles_orden_carga.map(
+                // const updatedDetails = data.detalles_orden_carga.map(
                 //   (detail) =>
                 //     detail.cod_detalle_orden_carga === cod_detalle_orden_carga
                 //       ? { ...detail, ...updatedDetail }
                 //       : detail
                 // );
+
+
 
                 // // Actualizar el contexto usando updateLoadingOrder
                 // updateLoadingOrder({
