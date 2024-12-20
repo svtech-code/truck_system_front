@@ -30,15 +30,13 @@ const varString = {
 };
 
 const LoadingOrder_main = () => {
-  const { data, dataChofer, numberOrders, updateLoadingOrder } =
-    useLoadingOrder();
+  const { data, dataChofer, numberOrders, updateLoadingOrder } = useLoadingOrder();
   const counterCard = { numberOrders };
 
   // usar un useEffect para peticiones adicionales
   useEffect(() => {
     const getDataLoadingOrder = async () => {
       const [vehicle, driver, taxpyer, georeferences] = await Promise.all([
-        // getData({ endPoint: "vehiculos" }),
         getData({ endPoint: "vehiculos_con_tipo" }),
         getData({ endPoint: "choferes" }),
         getData({ endPoint: "contribuyentes" }),

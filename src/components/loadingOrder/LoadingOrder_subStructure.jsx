@@ -1,6 +1,6 @@
 import { Button, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
 import { FaEdit } from "react-icons/fa";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useSubmitDetailLoadingOrder from "../../hooks/submit/useSubmitDetailLoadingOrder";
 import DetailLoadingOrder_form from "../detailLoadingOrder/DetailLoadingOrder_form";
 import detailLoadingOrderValidation from "../../validations/detailLoadingOrderValidation";
@@ -42,6 +42,7 @@ const LoadingOrder_subStructure = ({ data }) => {
       edit: true,
       descriptionEdit: descDetail,
       idEdit: codDetail,
+      data: detalles_orden_carga,
     });
 
     setIsOpenModalDetail(true);

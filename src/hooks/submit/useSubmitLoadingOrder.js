@@ -26,8 +26,6 @@ const useSubmitLoadingOrder = ({ data, updateStateComponent }) => {
                 text: "Registro almacenado",
               }).then(() => {
 
-                console.log(response?.data)
-
                 // actualización del contexto de loadingOrders
                 updateStateComponent({
                   data: updateArray({
@@ -45,6 +43,7 @@ const useSubmitLoadingOrder = ({ data, updateStateComponent }) => {
               route: `orden_carga/${cod_orden_carga}`,
               object: payload,
             }).then((response) => {
+
               Swal.fire({
                 icon: "success",
                 title: "Success",
