@@ -33,8 +33,6 @@ const DetailLoadingOrder_main = ({
   dataDetail,
   setFieldValue,
   values,
-  dataTaxpayers,
-  georeferences,
 }) => {
   const { data, updateLoadingOrder } = useLoadingOrder();
 
@@ -125,11 +123,9 @@ const DetailLoadingOrder_main = ({
         isOpen={isOpenModalDetail}
         onOpenChange={() => setIsOpenModalDetail(false)}
         useSubmit_generic={useSubmitDetailLoadingOrder({
-          data: dataDetail,
+          dataContext: useLoadingOrder(),
           setFieldValue: setFieldValue,
           stateValues: values,
-          dataTaxpayers: dataTaxpayers,
-          georeferences: georeferences,
         })}
         initialValues_generic={initialValues_DetailLoadingOrder}
         validationSchema_generic={detailLoadingOrderValidation}

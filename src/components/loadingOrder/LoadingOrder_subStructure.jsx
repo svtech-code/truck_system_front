@@ -19,7 +19,6 @@ const varString = {
 
 const LoadingOrder_subStructure = ({ data }) => {
   const {
-    cod_orden_carga,
     desc_transportista,
     patente,
     desc_marca,
@@ -30,8 +29,6 @@ const LoadingOrder_subStructure = ({ data }) => {
   } = data;
 
   const carLoadingOrder = `(${patente}) / ${desc_marca} ${desc_modelo}`;
-
-  const { dataTaxpayers, georeferences, updateLoadingOrder } = useLoadingOrder();
   const [isOpenModalDetail, setIsOpenModalDetail] = useState(false);
   const [isOpenModalFull, setIsOpenModalFull] = useState(false);
   const [stateDetail, setStateDetail] = useState({ data: detalles_orden_carga });
@@ -61,12 +58,9 @@ const LoadingOrder_subStructure = ({ data }) => {
         isOpen={isOpenModalDetail}
         onOpenChange={() => setIsOpenModalDetail(false)}
         useSubmit_generic={useSubmitDetailLoadingOrder({
+          dataContext: useLoadingOrder(),
           dataDetail: detalles_orden_carga, // detalles de la orden de carga
-          codStateValue: cod_orden_carga, // ver si tengo que pasarlo o no, hace referencia a los datos de la orden de carga
-          useData: useLoadingOrder(),
-          dataTaxpayers: dataTaxpayers,
-          georeferences: georeferences,
-          updateLoadingOrder: updateLoadingOrder, // para actualizar el contexto de la orden de carga
+          dataLoadingOrder: data,
         })}
         initialValues_generic={initialValues_DetailLoadingOrder}
         validationSchema_generic={detailLoadingOrderValidation}
@@ -89,7 +83,6 @@ const LoadingOrder_subStructure = ({ data }) => {
 
           <tr>
             <td className="w-36 font-semibold pl-4 uppercase">Vehículo:</td>
-            {/* <td>{desc_vehiculo}</td> */}
             <td>{carLoadingOrder}</td>
           </tr>
 

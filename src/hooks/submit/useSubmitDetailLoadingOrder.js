@@ -1,24 +1,23 @@
 import Swal from "sweetalert2";
 import apiPut from "../../api/apiPut";
-import useLoadingOrder from "../useLoadingOrder";
+import { updateArray } from "../../utils/methodUpdateArray";
 
 const useSubmitDetailLoadingOrder = ({
-  dataDetail,
-  setFieldValue = () => { },
+  dataContext = {
+    data: {},
+    dataTaxpayers: [],
+    georeferences: [],
+    updateLoadingOrder: () => { },
+  }, // función use del contexto de orden de carga
+  setFieldValue = () => { }, // actualizador de formik
   stateValues = {},
-  codStateValue,
-  useData = {
-    data: []
-  },
-  dataTaxpayers,
-  georeferences,
-  updateLoadingOrder,
+  dataLoadingOrder = {}, // data de la orden de carga
 }) => {
   const onSubmit =
     (onClose) =>
       async (values, { setSubmitting }) => {
         const { cod_detalle_orden_carga, ...otherValues } = values;
-        const { data } = useData;
+        const { data, dataTaxpayers, georeferences, updateLoadingOrder } = dataContext;
 
         // obtener las descripciones al crear un detalle
         const getDescription = ({
@@ -33,11 +32,11 @@ const useSubmitDetailLoadingOrder = ({
           return item ? item[textDescription] : "";
         };
 
-        // ver si es neecsario agregar las descriptiones para el update de un detalle
         const payload = {
           ...otherValues,
+          cod_detalle_orden_carga: cod_detalle_orden_carga,
           desc_cliente: getDescription({
-            cod: values.cod_cliente || data.cod_cliente,
+            cod: values.cod_cliente,
             codProperty: "cod_contribuyente",
             arrayData: dataTaxpayers,
             textDescription: "desc_contribuyente",
@@ -71,49 +70,40 @@ const useSubmitDetailLoadingOrder = ({
                 title: "Success",
                 text: "Registro actualizado",
               }).then(() => {
-                // const updatedDetail = response.data; // respuesta de la actualización -> puede ser el pyload tambien
 
-                // const updatedDetail = data.map(
-                //   (detail) =>
-                //     detail.cod_detalle_orden_carga === cod_detalle_orden_carga
-                //       ? { ...detail, ...payload }
-                //       : detail
-                // );
-                //
+                // nueva propuesta de función
+                const updateDetailLoadingOrderWhitNewData = (loadingOrder, newDetail) => {
+                  // aseguramos que el payload sea identico a la estructura del detalle
+                  const structureBase = loadingOrder.detalles_orden_carga[0] || {};
+                  const filterDetail = Object.keys(structureBase).reduce((detail, key) => {
+                    detail[key] = newDetail.hasOwnProperty(key) ? newDetail[key] : null; // aseguramos valores nulos si no existen 
+                    return detail;
+                  }, {})
 
+                  return {
+                    ...loadingOrder,
+                    detalles_orden_carga: loadingOrder.detalles_orden_carga.map(
+                      detail => detail.cod_detalle_orden_carga === newDetail.cod_detalle_orden_carga
+                        ? filterDetail // reemplazamos el detalle que coincide
+                        : detail // mantener los otros detalles iguales
+                    )
+                  }
+                }
 
-                // filtro para obtener primero la order de carga
-                const updatedDetail = data.filter(
-                  detail => detail.cod_orden_carga === codStateValue
-                ) || [];
+                const newDataLoadingOrder = updateDetailLoadingOrderWhitNewData(dataLoadingOrder, payload);
 
-                // actualizar el el detalle de la orden de carga
-                const updatedDetailLoadingOrder = updatedDetail.map(
-                  detail => detail.cod_detalle_orden_carga === cod_detalle_orden_carga
-                    ? { ...detail, ...payload }
-                    : detail
-                )
-
-                // // Encontrar el índice del detalle que se va a actualizar
-                // const updatedDetails = data.detalles_orden_carga.map(
-                //   (detail) =>
-                //     detail.cod_detalle_orden_carga === cod_detalle_orden_carga
-                //       ? { ...detail, ...updatedDetail }
-                //       : detail
-                // );
-
-
-
-                // // Actualizar el contexto usando updateLoadingOrder
-                // updateLoadingOrder({
-                //   ...stateValues,
-                //   detalles_orden_carga: updatedDetails,
-                // });
+                updateLoadingOrder({
+                  data: updateArray({
+                    arrayData: data,
+                    idData: dataLoadingOrder?.cod_orden_carga,
+                    idField: "cod_orden_carga",
+                    updateFields: newDataLoadingOrder
+                  })
+                });
               });
             });
           }
 
-          // cerrar el modal
           onClose();
         } catch (error) {
           console.log(error);

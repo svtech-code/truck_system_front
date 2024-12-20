@@ -231,8 +231,6 @@ const LoadingOrder_form = ({
         dataDetail={values.detalles_orden_carga}
         setFieldValue={setFieldValue}
         values={values}
-        dataTaxpayers={dataTaxpayers}
-        georeferences={georeferences}
       />
 
       {touched.detalles_orden_carga && errors.detalles_orden_carga && (
