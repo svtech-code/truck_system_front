@@ -23,7 +23,7 @@ const LoadingOrder_form = ({
   const [filterData, setFilterData] = useState({
     cars: dataCars || [],
     coupled: dataCoupled || [],
-    controlLimpieza: false,
+    // controlLimpieza: false,
   });
 
   // función para limpieza de datos dependientes
@@ -31,43 +31,88 @@ const LoadingOrder_form = ({
     fields.forEach((field) => setFieldValue(field, null));
   };
 
-  // filtro de datos, según transportista seleccionado
-  const applyFilter = useCallback(() => {
-    if (values.cod_transportista) {
-      // datos de los vehiculos
-      const filteredCars = dataCars.filter(
-        (car) =>
-          car.cod_transportista?.toString() === values.cod_transportista?.toString()
-      );
+  const applyFilterTransportista = useCallback(() => {
+    const filteredCars = dataCars.filter((car) =>
+      car.cod_transportista?.toString() === values.cod_transportista?.toString()
+    );
 
-      // datos de los acoplados
-      const filteredCoupled = dataCoupled.filter(
-        (coupled) =>
-          coupled.cod_transportista?.toString() === values.cod_transportista?.toString()
-      );
+    const filteredCoupled = dataCoupled.filter((coupled) =>
+      coupled.cod_transportista?.toString() === values.cod_transportista?.toString()
+    );
 
-      setFilterData({ cars: filteredCars, coupled: filteredCoupled });
+    // validación del filtro que se aplcia
+    if (values.cod_transportista !== null) {
+      setFilterData({ ...filterData, cars: filteredCars, coupled: filteredCoupled });
+      cleanDependentField(["cod_vehiculo", "cod_acoplado", "cod_chofer"]);
+
     } else {
-      setFilterData({ cars: dataCars, coupled: dataCoupled });
+      setFilterData({ ...filterData, cars: dataCars, coupled: dataCoupled });
+      cleanDependentField(["cod_vehiculo", "cod_acoplado", "cod_chofer"]);
 
     }
 
-    // if (filterData.controlLimpieza)
-    //   cleanDependentField(["cod_vehiculo", "cod_acoplado", "cod_chofer"]);
-  }, [values.cod_transportista, dataCars, dataCoupled]);
+  }, [values.cod_transportista, dataCars, dataCoupled])
 
   useEffect(() => {
+    // aplicar aqui antes que las condicionales siguiente una condicional para evitar filtro al seleccionar vehivulo 
+    //
+    // sin embargo dicha condicional debe permitir que al quitar el transportista se limpien los datos
+    //
 
-    if (values.cod_transportista)
-      console.log("hay datos, aplicar filtros")
-    else
-      console.log("no hay datos, limpiar")
 
-  }, [values.cod_transportista]);
+    if (values.cod_transportista !== null) {
+      applyFilterTransportista();
+
+    } else {
+      applyFilterTransportista();
+
+    }
+
+
+  }, [values.cod_transportista])
+
+  // filtro de datos, según transportista seleccionado
+  // const applyFilter = useCallback(() => {
+  //   if (values.cod_transportista !== null) {
+  //     // datos de los vehiculos
+  //     const filteredCars = dataCars.filter(
+  //       (car) =>
+  //         car.cod_transportista?.toString() === values.cod_transportista?.toString()
+  //     );
+  //
+  //     // datos de los acoplados
+  //     const filteredCoupled = dataCoupled.filter(
+  //       (coupled) =>
+  //         coupled.cod_transportista?.toString() === values.cod_transportista?.toString()
+  //     );
+  //
+  //     setFilterData({ cars: filteredCars, coupled: filteredCoupled });
+  //
+  //   }
+  //   // else {
+  //   //   console.log("debería restablecer los filtros")
+  //   //   setFilterData({ cars: dataCars, coupled: dataCoupled });
+  //   // }
+  //
+  //   if (values.cod_transportista === null) {
+  //     setFilterData({ cars: dataCars, coupled: dataCoupled });
+  //     console.log("restablecer filtros")
+  //   }
+  //
+  //   if (filterData.controlLimpieza)
+  //     cleanDependentField(["cod_vehiculo", "cod_acoplado", "cod_chofer"]);
+  //
+  // }, [values.cod_transportista, dataCars, dataCoupled]);
+
 
   // useEffect(() => {
-  //   if (values.cod_transportista) {
+  //   if (values.cod_transportista !== null) {
   //     setFilterData({ ...filterData, controlLimpieza: true });
+  //     applyFilter()
+  //   }
+  //
+  //   if (values.cod_transportista === null) {
+  //     setFilterData({ cars: dataCars, coupled: dataCoupled });
   //   }
   //
   //   if (
@@ -76,10 +121,9 @@ const LoadingOrder_form = ({
   //   ) {
   //     cleanDependentField(["cod_vehiculo", "cod_acoplado", "cod_chofer"]);
   //     setFilterData({ ...filterData, controlLimpieza: false });
-  //     if (values.cod_transportista) applyFilter();
+  //     if (values.cod_transportista !== null) applyFilter();
   //   }
   //
-  //   if (values.cod_transportista) applyFilter();
   // }, [values.cod_transportista]);
 
   // useEffect(() => {
